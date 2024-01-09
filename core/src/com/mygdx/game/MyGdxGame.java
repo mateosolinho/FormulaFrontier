@@ -23,7 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		map = new TmxMapLoader().load("1.tmx");
+		map = new TmxMapLoader().load("track.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -32,6 +32,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
