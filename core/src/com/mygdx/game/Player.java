@@ -49,7 +49,6 @@ public class Player {
     public float getWidth() {
         return width;
     }
-
     public float getHeight() {
         return height;
     }

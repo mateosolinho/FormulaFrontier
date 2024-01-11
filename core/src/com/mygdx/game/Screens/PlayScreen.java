@@ -30,10 +30,12 @@ public class PlayScreen implements Screen {
 
     public PlayScreen(){
         batch = new SpriteBatch();
+        // doSleep si esta en True los cuerpos inactivos "duermen" para ahorrar recursos
         world = new World(GRAVITY, true);
         b2rd = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
         camera.zoom = ZOOM;
+        // Fitviewport hace que se ajuste al tamaño de la pantalla
         viewport = new FitViewport(640 / 50.0f, 480 / 50.0f , camera);
         mapLoader = new MapLoader(world);
         player = mapLoader.getPlayer();
@@ -53,11 +55,14 @@ public class PlayScreen implements Screen {
     }
 
     private void draw() {
+        // Se convierten las coordenadas del mundo en coordenadas de pantalla
         batch.setProjectionMatrix(camera.combined);
+        // Dibuja esos elementos en pantalla
         b2rd.render(world, camera.combined);
     }
 
     private void update(float delta) {
+        // Centrar la cámara en el jugador en cada render
         camera.position.set(player.getPosition(),0);
         camera.update();
 
