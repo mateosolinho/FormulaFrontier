@@ -37,6 +37,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
+import UI.ButtonController;
+
 public class MyGdxGame extends ApplicationAdapter {
 
 	private TiledMap map;
@@ -49,105 +51,42 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		// Carga el mapa
 		map = new TmxMapLoader().load("trackFiles/track.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+
+		// Crea la cámara
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 
-		// Boton
-		stage = new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
-
-		Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/flecha-derecha.png"));
-		Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/flecha-izquierda.png"));
-		Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/flecha-arriba.png"));
-		Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/flecha-abajo.png"));
-
-		ImageButton.ImageButtonStyle styleDerecha = new ImageButton.ImageButtonStyle();
-		styleDerecha.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureDerecha));
-		ImageButton imageButtonDerecha = new ImageButton(styleDerecha);
-
-		ImageButton.ImageButtonStyle styleIzquierda = new ImageButton.ImageButtonStyle();
-		styleIzquierda.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureIzquierda));
-		ImageButton imageButtonIzquierda = new ImageButton(styleIzquierda);
-
-		ImageButton.ImageButtonStyle styleArriba = new ImageButton.ImageButtonStyle();
-		styleArriba.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureArriba));
-		ImageButton imageButtonArriba = new ImageButton(styleArriba);
-
-		ImageButton.ImageButtonStyle styleAbajo = new ImageButton.ImageButtonStyle();
-		styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
-		ImageButton imageButtonAbajo = new ImageButton(styleAbajo);
-
-
-		imageButtonDerecha.setPosition(1650, 150);
-		imageButtonDerecha.setSize(150, 150);
-
-		imageButtonIzquierda.setPosition(1400, 150);
-		imageButtonIzquierda.setSize(150, 150);
-
-		imageButtonArriba.setPosition(250, 300);
-		imageButtonArriba.setSize(150, 150);
-
-		imageButtonAbajo.setPosition(250, 50);
-		imageButtonAbajo.setSize(150, 150);
-
-		imageButtonDerecha.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("ImageButtonDerecha", "DERECHA!");
-			}
-		});
-		imageButtonIzquierda.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("ImageButtonIzquierda", "IZQUIERDA!");
-			}
-		});
-
-		imageButtonArriba.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("ImageButtonIzquierda", "ARRIBA!");
-			}
-		});
-
-		imageButtonAbajo.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.log("ImageButtonIzquierda", "ABAJO!");
-			}
-		});
-
-		stage.addActor(imageButtonDerecha);
-		stage.addActor(imageButtonIzquierda);
-		stage.addActor(imageButtonArriba);
-		stage.addActor(imageButtonAbajo);
-
-
-
+		// Llama a la clase donde estan los botones y le asignamos el stage de los botones al stage de esta clase para que aparezca por pantalla
+		ButtonController buttonController = new ButtonController(stage);
+		stage = buttonController.getStage();
 	}
 
 	@Override
 	public void render() {
+		// Pintamos el fondo de color blanco
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		// Actualizamos la camara y renderizamos el mapa
 		camera.update();
 		tiledMapRenderer.setView(camera);
 		tiledMapRenderer.render();
 
+		// Tiempo de actualizacion de los frames de la pantalla (30)
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+		// Dibujamos el stage en pantalla
 		stage.draw();
 
 	}
 
 	@Override
 	public void dispose () {
-
+		// Libera los recursos y limpia memoria
 		map.dispose();
 		stage.dispose();
-		//mySkin.dispose();
 	}
 }
