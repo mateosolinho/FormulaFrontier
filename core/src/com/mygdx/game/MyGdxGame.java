@@ -47,7 +47,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private Stage stage;
 
-	SpriteBatch batch;
+	private SpriteBatch batch;
+	private Player player;
 
 	@Override
 	public void create () {
@@ -60,8 +61,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.update();
 
+		// Gestion coche
+		batch = new SpriteBatch();
+		player = new Player();
+
 		// Llama a la clase donde estan los botones y le asignamos el stage de los botones al stage de esta clase para que aparezca por pantalla
-		ButtonController buttonController = new ButtonController(stage);
+		ButtonController buttonController = new ButtonController(stage, camera);
 		stage = buttonController.getStage();
 	}
 
@@ -70,6 +75,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		// Pintamos el fondo de color blanco
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+		// Dibujar el personaje
+		batch.begin();
+		player.render(batch);
+		batch.end();
+
+		// Actualizamos la camara y aplicamos el zoom
+		camera.zoom = 1.0f;
+
+		// Ajustamos la posición de la cámara para centrarse en el jugador
+		camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
 
 		// Actualizamos la camara y renderizamos el mapa
 		camera.update();
@@ -88,5 +104,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		// Libera los recursos y limpia memoria
 		map.dispose();
 		stage.dispose();
+		batch.dispose();
+		player.dispose();
 	}
 }

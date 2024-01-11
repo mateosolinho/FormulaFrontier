@@ -17,9 +17,12 @@ public class ButtonController {
 
     private Stage stage;
 
+    private OrthographicCamera camera;
+
     // Mediante el constructor le pasamos el Stage instanciado y llama a la función que crea los botones
-    public ButtonController(Stage stage) {
+    public ButtonController(Stage stage, OrthographicCamera camera) {
         this.stage = stage;
+        this.camera = camera;
         setupButtons();
     }
 
@@ -70,10 +73,10 @@ public class ButtonController {
         imageButtonIzquierda.setPosition(1400, 150);
         imageButtonIzquierda.setSize(150, 150);
 
-        imageButtonArriba.setPosition(250, 300);
+        imageButtonArriba.setPosition(200, 300);
         imageButtonArriba.setSize(150, 150);
 
-        imageButtonAbajo.setPosition(250, 50);
+        imageButtonAbajo.setPosition(200, 50);
         imageButtonAbajo.setSize(150, 150);
 
         // Gestíón de eventos en cada botón
@@ -81,12 +84,14 @@ public class ButtonController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ImageButtonDerecha", "DERECHA!");
+                camera.translate(30,0);
             }
         });
         imageButtonIzquierda.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ImageButtonIzquierda", "IZQUIERDA!");
+                camera.translate(-30,0);
             }
         });
 
@@ -94,6 +99,7 @@ public class ButtonController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ImageButtonIzquierda", "ARRIBA!");
+                camera.translate(0,30);
             }
         });
 
@@ -101,6 +107,7 @@ public class ButtonController {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ImageButtonIzquierda", "ABAJO!");
+                camera.translate(0,-30);
             }
         });
 
@@ -109,6 +116,7 @@ public class ButtonController {
         stage.addActor(imageButtonIzquierda);
         stage.addActor(imageButtonArriba);
         stage.addActor(imageButtonAbajo);
+
 
     }
 }
