@@ -34,6 +34,9 @@ public class PlayScreen implements Screen {
     private final Vector2 GRAVITY = new Vector2(0,0);
     private final float ZOOM = 6f;
 
+    /**
+     * Constructor de la pantalla de juego.
+     */
     public PlayScreen() {
         batch = new SpriteBatch();
         world = new World(GRAVITY, true);
@@ -42,7 +45,7 @@ public class PlayScreen implements Screen {
         camera.zoom = ZOOM;
         viewport = new FillViewport(640 / 50.0f, 480 / 50.0f , camera);
         mapLoader = new MapLoader(world);
-        player = new Car(35.0f, 0.8f, 80, mapLoader, Car.DRIVE_2WD, world);
+        player = new Car(35.0f, 0.8f, 80, mapLoader, Car.DRIVE_4WD, world);
     }
 
     @Override
@@ -60,6 +63,9 @@ public class PlayScreen implements Screen {
 
     }
 
+    /**
+     * Maneja la entrada del usuario, como las teclas presionadas.
+     */
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             player.setDriveDirection(DRIVE_DIRECTION_FORWARD);
@@ -93,7 +99,7 @@ public class PlayScreen implements Screen {
         b2dr.render(world, camera.combined);
     }
 
-    private void update(final float delta) {
+    private void update(float delta) {
         player.update(delta);
         camera.position.set(player.getBody().getPosition(), 0);
         camera.update();

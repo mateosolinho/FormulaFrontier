@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
+/**
+ * Clase para cargar un mapa Tiled y crear objetos Box2D a partir de los objetos del mapa.
+ */
 public class MapLoader implements Disposable {
 
     // "wall" que hace referencia a la clase Objeto del .tmx de los muros
@@ -24,7 +27,11 @@ public class MapLoader implements Disposable {
     private final World mWorld;
     private final TiledMap map;
 
-
+    /**
+     * Constructor que carga un mapa Tiled y crea objetos Box2D a partir de los objetos del mapa.
+     *
+     * @param world Mundo Box2D donde se crearán los objetos.
+     */
     public MapLoader(World world) {
         this.mWorld = world;
         map = new TmxMapLoader().load("trackFiles/new_map.tmx");
@@ -41,6 +48,11 @@ public class MapLoader implements Disposable {
         }
     }
 
+    /**
+     * Obtiene el objeto asociado al jugador desde el mapa cargado.
+     *
+     * @return Cuerpo del jugador.
+     */
     public Body getPlayer() {
         final Rectangle rectangle = map.getLayers().get("player").getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         // Llamando a createRectangle creamos el rectangulo que hace referencia al coche del jugador
@@ -50,7 +62,9 @@ public class MapLoader implements Disposable {
                 BodyDef.BodyType.DynamicBody, mWorld, PLAYER_DENSITY, false);
     }
 
-
+    /**
+     * Libera los recursos utilizados por el mapa.
+     */
     @Override
     public void dispose() {
         map.dispose();

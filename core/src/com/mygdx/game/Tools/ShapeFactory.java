@@ -8,8 +8,17 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class ShapeFactory {
-    public ShapeFactory(){}
-
+    /**
+     * Crea un objeto rectangular en la pantalla
+     *
+     * @param position Posición del centro del rectángulo.
+     * @param size Tamaño del rectángulo.
+     * @param type Tipo de cuerpo Box2D (estático, dinámico o cinemático).
+     * @param world Instancia del mundo Box2D donde se creará el objeto.
+     * @param density Densidad del cuerpo para simulación de física.
+     * @param sensor Indica si el cuerpo debe ser un sensor (no afecta colisiones físicas).
+     * @return El objeto Box2D creado.
+     */
     public static Body createRectangle (Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density, boolean sensor){
 
         // Define el Body
