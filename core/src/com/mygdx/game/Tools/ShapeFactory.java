@@ -1,4 +1,4 @@
-package Tools;
+package com.mygdx.game.Tools;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class ShapeFactory {
     public ShapeFactory(){}
 
-    public static Body createRectangle (Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density){
+    public static Body createRectangle (Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density, boolean sensor){
 
         // Define el Body
         BodyDef bdef = new BodyDef();
@@ -26,6 +26,7 @@ public class ShapeFactory {
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.density = density;
+        fdef.isSensor = sensor;
 
         body.createFixture(fdef);
         shape.dispose();

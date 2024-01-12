@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
+
 // Esta es la primera clase, que lanza todas las demás
 public class AndroidLauncher extends AndroidApplication {
 	@Override

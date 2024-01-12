@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
-import Tools.ShapeFactory;
+import com.mygdx.game.Tools.ShapeFactory;
 
 public class MapLoader implements Disposable {
 
@@ -39,7 +39,7 @@ public class MapLoader implements Disposable {
             ShapeFactory.createRectangle(
                     new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
                     new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-                    BodyDef.BodyType.StaticBody, mWorld, OBJECT_DENSITY);
+                    BodyDef.BodyType.StaticBody, mWorld, OBJECT_DENSITY, false);
         }
     }
 
@@ -49,7 +49,7 @@ public class MapLoader implements Disposable {
         return ShapeFactory.createRectangle(
                 new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
                 new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-                BodyDef.BodyType.DynamicBody, mWorld, PLAYER_DENSITY);
+                BodyDef.BodyType.DynamicBody, mWorld, PLAYER_DENSITY, false);
     }
 
 
