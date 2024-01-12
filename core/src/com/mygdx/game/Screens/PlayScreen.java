@@ -9,6 +9,7 @@ import static com.mygdx.game.Entities.Car.TURN_DIRECTION_RIGHT;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,14 +17,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Entities.Car;
 import com.mygdx.game.Tools.MapLoader;
 
-// https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
-public class PlayScreen implements Screen {
+import UI.ButtonController;
 
+// https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
+public class PlayScreen extends InputAdapter implements Screen {
+
+    private Stage stage;
     private final SpriteBatch batch;
     private final World world;
     private final Box2DDebugRenderer b2dr;
@@ -50,7 +55,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void show() {
-
+        ButtonController buttonController = new ButtonController(stage,camera);
+        stage = buttonController.getStage();
     }
 
     @Override
@@ -60,7 +66,7 @@ public class PlayScreen implements Screen {
         handleInput();
         update(delta);
         draw();
-
+        stage.draw();
     }
 
     /**
@@ -132,5 +138,6 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         mapLoader.dispose();
+        stage.dispose();
     }
 }
