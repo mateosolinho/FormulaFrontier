@@ -38,6 +38,7 @@ public class ButtonController {
 
     // Función mediante la cual se crean los botones
     public void setupButtons () {
+
         // Crea una nueva instancia del Stage usando un viewport basado en pantalla (pixeles)
         stage = new Stage(new ScreenViewport());
         // Establece el Stage como el procesador de entrada principal (Gestión de eventos, click, toques en pantalla...)
@@ -66,18 +67,29 @@ public class ButtonController {
         styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
         ImageButton imageButtonAbajo = new ImageButton(styleAbajo);
 
+        // Obtén las dimensiones de la pantalla
+        float screenWidth = Gdx.graphics.getWidth();
+        float screenHeight = Gdx.graphics.getHeight();
+
+        stage.getViewport().getCamera().position.set(screenWidth / 2f,0,0);
+
+
         // Asignación de posición y tamaño acada botón
-        imageButtonDerecha.setPosition(1650, 150);
-        imageButtonDerecha.setSize(150, 150);
+        imageButtonDerecha.setHeight(screenHeight * 0.15f);
+        imageButtonDerecha.setWidth(screenWidth * 0.15f);
+        imageButtonDerecha.setPosition(17 * screenWidth / 20f, -screenHeight / 4f);
 
-        imageButtonIzquierda.setPosition(1400, 150);
-        imageButtonIzquierda.setSize(150, 150);
+        imageButtonIzquierda.setHeight(screenHeight * 0.15f);
+        imageButtonIzquierda.setWidth(screenWidth * 0.15f);
+        imageButtonIzquierda.setPosition(14 * screenWidth / 20f, -screenHeight / 4f);
 
-        imageButtonArriba.setPosition(200, 300);
-        imageButtonArriba.setSize(150, 150);
+        imageButtonArriba.setHeight(screenHeight * 0.15f);
+        imageButtonArriba.setWidth(screenWidth * 0.15f);
+        imageButtonArriba.setPosition(2 * screenWidth / 20f, -screenHeight / 7f);
 
-        imageButtonAbajo.setPosition(200, 50);
-        imageButtonAbajo.setSize(150, 150);
+        imageButtonAbajo.setHeight(screenHeight * 0.15f);
+        imageButtonAbajo.setWidth(screenWidth * 0.15f);
+        imageButtonAbajo.setPosition(2 * screenWidth / 20f, -screenHeight / 3f);
 
         // Gestíón de eventos en cada botón
         imageButtonDerecha.addListener(new ClickListener() {
@@ -98,7 +110,7 @@ public class ButtonController {
         imageButtonArriba.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("ImageButtonIzquierda", "ARRIBA!");
+                Gdx.app.log("ImageButtonArriba", "ARRIBA!");
                 camera.translate(0,30);
             }
         });
@@ -106,7 +118,7 @@ public class ButtonController {
         imageButtonAbajo.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("ImageButtonIzquierda", "ABAJO!");
+                Gdx.app.log("ImageButtonAabjo", "ABAJO!");
                 camera.translate(0,-30);
             }
         });
@@ -116,7 +128,6 @@ public class ButtonController {
         stage.addActor(imageButtonIzquierda);
         stage.addActor(imageButtonArriba);
         stage.addActor(imageButtonAbajo);
-
 
     }
 }
