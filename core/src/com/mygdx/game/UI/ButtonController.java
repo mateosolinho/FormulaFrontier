@@ -1,17 +1,17 @@
-package UI;
+package com.mygdx.game.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Entities.Car;
+import com.mygdx.game.Screens.PlayScreen;
 
 public class ButtonController {
 
@@ -19,12 +19,16 @@ public class ButtonController {
 
     private OrthographicCamera camera;
 
+    private Car player;
+
     // Mediante el constructor le pasamos el Stage instanciado y llama a la función que crea los botones
-    public ButtonController(Stage stage, OrthographicCamera camera) {
+    public ButtonController(Stage stage, OrthographicCamera camera, Car player) {
         this.stage = stage;
         this.camera = camera;
+        this.player = player;
         setupButtons();
     }
+
 
     // Función que sirve para pasarle el Stage a la clase principal
     public Stage getStage() {
@@ -74,8 +78,10 @@ public class ButtonController {
         stage.getViewport().getCamera().position.set(screenWidth / 2f,0,0);
 
 
+        // TODO los eventos de los botones no coinciden con donde estan los botones en pantalla
         // Asignación de posición y tamaño acada botón
         imageButtonDerecha.setHeight(screenHeight * 0.15f);
+        imageButtonDerecha.setWidth(screenWidth * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
         imageButtonDerecha.setPosition(17 * screenWidth / 20f, -screenHeight / 4f);
 

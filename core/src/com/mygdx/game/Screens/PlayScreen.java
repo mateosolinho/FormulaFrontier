@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Entities.Car;
 import com.mygdx.game.Tools.MapLoader;
 
-import UI.ButtonController;
+import com.mygdx.game.UI.ButtonController;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen extends InputAdapter implements Screen {
@@ -55,7 +55,7 @@ public class PlayScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-        ButtonController buttonController = new ButtonController(stage,camera);
+        ButtonController buttonController = new ButtonController(stage,camera, player);
         stage = buttonController.getStage();
     }
 
@@ -66,6 +66,7 @@ public class PlayScreen extends InputAdapter implements Screen {
         handleInput();
         update(delta);
         draw();
+        stage.act(delta);
         stage.draw();
     }
 
