@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -19,10 +20,10 @@ public class ButtonController {
 
     private OrthographicCamera camera;
 
-    private Car player;
+    private Body player;
 
     // Mediante el constructor le pasamos el Stage instanciado y llama a la función que crea los botones
-    public ButtonController(Stage stage, OrthographicCamera camera, Car player) {
+    public ButtonController(Stage stage, OrthographicCamera camera, Body player) {
         this.stage = stage;
         this.camera = camera;
         this.player = player;

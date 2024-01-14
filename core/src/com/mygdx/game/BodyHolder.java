@@ -21,7 +21,6 @@ public abstract class BodyHolder {
 
     private final Body body;
     private float drift = 1;
-    private final int id;
 
     /**
      * Constructor para un objeto BodyHolder.
@@ -30,7 +29,6 @@ public abstract class BodyHolder {
      */
     public BodyHolder(final Body mBody) {
         this.body = mBody;
-        id = -1;
     }
 
     /**
@@ -42,11 +40,9 @@ public abstract class BodyHolder {
      * @param world Instancia del mundo Box2D donde se creará el cuerpo.
      * @param density Densidad del cuerpo para simulación de física.
      * @param sensor Indica si el cuerpo debe ser un sensor (no afecta colisiones físicas).
-     * @param id Identificador del objeto.
      */
-    public BodyHolder(Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density, boolean sensor, int id) {
+    public BodyHolder(Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density, boolean sensor){
         body = ShapeFactory.createRectangle(position, size, type, world, density, sensor);
-        this.id = id;
     }
 
     /**
@@ -55,14 +51,12 @@ public abstract class BodyHolder {
      * @param delta Tiempo transcurrido desde la última actualización.
      */
     public void update(final float delta) {
-        if (drift < 1) {
-            forwardSpeed = getForwardVelocity();
-            lateralSpeed = getLateralVelocity();
-            if (lateralSpeed.len() < DRIFT_OFFSET && id > 1) {
-                killDrift();
-            } else {
-                handleDrift();
-            }
+        forwardSpeed = getForwardVelocity();
+        lateralSpeed = getLateralVelocity();
+        if (lateralSpeed.len() < DRIFT_OFFSET){
+            killDrift();
+        } else {
+            handleDrift();
         }
     }
 
