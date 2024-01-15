@@ -64,7 +64,7 @@ public class PlayScreen implements Screen {
         camera = new OrthographicCamera();
         camera.zoom = ZOOM;
         // Fitviewport hace que se ajuste al tamaño de la pantalla
-        viewport = new FillViewport(640 / 50.0f, 480 / 50.0f , camera);
+        viewport = new FillViewport(Gdx.graphics.getWidth() / 100.0f, Gdx.graphics.getHeight() / 100.0f , camera);
         mapLoader = new MapLoader(world);
         player = mapLoader.getPlayer();
 
@@ -73,7 +73,7 @@ public class PlayScreen implements Screen {
     }
     @Override
     public void show() {
-        ButtonController buttonController = new ButtonController(stage,camera, player);
+        ButtonController buttonController = new ButtonController(stage,camera, player, this);
         stage = buttonController.getStage();
     }
 
@@ -177,13 +177,6 @@ public class PlayScreen implements Screen {
             Gdx.app.exit();
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.Q)){
-            camera.zoom -= 0.4f;
-            Gdx.app.log("Input Q", "Q");
-        } else if (Gdx.input.isKeyPressed(Input.Keys.E)){
-            camera.zoom += 0.4f;
-            Gdx.app.log("Input E", "E");
-        }
     }
 
     private void draw() {

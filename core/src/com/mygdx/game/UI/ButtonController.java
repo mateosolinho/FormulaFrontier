@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,11 +24,14 @@ public class ButtonController {
 
     private Body player;
 
+    private PlayScreen playScreen;
+
     // Mediante el constructor le pasamos el Stage instanciado y llama a la función que crea los botones
-    public ButtonController(Stage stage, OrthographicCamera camera, Body player) {
+    public ButtonController(Stage stage, OrthographicCamera camera, Body player, PlayScreen playScreen) {
         this.stage = stage;
         this.camera = camera;
         this.player = player;
+        this.playScreen = playScreen;
         setupButtons();
     }
 
@@ -43,6 +48,7 @@ public class ButtonController {
 
     // Función mediante la cual se crean los botones
     public void setupButtons () {
+        final Vector2 baseVector = new Vector2(0,0);
 
         // Crea una nueva instancia del Stage usando un viewport basado en pantalla (pixeles)
         stage = new Stage(new ScreenViewport());
@@ -84,33 +90,39 @@ public class ButtonController {
         imageButtonDerecha.setHeight(screenHeight * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
-        imageButtonDerecha.setPosition(17 * screenWidth / 20f, -screenHeight / 4f);
+        imageButtonDerecha.setPosition(17 * screenWidth / 20f, -screenHeight / 3f);
 
         imageButtonIzquierda.setHeight(screenHeight * 0.15f);
         imageButtonIzquierda.setWidth(screenWidth * 0.15f);
-        imageButtonIzquierda.setPosition(14 * screenWidth / 20f, -screenHeight / 4f);
+        imageButtonIzquierda.setPosition(14 * screenWidth / 20f, -screenHeight / 3f);
 
         imageButtonArriba.setHeight(screenHeight * 0.15f);
         imageButtonArriba.setWidth(screenWidth * 0.15f);
-        imageButtonArriba.setPosition(2 * screenWidth / 20f, -screenHeight / 7f);
+        imageButtonArriba.setPosition(1 * screenWidth / 20f, -screenHeight / 5f);
 
         imageButtonAbajo.setHeight(screenHeight * 0.15f);
         imageButtonAbajo.setWidth(screenWidth * 0.15f);
-        imageButtonAbajo.setPosition(2 * screenWidth / 20f, -screenHeight / 3f);
+        imageButtonAbajo.setPosition(1 * screenWidth / 20f, -screenHeight / 2.5f);
 
         // Gestíón de eventos en cada botón
-        imageButtonDerecha.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("ImageButtonDerecha", "DERECHA!");
-                camera.translate(30,0);
-            }
-        });
         imageButtonIzquierda.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("ImageButtonIzquierda", "IZQUIERDA!");
+                baseVector.set(0, 120.0f);
+            }
+        });
+        imageButtonDerecha.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("ImageButtonDerecha", "DERECHA!");
                 camera.translate(-30,0);
+                return super.touchDown(event, x, y, pointer, button);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
             }
         });
 
