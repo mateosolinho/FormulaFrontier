@@ -1,7 +1,6 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -26,27 +25,30 @@ import com.mygdx.game.Tools.MapLoader;
 public class PlayScreen implements Screen {
 
     // Variables para indicar la dirección de conducción
-    private static int DRIVE_DIRECTION_NONE = 0;
-    private static int DRIVE_DIRECTION_FORWARD = 1;
-    private static int DRIVE_DIRECTION_BACKWARD = 2;
+    private final static int DRIVE_DIRECTION_NONE = 0;
+    private final static int DRIVE_DIRECTION_FORWARD = 1;
+    private final static int DRIVE_DIRECTION_BACKWARD = 2;
 
 
     // Variables para indicar hacia donde es el giro
-    private  static int TURN_DIRECTION_NONE = 0;
-    private  static int TURN_DIRECTION_LEFT = 1;
-    private  static int TURN_DIRECTION_RIGHT = 2;
+    private final static int TURN_DIRECTION_NONE = 0;
+    private final static int TURN_DIRECTION_LEFT = 1;
+    private final static int TURN_DIRECTION_RIGHT = 2;
 
 
     // Deceleración del vehiculo al deslizarse o girar
-    private static float DRIFT = 0.99f;
+    private final static float DRIFT = 0.99f;
+
     // Velocidad de conducción
-    private static float DRIVE_SPEED = 400.0f;
-//    private static float DRIVE_SPEED = 120.0f;
+    private final static float DRIVE_SPEED = 400.0f;
+    //    private static float DRIVE_SPEED = 120.0f;
+
     // Velocidad de giro
-    private static float TURN_SPEED = 4.0f;
-//    private static float TURN_SPEED = 2.0f;
+    private final static float TURN_SPEED = 3.0f;
+    //    private static float TURN_SPEED = 2.0f;
+
     // Velocidad máxima
-    private static float MAX_SPEED = 80.0f;
+    private final static float MAX_SPEED = 50.0f;
 //    private static float MAX_SPEED = 35.0f;
 
     // Variable para comprobar la dirección de conducción del objeto
@@ -60,55 +62,50 @@ public class PlayScreen implements Screen {
     private ImageButton imageButtonAbajo;
 
     private Stage stage;
-    private SpriteBatch batch;
-    private World world;
-    private Box2DDebugRenderer b2rd;
-    private OrthographicCamera camera;
-    private Viewport viewport;
-    private Body player;
-    private Vector2 GRAVITY = new Vector2(0,0);
-    private float ZOOM = 6f;
-    private MapLoader mapLoader;
+    private final SpriteBatch batch;
+    private final World world;
+    private final Box2DDebugRenderer b2rd;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+    private final Body player;
+    private final MapLoader mapLoader;
+    Vector2 baseVector;
+    int tick = 50;
+    long ttotal = 0;
 
-    int tick=30;
-    long ttotal=0;
-
-    public PlayScreen(){
+    public PlayScreen() {
         batch = new SpriteBatch();
         // doSleep si esta en True los cuerpos inactivos "duermen" para ahorrar recursos
-        world = new World(GRAVITY, true);
+        world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        camera.zoom = ZOOM;
+        camera.zoom = 6f;
         // Fitviewport hace que se ajuste al tamaño de la pantalla
-        viewport = new FillViewport(Gdx.graphics.getWidth() / 100.0f, Gdx.graphics.getHeight() / 100.0f , camera);
+        viewport = new FillViewport(Gdx.graphics.getWidth() / 100.0f, Gdx.graphics.getHeight() / 100.0f, camera);
         mapLoader = new MapLoader(world);
         player = mapLoader.getPlayer();
 
         // Establece el amortiguamiento lineal del objeto player
         player.setLinearDamping(0.5f);
         createButtons();
+        handleInput();
     }
+
     @Override
     public void show() {
 
     }
 
-    Vector2 baseVector;
-
     @Override
     public void render(float delta) {
-        baseVector = new Vector2(0,0);
+        baseVector = new Vector2(0, 0);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if (System.currentTimeMillis() - ttotal > tick) {
 
-        handleInput();
-
-        ;
-        if (System.currentTimeMillis()-ttotal>tick) {
             if (isUpPressed) {
-               driveDirection = DRIVE_DIRECTION_FORWARD;
+                driveDirection = DRIVE_DIRECTION_FORWARD;
             } else if (isDownPressed) {
                 driveDirection = DRIVE_DIRECTION_BACKWARD;
             } else {
@@ -122,10 +119,10 @@ public class PlayScreen implements Screen {
             } else {
                 turnDirection = TURN_DIRECTION_NONE;
             }
-            ttotal=System.currentTimeMillis();
+            processInput();
+            ttotal = System.currentTimeMillis();
         }
 
-        processInput();
         update(delta);
         handleDrift();
         draw();
@@ -150,66 +147,75 @@ public class PlayScreen implements Screen {
     boolean isLeftPressed = false;
 
     private void processInput() {
-        Vector2 baseVector = new Vector2(0,0);
-
-        if (turnDirection == TURN_DIRECTION_RIGHT){
-            player.setAngularVelocity(-TURN_SPEED);
-        } else if (turnDirection == TURN_DIRECTION_LEFT) {
-            player.setAngularVelocity(TURN_SPEED);
-        } else if (turnDirection == TURN_DIRECTION_NONE  && player.getAngularVelocity() != 0) {
-            player.setAngularVelocity(0.0f);
+        switch (turnDirection) {
+            case TURN_DIRECTION_RIGHT:
+                player.setAngularVelocity(-TURN_SPEED);
+                break;
+            case TURN_DIRECTION_LEFT:
+                player.setAngularVelocity(TURN_SPEED);
+                break;
+            default:
+                if (turnDirection == TURN_DIRECTION_NONE && player.getAngularVelocity() != 0) {
+                    player.setAngularVelocity(0.0f);
+                }
+                break;
         }
 
-        if (driveDirection == DRIVE_DIRECTION_FORWARD){
-            baseVector.set(0, DRIVE_SPEED);
-        } else if (driveDirection == DRIVE_DIRECTION_BACKWARD){
-            baseVector.set(0, -DRIVE_SPEED);
+        switch (driveDirection) {
+            case DRIVE_DIRECTION_FORWARD:
+                baseVector.set(0, DRIVE_SPEED);
+                break;
+            case DRIVE_DIRECTION_BACKWARD:
+                baseVector.set(0, -DRIVE_SPEED);
+                break;
         }
 
         // Comprueba si hay una entrada activa para avanzar o retroceder y la velocidad actual del objeto es menor que la velocidad máxima
-        if (!baseVector.isZero() && player.getLinearVelocity().len() < MAX_SPEED){
+        if (!baseVector.isZero() && player.getLinearVelocity().len() < MAX_SPEED) {
             // Aplica una fuerta en el centro del objeto
             player.applyForceToCenter(player.getWorldVector(baseVector), true);
-            Gdx.app.log("Siiiii" , "APLICANDO LA FUERZA");
         }
     }
 
     /**
      * Metodo para gestionar la velocidad hacia adelante del objeto
+     *
      * @return multiplica el producto punto * el vector normal para obtener la velocidad hacia adelante
      */
-    private Vector2 getForwardVelocity(){
+    private Vector2 getForwardVelocity() {
         // Obtiene el vector normal del objeto en relación con el eje y
-        Vector2 currentNormal = player.getWorldVector(new Vector2(0,1));
+        Vector2 currentNormal = player.getWorldVector(new Vector2(0, 1));
         float dotProduct = currentNormal.dot(player.getLinearVelocity());
         return multiply(dotProduct, currentNormal);
     }
 
     /**
      * Metodo para obtener la velocidad lateral del objeto
+     *
      * @return multiplica el producto punto * el vector normal para obtener la velocidad lateral
      */
-    private Vector2 getLateralVelocity(){
-        Vector2 currentNormal = player.getWorldVector(new Vector2(1,0));
+    private Vector2 getLateralVelocity() {
+        Vector2 currentNormal = player.getWorldVector(new Vector2(1, 0));
         float dotProduct = currentNormal.dot(player.getLinearVelocity());
         return multiply(dotProduct, currentNormal);
     }
 
     /**
      * Vector para multiplicar un escalar por un vector tridimensional
+     *
      * @param a El escalar a multiplicar
      * @param v El vector bidimensional a multiplicar
      * @return Un nuevo vector bidimensional resultado de la multiplicación.
      */
-    private Vector2 multiply(float a, Vector2 v){
-        return new Vector2(a * v.x , a * v.y);
+    private Vector2 multiply(float a, Vector2 v) {
+        return new Vector2(a * v.x, a * v.y);
     }
+
     private void handleInput() {
         // -------------------------------------------------------------------------------------
-        imageButtonArriba.addListener(new InputListener(){
+        imageButtonArriba.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("pulso2", "true");
                 isUpPressed = true;
                 return true;
             }
@@ -217,12 +223,10 @@ public class PlayScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 isUpPressed = false;
-                Gdx.app.log("pulso2", "false");
-                super.touchUp(event, x, y, pointer, button);
             }
         });
 
-        imageButtonAbajo.addListener(new InputListener(){
+        imageButtonAbajo.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isDownPressed = true;
@@ -232,14 +236,12 @@ public class PlayScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 isDownPressed = false;
-                super.touchUp(event, x, y, pointer, button);
             }
         });
 
-        imageButtonDerecha.addListener(new InputListener(){
+        imageButtonDerecha.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("pulso2", "true");
                 isRightPressed = true;
                 return true;
             }
@@ -247,12 +249,10 @@ public class PlayScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 isRightPressed = false;
-                Gdx.app.log("pulso2", "false");
-                super.touchUp(event, x, y, pointer, button);
             }
         });
 
-        imageButtonIzquierda.addListener(new InputListener(){
+        imageButtonIzquierda.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isLeftPressed = true;
@@ -262,29 +262,29 @@ public class PlayScreen implements Screen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 isLeftPressed = false;
-                super.touchUp(event, x, y, pointer, button);
             }
         });
 // -------------------------------------------------------------------------------------
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-            driveDirection = DRIVE_DIRECTION_FORWARD;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            driveDirection = DRIVE_DIRECTION_BACKWARD;
-        } else {
-            driveDirection = DRIVE_DIRECTION_NONE;
-        }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            turnDirection = TURN_DIRECTION_LEFT;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            turnDirection = TURN_DIRECTION_RIGHT;
-        } else {
-            turnDirection = TURN_DIRECTION_NONE;
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
-            Gdx.app.exit();
-        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+//            driveDirection = DRIVE_DIRECTION_FORWARD;
+//        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+//            driveDirection = DRIVE_DIRECTION_BACKWARD;
+//        } else {
+//            driveDirection = DRIVE_DIRECTION_NONE;
+//        }
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+//            turnDirection = TURN_DIRECTION_LEFT;
+//        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+//            turnDirection = TURN_DIRECTION_RIGHT;
+//        } else {
+//            turnDirection = TURN_DIRECTION_NONE;
+//        }
+//
+//        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+//            Gdx.app.exit();
+//        }
     }
 
     private void draw() {
@@ -294,10 +294,10 @@ public class PlayScreen implements Screen {
 
     private void update(float delta) {
         // Centrar la cámara en el jugador en cada render
-        camera.position.set(player.getPosition(),0);
+        camera.position.set(player.getPosition(), 0);
         camera.update();
 
-        world.step(delta, 6,2);
+        world.step(delta, 6, 2);
     }
 
     @Override
@@ -330,7 +330,6 @@ public class PlayScreen implements Screen {
     }
 
     public void createButtons() {
-        final Vector2 baseVector = new Vector2(0,0);
 
         // Crea una nueva instancia del Stage usando un viewport basado en pantalla (pixeles)
         stage = new Stage(new ScreenViewport());
@@ -364,7 +363,7 @@ public class PlayScreen implements Screen {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
-        stage.getViewport().getCamera().position.set(screenWidth / 2f,0,0);
+        stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
 
         // TODO los eventos de los botones no coinciden con donde estan los botones en pantalla
@@ -385,7 +384,6 @@ public class PlayScreen implements Screen {
         imageButtonAbajo.setHeight(screenHeight * 0.15f);
         imageButtonAbajo.setWidth(screenWidth * 0.15f);
         imageButtonAbajo.setPosition(1 * screenWidth / 20f, -screenHeight / 2.5f);
-
 
 
         // Añadimos al Stage cada botón
