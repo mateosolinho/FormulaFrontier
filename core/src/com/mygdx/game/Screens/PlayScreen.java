@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -73,16 +76,26 @@ public class PlayScreen implements Screen {
     int tick = 50;
     long ttotal = 0;
 
+    //--------------------------
+    private TiledMap map;
+    OrthogonalTiledMapRenderer tiledMapRenderer;
+    //--------------------------
+
+
     public PlayScreen() {
         batch = new SpriteBatch();
         // doSleep si esta en True los cuerpos inactivos "duermen" para ahorrar recursos
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        camera.zoom = 6f;
+        camera.zoom = 20f;
         // Fitviewport hace que se ajuste al tamaño de la pantalla
-        viewport = new FillViewport(Gdx.graphics.getWidth() / 100.0f, Gdx.graphics.getHeight() / 100.0f, camera);
-        mapLoader = new MapLoader(world);
+        viewport = new FillViewport(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f, camera);
+        map = new TmxMapLoader().load("trackFiles/sinNombre2.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.update();
+        mapLoader = new MapLoader(world, "trackFiles/sinNombre2.tmx" );
         player = mapLoader.getPlayer();
 
         // Establece el amortiguamiento lineal del objeto player
@@ -128,6 +141,9 @@ public class PlayScreen implements Screen {
         draw();
         stage.act(delta);
         stage.draw();
+        camera.update();
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
     }
 
     /**
@@ -327,6 +343,7 @@ public class PlayScreen implements Screen {
         b2rd.dispose();
         mapLoader.dispose();
         stage.dispose();
+        map.dispose();
     }
 
     public void createButtons() {
@@ -393,4 +410,6 @@ public class PlayScreen implements Screen {
         stage.addActor(imageButtonAbajo);
 
     }
+
+
 }
