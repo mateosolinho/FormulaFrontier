@@ -94,23 +94,23 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        camera.zoom = 2f;
+        camera.zoom = 30f;
         // Fitviewport hace que se ajuste al tamaño de la pantalla
-        viewport = new ExtendViewport(Gdx.graphics.getWidth() / 50.0f, Gdx.graphics.getHeight() / 50.0f, camera);
-        map = new TmxMapLoader().load("trackFiles/sinNombre2.tmx");
-        MapProperties prop = map.getProperties();
-
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-
-        int mapPixelWidth = mapWidth * tilePixelWidth;
-        int mapPixelHeight = mapHeight * tilePixelHeight;
+        viewport = new FillViewport(Gdx.graphics.getWidth() / 50.0f, Gdx.graphics.getHeight() / 50.0f, camera);
+        map = new TmxMapLoader().load("trackFiles/sinnombre.tmx");
+//        MapProperties prop = map.getProperties();
+//
+//        int mapWidth = prop.get("width", Integer.class);
+//        int mapHeight = prop.get("height", Integer.class);
+//        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+//        int tilePixelHeight = prop.get("tileheight", Integer.class);
+//
+//        int mapPixelWidth = mapWidth * tilePixelWidth;
+//        int mapPixelHeight = mapHeight * tilePixelHeight;
 
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-        camera.setToOrtho(false, mapPixelWidth, mapPixelHeight);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
         player = getPlayer();
         getWalls();
