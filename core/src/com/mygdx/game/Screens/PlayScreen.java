@@ -7,11 +7,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,10 +23,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Tools.MapLoader;
+import com.mygdx.game.Tools.ShapeFactory;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
@@ -71,13 +78,12 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final Body player;
-    private final MapLoader mapLoader;
     Vector2 baseVector;
     int tick = 50;
     long ttotal = 0;
 
     //--------------------------
-    private TiledMap map;
+    TiledMap map;
     OrthogonalTiledMapRenderer tiledMapRenderer;
     //--------------------------
 
@@ -88,15 +94,26 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        camera.zoom = 20f;
+        camera.zoom = 2f;
         // Fitviewport hace que se ajuste al tamaño de la pantalla
-        viewport = new FillViewport(Gdx.graphics.getWidth() * 0.5f, Gdx.graphics.getHeight() * 0.5f, camera);
+        viewport = new ExtendViewport(Gdx.graphics.getWidth() / 50.0f, Gdx.graphics.getHeight() / 50.0f, camera);
         map = new TmxMapLoader().load("trackFiles/sinNombre2.tmx");
+        MapProperties prop = map.getProperties();
+
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+
+        int mapPixelWidth = mapWidth * tilePixelWidth;
+        int mapPixelHeight = mapHeight * tilePixelHeight;
+
+
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, mapPixelWidth, mapPixelHeight);
         camera.update();
-        mapLoader = new MapLoader(world, "trackFiles/sinNombre2.tmx" );
-        player = mapLoader.getPlayer();
+        player = getPlayer();
+        getWalls();
 
         // Establece el amortiguamiento lineal del objeto player
         player.setLinearDamping(0.5f);
@@ -312,13 +329,14 @@ public class PlayScreen implements Screen {
         // Centrar la cámara en el jugador en cada render
         camera.position.set(player.getPosition(), 0);
         camera.update();
+        viewport.apply();
 
         world.step(delta, 6, 2);
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        viewport.update(width, height, true);
     }
 
     @Override
@@ -341,7 +359,6 @@ public class PlayScreen implements Screen {
         batch.dispose();
         world.dispose();
         b2rd.dispose();
-        mapLoader.dispose();
         stage.dispose();
         map.dispose();
     }
@@ -411,5 +428,25 @@ public class PlayScreen implements Screen {
 
     }
 
+    public Body getPlayer() {
+        final Rectangle rectangle = map.getLayers().get("player").getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
+        // Llamando a createRectangle creamos el rectangulo que hace referencia al coche del jugador
+        return ShapeFactory.createRectangle(
+                new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
+                new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
+                BodyDef.BodyType.DynamicBody, world, 0.4f, false);
+    }
+
+    public void getWalls(){
+        final Array<RectangleMapObject> walls = map.getLayers().get("wall").getObjects().getByType(RectangleMapObject.class);
+        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
+            Rectangle rectangle = rObject.getRectangle();
+            // Llamando a createRectangle creamos el rectangulo que hace referencia a los limites del mapa
+            ShapeFactory.createRectangle(
+                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
+                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
+                    BodyDef.BodyType.StaticBody, world, 1f, false);
+        }
+    }
 
 }

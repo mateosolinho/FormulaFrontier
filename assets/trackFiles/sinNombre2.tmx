@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="71" height="39" tilewidth="128" tileheight="128" infinite="0" nextlayerid="3" nextobjectid="2">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="71" height="39" tilewidth="128" tileheight="128" infinite="0" nextlayerid="4" nextobjectid="29">
  <tileset firstgid="1" source="assetsPistaPrueba.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="71" height="39">
   <data encoding="csv">
@@ -44,6 +44,33 @@
 140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,140,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="3" name="wall">
+  <object id="2" x="-8" y="200" width="160" height="4776"/>
+  <object id="3" x="-24" y="4864" width="4240" height="136"/>
+  <object id="4" x="4096" y="3960" width="136" height="1056"/>
+  <object id="6" x="5000" y="3080" width="112" height="1016"/>
+  <object id="7" x="4104" y="3960" width="1016" height="136"/>
+  <object id="9" x="8" y="112" width="4600" height="160"/>
+  <object id="10" x="4576" y="128" width="144" height="1016"/>
+  <object id="11" x="4584" y="1016" width="1808" height="120"/>
+  <object id="12" x="6288" y="120" width="104" height="1024"/>
+  <object id="13" x="6272" y="120" width="2824" height="152"/>
+  <object id="14" x="8960" y="120" width="144" height="4736"/>
+  <object id="15" x="7024" y="4744" width="2080" height="112"/>
+  <object id="16" x="7032" y="3080" width="136" height="1784"/>
+  <object id="17" x="5000" y="3080" width="2168" height="128"/>
+  <object id="18" x="8072" y="1152" width="128" height="2696"/>
+  <object id="19" x="7304" y="1144" width="912" height="120"/>
+  <object id="20" x="7288" y="1144" width="128" height="1016"/>
+  <object id="21" x="3728" y="2048" width="4488" height="128"/>
+  <object id="22" x="3992" y="2040" width="96" height="1032"/>
+  <object id="23" x="3072" y="2952" width="1024" height="112"/>
+  <object id="24" x="3064" y="2944" width="128" height="1016"/>
+  <object id="25" x="1024" y="3864" width="2176" height="96"/>
+  <object id="26" x="1024" y="1144" width="144" height="2816"/>
+  <object id="27" x="1024" y="1144" width="2680" height="96"/>
+  <object id="28" x="3552" y="1136" width="168" height="1024"/>
+ </objectgroup>
  <objectgroup id="2" name="player">
   <object id="1" x="488" y="1592" width="216" height="512"/>
  </objectgroup>

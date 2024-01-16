@@ -34,15 +34,15 @@ public class MapLoader implements Disposable {
         mMap = new TmxMapLoader().load(file);
 
         // Debido a que son varios objetos debemos recorrerlos todos
-//        final Array<RectangleMapObject> walls = mMap.getLayers().get(MAP_WALL).getObjects().getByType(RectangleMapObject.class);
-//        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
-//            Rectangle rectangle = rObject.getRectangle();
-//            // Llamando a createRectangle creamos el rectangulo que hace referencia a los limites del mapa
-//            ShapeFactory.createRectangle(
-//                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
-//                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-//                    BodyDef.BodyType.StaticBody, mWorld, OBJECT_DENSITY, false);
-//        }
+        final Array<RectangleMapObject> walls = mMap.getLayers().get(MAP_WALL).getObjects().getByType(RectangleMapObject.class);
+        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
+            Rectangle rectangle = rObject.getRectangle();
+            // Llamando a createRectangle creamos el rectangulo que hace referencia a los limites del mapa
+            ShapeFactory.createRectangle(
+                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
+                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
+                    BodyDef.BodyType.StaticBody, mWorld, OBJECT_DENSITY, false);
+        }
     }
 
     public Body getPlayer() {
