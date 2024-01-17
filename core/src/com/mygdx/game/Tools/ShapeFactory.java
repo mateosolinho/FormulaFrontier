@@ -23,13 +23,13 @@ public class ShapeFactory {
 
         // Define el Body
         BodyDef bdef = new BodyDef();
-        bdef.position.set(position.x / 50.0f, position.y / 50.0f);
+        bdef.position.set(position.x, position.y);
         bdef.type = type;
         Body body = world.createBody(bdef);
 
         // Define Fixture
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(size.x / 50.0f, size.y / 50.0f);
+        shape.setAsBox(size.x, size.y);
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.density = density;

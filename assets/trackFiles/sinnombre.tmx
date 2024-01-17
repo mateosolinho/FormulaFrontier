@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-down" width="100" height="54" tilewidth="128" tileheight="128" infinite="0" nextlayerid="5" nextobjectid="170">
- <tileset firstgid="1" source="assets.tsx"/>
+ <tileset firstgid="1" source="assetsPistaFina2.tsx"/>
+ <layer id="4" name="pista" width="100" height="54">
+  <data encoding="base64" compression="zlib">
+   eJztm0GOwyAMRX2J3K/NSM21OEpP0fM0pKibBrAZm5jkP8liMe14wuc1EHWIgDfmtRai2zrehGPX911gXgJ93kuv/Qpe6q93GCsPmzl45mpJfecB8lj2p8yUe+c85tR3BD96f3ZEH+HHJSqbx0h+nKiyecAPX3nAD195MPzYKu6L19cGy9HBPImrZa9QyoPhx1bWe81lUBcf8uvMZiH0w5TU//D5bfFDeJ3FPOLvm8iFHy3nCsuROK+z8GMivh+Tyuz/UutvtL6L69ToOqt+RP7jh0ZGtf6987D6PBD4ETh+lJiYtQf8+PYNGvcPbha5XNK6cZPHkX5EJPur3BpvdSP1d5XHyPcPDeCHu/OHqzzgRzmPdB5QfUYDP/LU/NDuz12n2pzJD4N+pXVqde6v+iE5n1vhzQ/m/Udc8KPYr3seuH8U+8GPDPADfsCPPPDjx48AP9TyKK3/mh8h/n1X9EP7vM8893P9KOZxNj+sYKz/2s83ruaHFYz1Dz860tEP6+9zwA+BHy+j/R+3BvaDc31iP47OY2A/RHnAD13ghy/ghy/ghy/ghy80/Zip//++S54LHTbJAqIf98/Y8vzL7HstAAAAAAAAAAAAACPzBrunobQ=
+  </data>
+ </layer>
+ <objectgroup id="2" name="player">
+  <object id="166" x="640" y="1920" width="128" height="256"/>
+ </objectgroup>
  <objectgroup id="1" name="wall">
   <object id="40" x="128" y="122" width="5376" height="134"/>
   <object id="140" x="5376" y="512" width="3840" height="128"/>
@@ -27,12 +35,4 @@
   <object id="164" x="256" y="5376" width="5120" height="128"/>
   <object id="165" x="1152" y="4352" width="3200" height="128"/>
  </objectgroup>
- <objectgroup id="2" name="player">
-  <object id="166" x="640" y="1920" width="128" height="256"/>
- </objectgroup>
- <layer id="4" name="pista" width="100" height="54">
-  <data encoding="base64" compression="zlib">
-   eJztwwEJAAAMBKHr9f17LcdAwVVTVVVVVVVVVVVVVVVVVVVVVVVVVVVfPryT3MU=
-  </data>
- </layer>
 </map>

@@ -94,7 +94,7 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        camera.zoom = 30f;
+        camera.zoom = 60f;
         // Fitviewport hace que se ajuste al tamaño de la pantalla
         viewport = new FillViewport(Gdx.graphics.getWidth() / 50.0f, Gdx.graphics.getHeight() / 50.0f, camera);
         map = new TmxMapLoader().load("trackFiles/sinnombre.tmx");
