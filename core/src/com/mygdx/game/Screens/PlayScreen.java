@@ -75,7 +75,7 @@ public class PlayScreen implements Screen {
         camera = new OrthographicCamera(mapWidth,mapHeight);
         camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
         camera.zoom = 0.3f;
-        viewport = new FillViewport(mapWidth/PPM, mapHeight/PPM,camera);
+        viewport = new FitViewport(mapWidth/PPM, mapHeight/PPM,camera);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
 
         world = new World(new Vector2(0, 0), true);

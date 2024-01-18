@@ -26,10 +26,15 @@ public class ButtonCreator {
         Gdx.input.setInputProcessor(stage);
 
         // Se le asgina una textura a cada botón
-        Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/flecha-derecha.png"));
-        Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/flecha-izquierda.png"));
-        Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/flecha-arriba.png"));
-        Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/flecha-abajo.png"));
+//        Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/flecha-derecha.png"));
+//        Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/flecha-izquierda.png"));
+//        Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/flecha-arriba.png"));
+//        Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/flecha-abajo.png"));
+
+        Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/derechaBien.png"));
+        Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/izquierdaBien.png"));
+        Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/arribaBien.png"));
+        Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/abajoBien.png"));
 
         // Creación de cada botón y asignación de la textura y el estilo
         ImageButton.ImageButtonStyle styleDerecha = new ImageButton.ImageButtonStyle();
@@ -48,13 +53,13 @@ public class ButtonCreator {
         styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
         imageButtonAbajo = new ImageButton(styleAbajo);
 
+
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
         imageButtonDerecha.setHeight(screenHeight * 0.15f);
-        imageButtonDerecha.setWidth(screenWidth * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
         imageButtonDerecha.setPosition(17 * screenWidth / 20f, -screenHeight / 3f);
 
@@ -64,11 +69,23 @@ public class ButtonCreator {
 
         imageButtonArriba.setHeight(screenHeight * 0.15f);
         imageButtonArriba.setWidth(screenWidth * 0.15f);
-        imageButtonArriba.setPosition(1 * screenWidth / 20f, -screenHeight / 5f);
+        imageButtonArriba.setPosition(1 * screenWidth / 20f, -screenHeight / 5.1f);
 
         imageButtonAbajo.setHeight(screenHeight * 0.15f);
         imageButtonAbajo.setWidth(screenWidth * 0.15f);
-        imageButtonAbajo.setPosition(1 * screenWidth / 20f, -screenHeight / 2.5f);
+        imageButtonAbajo.setPosition(1 * screenWidth / 20f, -screenHeight / 2.2f);
+
+        styleDerecha.imageUp.setMinWidth(200f);
+        styleDerecha.imageUp.setMinHeight(200f);
+
+        styleIzquierda.imageUp.setMinWidth(200f);
+        styleIzquierda.imageUp.setMinHeight(200f);
+
+        styleArriba.imageUp.setMinWidth(200f);
+        styleArriba.imageUp.setMinHeight(200f);
+
+        styleAbajo.imageUp.setMinWidth(200f);
+        styleAbajo.imageUp.setMinHeight(200f);
 
         stage.addActor(imageButtonDerecha);
         stage.addActor(imageButtonIzquierda);
