@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.Game;
 
 public class ShapeFactory {
     /**
@@ -23,14 +24,15 @@ public class ShapeFactory {
 
         // Define el Body
         BodyDef bdef = new BodyDef();
-        bdef.position.set(position.x, position.y);
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+
+        bdef.position.set(position.x / Game.PPM, position.y / Game.PPM);
         bdef.type = type;
         Body body = world.createBody(bdef);
 
         // Define Fixture
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(size.x, size.y);
-        FixtureDef fdef = new FixtureDef();
+        shape.setAsBox(size.x / Game.PPM, size.y / Game.PPM);
         fdef.shape = shape;
         fdef.density = density;
         fdef.isSensor = sensor;

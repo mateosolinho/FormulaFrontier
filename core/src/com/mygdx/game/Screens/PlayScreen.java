@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -26,8 +29,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Game;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ShapeFactory;
 
@@ -77,7 +82,7 @@ public class PlayScreen implements Screen {
     private final Box2DDebugRenderer b2rd;
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private final Body player;
+    private Body player;
     Vector2 baseVector;
     int tick = 50;
     long ttotal = 0;
@@ -90,28 +95,21 @@ public class PlayScreen implements Screen {
 
     public PlayScreen() {
         batch = new SpriteBatch();
-        // doSleep si esta en True los cuerpos inactivos "duermen" para ahorrar recursos
+
+        map = new TmxMapLoader().load("trackFiles/sinnombre.tmx");
+        float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
+        float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
+
+        camera = new OrthographicCamera(mapWidth,mapHeight);
+        camera.setToOrtho(false, mapWidth/ Game.PPM , mapHeight / Game.PPM);
+        camera.zoom = 0.5f;
+        viewport = new FitViewport(mapWidth/Game.PPM, mapHeight/Game.PPM,camera);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/Game.PPM);
+
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
-        camera = new OrthographicCamera();
-        camera.zoom = 60f;
-        // Fitviewport hace que se ajuste al tamaño de la pantalla
-        viewport = new FillViewport(Gdx.graphics.getWidth() / 50.0f, Gdx.graphics.getHeight() / 50.0f, camera);
-        map = new TmxMapLoader().load("trackFiles/sinnombre.tmx");
-//        MapProperties prop = map.getProperties();
-//
-//        int mapWidth = prop.get("width", Integer.class);
-//        int mapHeight = prop.get("height", Integer.class);
-//        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-//        int tilePixelHeight = prop.get("tileheight", Integer.class);
-//
-//        int mapPixelWidth = mapWidth * tilePixelWidth;
-//        int mapPixelHeight = mapHeight * tilePixelHeight;
 
-
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.update();
+//        camera.update();
         player = getPlayer();
         getWalls();
 
@@ -128,9 +126,14 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        update(delta);
         baseVector = new Vector2(0, 0);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
+
 
         if (System.currentTimeMillis() - ttotal > tick) {
 
@@ -153,14 +156,10 @@ public class PlayScreen implements Screen {
             ttotal = System.currentTimeMillis();
         }
 
-        update(delta);
         handleDrift();
         draw();
         stage.act(delta);
         stage.draw();
-        camera.update();
-        tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render();
     }
 
     /**
@@ -329,9 +328,8 @@ public class PlayScreen implements Screen {
         // Centrar la cámara en el jugador en cada render
         camera.position.set(player.getPosition(), 0);
         camera.update();
-        viewport.apply();
 
-        world.step(delta, 6, 2);
+        world.step(1/60f,5,3);
     }
 
     @Override
@@ -443,8 +441,8 @@ public class PlayScreen implements Screen {
             Rectangle rectangle = rObject.getRectangle();
             // Llamando a createRectangle creamos el rectangulo que hace referencia a los limites del mapa
             ShapeFactory.createRectangle(
-                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
-                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
+                    new Vector2((rectangle.getX()+rectangle.getWidth()/2), (rectangle.getY()+rectangle.getHeight()/2)), // position
+                    new Vector2(rectangle.getWidth()/2, rectangle.getHeight()/2), // size
                     BodyDef.BodyType.StaticBody, world, 1f, false);
         }
     }
