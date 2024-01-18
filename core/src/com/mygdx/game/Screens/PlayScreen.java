@@ -8,11 +8,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -64,6 +67,8 @@ public class PlayScreen implements Screen {
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
     private ButtonCreator buttonCreator;
+    private Texture playerTexture;
+    private Sprite playerSprite;
 
     public PlayScreen() {
         batch = new SpriteBatch();
@@ -80,6 +85,11 @@ public class PlayScreen implements Screen {
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
+
+        playerTexture = new Texture(Gdx.files.internal("Cars/pitstop_car_16.png"));
+        playerSprite = new Sprite(playerTexture);
+        playerSprite.setSize(1.9f, 3f);
+        playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
         player = getPlayer();
         getWalls();
@@ -269,6 +279,12 @@ public class PlayScreen implements Screen {
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
         b2rd.render(world, camera.combined);
+
+        batch.begin();
+        playerSprite.setPosition(player.getPosition().x - playerSprite.getWidth() / 2, player.getPosition().y - playerSprite.getHeight() / 2);
+        playerSprite.setRotation(player.getAngle() * MathUtils.radiansToDegrees);  // Convierte radianes a grados
+        playerSprite.draw(batch);
+        batch.end();
     }
 
     private void update(float delta) {
@@ -306,6 +322,8 @@ public class PlayScreen implements Screen {
         b2rd.dispose();
         stage.dispose();
         map.dispose();
+        playerTexture.dispose();
+        playerTexture.dispose();
     }
 
     public Body getPlayer() {
