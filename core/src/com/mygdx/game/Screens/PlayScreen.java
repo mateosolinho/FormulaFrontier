@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Game;
+import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.ShapeFactory;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
@@ -43,7 +44,7 @@ public class PlayScreen implements Screen {
     private final static float DRIFT = 0.99f;
 
     private final static float DRIVE_SPEED = 100.0f;
-    private final static float TURN_SPEED = 2.0f;
+    private final static float TURN_SPEED = 2.5f;
     private final static float MAX_SPEED = 30.0f;
 
     private int driveDirection = DRIVE_DIRECTION_NONE;
@@ -67,7 +68,7 @@ public class PlayScreen implements Screen {
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
-
+    private ButtonCreator buttonCreator;
 
     public PlayScreen() {
         batch = new SpriteBatch();
@@ -89,7 +90,8 @@ public class PlayScreen implements Screen {
         getWalls();
 
         player.setLinearDamping(0.5f);
-        createButtons();
+        buttonCreator = new ButtonCreator(stage);
+        stage = buttonCreator.createButtons();
         handleInput();
     }
 
@@ -129,7 +131,7 @@ public class PlayScreen implements Screen {
             processInput();
             tTotal = System.currentTimeMillis();
         }
-
+        // TODO pasar el handleinput a otra clase
         handleDrift();
         draw();
         stage.act(delta);
@@ -176,9 +178,7 @@ public class PlayScreen implements Screen {
                 break;
         }
 
-        // Comprueba si hay una entrada activa para avanzar o retroceder y la velocidad actual del objeto es menor que la velocidad máxima
         if (!baseVector.isZero() && player.getLinearVelocity().len() < MAX_SPEED) {
-            // Aplica una fuerta en el centro del objeto
             player.applyForceToCenter(player.getWorldVector(baseVector), true);
         }
     }
@@ -218,7 +218,7 @@ public class PlayScreen implements Screen {
 
     private void handleInput() {
         // -------------------------------------------------------------------------------------
-        imageButtonArriba.addListener(new InputListener() {
+        buttonCreator.getImageButtonArriba().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isUpPressed = true;
@@ -231,7 +231,7 @@ public class PlayScreen implements Screen {
             }
         });
 
-        imageButtonAbajo.addListener(new InputListener() {
+        buttonCreator.getImageButtonAbajo().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isDownPressed = true;
@@ -244,7 +244,7 @@ public class PlayScreen implements Screen {
             }
         });
 
-        imageButtonDerecha.addListener(new InputListener() {
+        buttonCreator.getImageButtonDerecha().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isRightPressed = true;
@@ -257,7 +257,7 @@ public class PlayScreen implements Screen {
             }
         });
 
-        imageButtonIzquierda.addListener(new InputListener() {
+        buttonCreator.getImageButtonIzquierda().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isLeftPressed = true;
@@ -332,63 +332,6 @@ public class PlayScreen implements Screen {
         b2rd.dispose();
         stage.dispose();
         map.dispose();
-    }
-
-    public void createButtons() {
-
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
-        // Se le asgina una textura a cada botón
-        Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/flecha-derecha.png"));
-        Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/flecha-izquierda.png"));
-        Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/flecha-arriba.png"));
-        Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/flecha-abajo.png"));
-
-        // Creación de cada botón y asignación de la textura y el estilo
-        ImageButton.ImageButtonStyle styleDerecha = new ImageButton.ImageButtonStyle();
-        styleDerecha.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureDerecha));
-        imageButtonDerecha = new ImageButton(styleDerecha);
-
-        ImageButton.ImageButtonStyle styleIzquierda = new ImageButton.ImageButtonStyle();
-        styleIzquierda.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureIzquierda));
-        imageButtonIzquierda = new ImageButton(styleIzquierda);
-
-        ImageButton.ImageButtonStyle styleArriba = new ImageButton.ImageButtonStyle();
-        styleArriba.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureArriba));
-        imageButtonArriba = new ImageButton(styleArriba);
-
-        ImageButton.ImageButtonStyle styleAbajo = new ImageButton.ImageButtonStyle();
-        styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
-        imageButtonAbajo = new ImageButton(styleAbajo);
-
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
-
-        stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
-
-        imageButtonDerecha.setHeight(screenHeight * 0.15f);
-        imageButtonDerecha.setWidth(screenWidth * 0.15f);
-        imageButtonDerecha.setWidth(screenWidth * 0.15f);
-        imageButtonDerecha.setPosition(17 * screenWidth / 20f, -screenHeight / 3f);
-
-        imageButtonIzquierda.setHeight(screenHeight * 0.15f);
-        imageButtonIzquierda.setWidth(screenWidth * 0.15f);
-        imageButtonIzquierda.setPosition(14 * screenWidth / 20f, -screenHeight / 3f);
-
-        imageButtonArriba.setHeight(screenHeight * 0.15f);
-        imageButtonArriba.setWidth(screenWidth * 0.15f);
-        imageButtonArriba.setPosition(1 * screenWidth / 20f, -screenHeight / 5f);
-
-        imageButtonAbajo.setHeight(screenHeight * 0.15f);
-        imageButtonAbajo.setWidth(screenWidth * 0.15f);
-        imageButtonAbajo.setPosition(1 * screenWidth / 20f, -screenHeight / 2.5f);
-
-        stage.addActor(imageButtonDerecha);
-        stage.addActor(imageButtonIzquierda);
-        stage.addActor(imageButtonArriba);
-        stage.addActor(imageButtonAbajo);
-
     }
 
     public Body getPlayer() {
