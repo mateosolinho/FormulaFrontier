@@ -1,12 +1,14 @@
 package com.mygdx.game.Screens;
 
+import static com.mygdx.game.Constants.PLAYER;
+import static com.mygdx.game.Constants.PPM;
+import static com.mygdx.game.Constants.WALLS;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,13 +22,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.ShapeFactory;
 
@@ -50,10 +49,7 @@ public class PlayScreen implements Screen {
     private int driveDirection = DRIVE_DIRECTION_NONE;
     private int turnDirection = TURN_DIRECTION_NONE;
 
-    private ImageButton imageButtonDerecha;
-    private ImageButton imageButtonIzquierda;
-    private ImageButton imageButtonArriba;
-    private ImageButton imageButtonAbajo;
+    private final int TICK = 50;
 
     private Stage stage;
     private Vector2 baseVector;
@@ -63,7 +59,6 @@ public class PlayScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final Body player;
-    private final int tick = 50;
     private long tTotal = 0;
     private final TiledMap map;
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
@@ -73,15 +68,15 @@ public class PlayScreen implements Screen {
     public PlayScreen() {
         batch = new SpriteBatch();
 
-        map = new TmxMapLoader().load("trackFiles/sinnombre.tmx");
+        map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
         float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
         float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
         camera = new OrthographicCamera(mapWidth,mapHeight);
-        camera.setToOrtho(false, mapWidth/ Game.PPM , mapHeight / Game.PPM);
-        camera.zoom = 0.5f;
-        viewport = new FitViewport(mapWidth/Game.PPM, mapHeight/Game.PPM,camera);
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/Game.PPM);
+        camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
+        camera.zoom = 0.3f;
+        viewport = new FillViewport(mapWidth/PPM, mapHeight/PPM,camera);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
@@ -111,7 +106,7 @@ public class PlayScreen implements Screen {
         tiledMapRenderer.render();
 
 
-        if (System.currentTimeMillis() - tTotal > tick) {
+        if (System.currentTimeMillis() - tTotal > TICK) {
 
             if (isUpPressed) {
                 driveDirection = DRIVE_DIRECTION_FORWARD;
@@ -269,27 +264,6 @@ public class PlayScreen implements Screen {
                 isLeftPressed = false;
             }
         });
-// -------------------------------------------------------------------------------------
-
-//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-//            driveDirection = DRIVE_DIRECTION_FORWARD;
-//        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-//            driveDirection = DRIVE_DIRECTION_BACKWARD;
-//        } else {
-//            driveDirection = DRIVE_DIRECTION_NONE;
-//        }
-//
-//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-//            turnDirection = TURN_DIRECTION_LEFT;
-//        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-//            turnDirection = TURN_DIRECTION_RIGHT;
-//        } else {
-//            turnDirection = TURN_DIRECTION_NONE;
-//        }
-//
-//        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-//            Gdx.app.exit();
-//        }
     }
 
     private void draw() {
@@ -335,7 +309,7 @@ public class PlayScreen implements Screen {
     }
 
     public Body getPlayer() {
-        final Rectangle rectangle = map.getLayers().get("player").getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
+        final Rectangle rectangle = map.getLayers().get(PLAYER).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         return ShapeFactory.createRectangle(
                 new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
                 new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
@@ -343,7 +317,7 @@ public class PlayScreen implements Screen {
     }
 
     public void getWalls(){
-        final Array<RectangleMapObject> walls = map.getLayers().get("wall").getObjects().getByType(RectangleMapObject.class);
+        final Array<RectangleMapObject> walls = map.getLayers().get(WALLS).getObjects().getByType(RectangleMapObject.class);
         for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
             Rectangle rectangle = rObject.getRectangle();
             ShapeFactory.createRectangle(

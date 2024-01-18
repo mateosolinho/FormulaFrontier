@@ -1,5 +1,7 @@
 package com.mygdx.game.Tools;
 
+import static com.mygdx.game.Constants.PPM;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -27,12 +29,12 @@ public class ShapeFactory {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
 
-        bdef.position.set(position.x / Game.PPM, position.y / Game.PPM);
+        bdef.position.set(position.x / PPM, position.y / PPM);
         bdef.type = type;
         Body body = world.createBody(bdef);
 
         // Define Fixture
-        shape.setAsBox(size.x / Game.PPM, size.y / Game.PPM);
+        shape.setAsBox(size.x / PPM, size.y / PPM);
         fdef.shape = shape;
         fdef.density = density;
         fdef.isSensor = sensor;
