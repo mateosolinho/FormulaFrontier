@@ -88,7 +88,7 @@ public class PlayScreen implements Screen {
 
         playerTexture = new Texture(Gdx.files.internal("Cars/pitstop_car_16.png"));
         playerSprite = new Sprite(playerTexture);
-        playerSprite.setSize(1.9f, 3f);
+        playerSprite.setSize(2.2f, 4f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
         player = getPlayer();
