@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -18,8 +16,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -27,48 +23,30 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Game;
-import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ShapeFactory;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
 
-    // Variables para indicar la dirección de conducción
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
     private final static int DRIVE_DIRECTION_BACKWARD = 2;
 
-
-    // Variables para indicar hacia donde es el giro
     private final static int TURN_DIRECTION_NONE = 0;
     private final static int TURN_DIRECTION_LEFT = 1;
     private final static int TURN_DIRECTION_RIGHT = 2;
 
-
-    // Deceleración del vehiculo al deslizarse o girar
     private final static float DRIFT = 0.99f;
 
-    // Velocidad de conducción
-    private final static float DRIVE_SPEED = 400.0f;
-    //    private static float DRIVE_SPEED = 120.0f;
+    private final static float DRIVE_SPEED = 100.0f;
+    private final static float TURN_SPEED = 2.0f;
+    private final static float MAX_SPEED = 30.0f;
 
-    // Velocidad de giro
-    private final static float TURN_SPEED = 3.0f;
-    //    private static float TURN_SPEED = 2.0f;
-
-    // Velocidad máxima
-    private final static float MAX_SPEED = 50.0f;
-//    private static float MAX_SPEED = 35.0f;
-
-    // Variable para comprobar la dirección de conducción del objeto
     private int driveDirection = DRIVE_DIRECTION_NONE;
-    // Variable para comprobar la direccion de giro del objeto
     private int turnDirection = TURN_DIRECTION_NONE;
 
     private ImageButton imageButtonDerecha;
@@ -77,20 +55,18 @@ public class PlayScreen implements Screen {
     private ImageButton imageButtonAbajo;
 
     private Stage stage;
+    private Vector2 baseVector;
     private final SpriteBatch batch;
     private final World world;
     private final Box2DDebugRenderer b2rd;
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private Body player;
-    Vector2 baseVector;
-    int tick = 50;
-    long ttotal = 0;
+    private final Body player;
+    private final int tick = 50;
+    private long tTotal = 0;
+    private final TiledMap map;
+    private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    //--------------------------
-    TiledMap map;
-    OrthogonalTiledMapRenderer tiledMapRenderer;
-    //--------------------------
 
 
     public PlayScreen() {
@@ -109,11 +85,9 @@ public class PlayScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
 
-//        camera.update();
         player = getPlayer();
         getWalls();
 
-        // Establece el amortiguamiento lineal del objeto player
         player.setLinearDamping(0.5f);
         createButtons();
         handleInput();
@@ -135,7 +109,7 @@ public class PlayScreen implements Screen {
         tiledMapRenderer.render();
 
 
-        if (System.currentTimeMillis() - ttotal > tick) {
+        if (System.currentTimeMillis() - tTotal > tick) {
 
             if (isUpPressed) {
                 driveDirection = DRIVE_DIRECTION_FORWARD;
@@ -153,7 +127,7 @@ public class PlayScreen implements Screen {
                 turnDirection = TURN_DIRECTION_NONE;
             }
             processInput();
-            ttotal = System.currentTimeMillis();
+            tTotal = System.currentTimeMillis();
         }
 
         handleDrift();
@@ -215,7 +189,6 @@ public class PlayScreen implements Screen {
      * @return multiplica el producto punto * el vector normal para obtener la velocidad hacia adelante
      */
     private Vector2 getForwardVelocity() {
-        // Obtiene el vector normal del objeto en relación con el eje y
         Vector2 currentNormal = player.getWorldVector(new Vector2(0, 1));
         float dotProduct = currentNormal.dot(player.getLinearVelocity());
         return multiply(dotProduct, currentNormal);
@@ -363,9 +336,7 @@ public class PlayScreen implements Screen {
 
     public void createButtons() {
 
-        // Crea una nueva instancia del Stage usando un viewport basado en pantalla (pixeles)
         stage = new Stage(new ScreenViewport());
-        // Establece el Stage como el procesador de entrada principal (Gestión de eventos, click, toques en pantalla...)
         Gdx.input.setInputProcessor(stage);
 
         // Se le asgina una textura a cada botón
@@ -391,15 +362,11 @@ public class PlayScreen implements Screen {
         styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
         imageButtonAbajo = new ImageButton(styleAbajo);
 
-        // Obtén las dimensiones de la pantalla
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
 
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
-
-        // TODO los eventos de los botones no coinciden con donde estan los botones en pantalla
-        // Asignación de posición y tamaño acada botón
         imageButtonDerecha.setHeight(screenHeight * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
@@ -417,8 +384,6 @@ public class PlayScreen implements Screen {
         imageButtonAbajo.setWidth(screenWidth * 0.15f);
         imageButtonAbajo.setPosition(1 * screenWidth / 20f, -screenHeight / 2.5f);
 
-
-        // Añadimos al Stage cada botón
         stage.addActor(imageButtonDerecha);
         stage.addActor(imageButtonIzquierda);
         stage.addActor(imageButtonArriba);
@@ -428,7 +393,6 @@ public class PlayScreen implements Screen {
 
     public Body getPlayer() {
         final Rectangle rectangle = map.getLayers().get("player").getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
-        // Llamando a createRectangle creamos el rectangulo que hace referencia al coche del jugador
         return ShapeFactory.createRectangle(
                 new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
                 new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
@@ -439,7 +403,6 @@ public class PlayScreen implements Screen {
         final Array<RectangleMapObject> walls = map.getLayers().get("wall").getObjects().getByType(RectangleMapObject.class);
         for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
             Rectangle rectangle = rObject.getRectangle();
-            // Llamando a createRectangle creamos el rectangulo que hace referencia a los limites del mapa
             ShapeFactory.createRectangle(
                     new Vector2((rectangle.getX()+rectangle.getWidth()/2), (rectangle.getY()+rectangle.getHeight()/2)), // position
                     new Vector2(rectangle.getWidth()/2, rectangle.getHeight()/2), // size
