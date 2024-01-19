@@ -45,29 +45,29 @@
 //        getBody().getFixtureList().get(0).setRestitution(RESTITUTION);
 //    }
 //
-////    private void processInput() {
-////        Vector2 baseVector = new Vector2(0,0);
-////
-////        if (mTurnDirection == TURN_DIRECTION_RIGHT){
-////            getBody().setAngularVelocity(-TURN_SPEED);
-////        } else if (mTurnDirection == TURN_DIRECTION_LEFT) {
-////            getBody().setAngularVelocity(TURN_SPEED);
-////        } else if (mTurnDirection == TURN_DIRECTION_NONE  && getBody().getAngularVelocity() != 0) {
-////            getBody().setAngularVelocity(0.0f);
-////        }
-////
-////        if (mDriveDirection == DRIVE_DIRECTION_FORWARD){
-////            baseVector.set(0, DRIVE_SPEED);
-////        } else if (mDriveDirection == DRIVE_DIRECTION_BACKWARD){
-////            baseVector.set(0, -DRIVE_SPEED);
-////        }
-////
-////        // Comprueba si hay una entrada activa para avanzar o retroceder y la velocidad actual del objeto es menor que la velocidad máxima
-////        if (!baseVector.isZero() && getBody().getLinearVelocity().len() < MAX_SPEED){
-////            // Aplica una fuerta en el centro del objeto
-////            getBody().applyForceToCenter(getBody().getWorldVector(baseVector), true);
-////        }
-////    }
+//    private void processInput() {
+//        Vector2 baseVector = new Vector2(0,0);
+//
+//        if (mTurnDirection == TURN_DIRECTION_RIGHT){
+//            getBody().setAngularVelocity(-TURN_SPEED);
+//        } else if (mTurnDirection == TURN_DIRECTION_LEFT) {
+//            getBody().setAngularVelocity(TURN_SPEED);
+//        } else if (mTurnDirection == TURN_DIRECTION_NONE  && getBody().getAngularVelocity() != 0) {
+//            getBody().setAngularVelocity(0.0f);
+//        }
+//
+//        if (mDriveDirection == DRIVE_DIRECTION_FORWARD){
+//            baseVector.set(0, DRIVE_SPEED);
+//        } else if (mDriveDirection == DRIVE_DIRECTION_BACKWARD){
+//            baseVector.set(0, -DRIVE_SPEED);
+//        }
+//
+//        // Comprueba si hay una entrada activa para avanzar o retroceder y la velocidad actual del objeto es menor que la velocidad máxima
+//        if (!baseVector.isZero() && getBody().getLinearVelocity().len() < MAX_SPEED){
+//            // Aplica una fuerta en el centro del objeto
+//            getBody().applyForceToCenter(getBody().getWorldVector(baseVector), true);
+//        }
+//    }
 //
 //    @Override
 //    public void update(float delta) {

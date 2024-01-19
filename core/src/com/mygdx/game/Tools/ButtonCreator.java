@@ -52,7 +52,6 @@ public class ButtonCreator {
 
     public Stage createButtons() {
 
-
         Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/derechaBien.png"));
         Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/izquierdaBien.png"));
         Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/arribaBien.png"));

@@ -30,7 +30,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.BodyHolder;
 import com.mygdx.game.Tools.ButtonCreator;
+import com.mygdx.game.Tools.ObjectManager;
 import com.mygdx.game.Tools.ShapeFactory;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
@@ -70,6 +72,8 @@ public class PlayScreen implements Screen {
     private ButtonCreator buttonCreator;
     private Texture playerTexture;
     private Sprite playerSprite;
+    private BodyHolder bodyHolder;
+    private ObjectManager objectManager;
 
     public PlayScreen() {
         batch = new SpriteBatch();
@@ -92,9 +96,10 @@ public class PlayScreen implements Screen {
         playerSprite.setSize(2.2f, 4f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
-        player = getPlayer();
-        getWalls();
-        getMeta();
+        objectManager = new ObjectManager(world);
+        player = objectManager.createPlayer(map);
+        objectManager.createWalls(map);
+        objectManager.createMeta(map);
 
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator(stage);
@@ -138,8 +143,8 @@ public class PlayScreen implements Screen {
             processInput();
             tTotal = System.currentTimeMillis();
         }
-        // TODO pasar el handleinput a otra clase
         handleDrift();
+
         draw();
         stage.act(delta);
         stage.draw();
@@ -224,7 +229,7 @@ public class PlayScreen implements Screen {
     }
 
     private void handleInput() {
-        // -------------------------------------------------------------------------------------
+
         buttonCreator.getImageButtonArriba().addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -284,13 +289,12 @@ public class PlayScreen implements Screen {
 
         batch.begin();
         playerSprite.setPosition(player.getPosition().x - playerSprite.getWidth() / 2, player.getPosition().y - playerSprite.getHeight() / 2);
-        playerSprite.setRotation(player.getAngle() * MathUtils.radiansToDegrees);  // Convierte radianes a grados
+        playerSprite.setRotation(player.getAngle() * MathUtils.radiansToDegrees);
         playerSprite.draw(batch);
         batch.end();
     }
 
     private void update(float delta) {
-        // Centrar la cámara en el jugador en cada render
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
@@ -327,35 +331,4 @@ public class PlayScreen implements Screen {
         playerTexture.dispose();
         playerTexture.dispose();
     }
-
-    public Body getPlayer() {
-        final Rectangle rectangle = map.getLayers().get(PLAYER).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
-        return ShapeFactory.createRectangle(
-                new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
-                new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-                BodyDef.BodyType.DynamicBody, world, 0.4f, false);
-    }
-
-    public void getWalls(){
-        final Array<RectangleMapObject> walls = map.getLayers().get(WALLS).getObjects().getByType(RectangleMapObject.class);
-        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
-            Rectangle rectangle = rObject.getRectangle();
-            ShapeFactory.createRectangle(
-                    new Vector2((rectangle.getX()+rectangle.getWidth()/2), (rectangle.getY()+rectangle.getHeight()/2)), // position
-                    new Vector2(rectangle.getWidth()/2, rectangle.getHeight()/2), // size
-                    BodyDef.BodyType.StaticBody, world, 1f, false);
-        }
-    }
-    public void getMeta(){
-        final Array<RectangleMapObject> walls = map.getLayers().get(META).getObjects().getByType(RectangleMapObject.class);
-        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
-            Rectangle rectangle = rObject.getRectangle();
-            ShapeFactory.createRectangle(
-                    new Vector2((rectangle.getX()+rectangle.getWidth()/2), (rectangle.getY()+rectangle.getHeight()/2)), // position
-                    new Vector2(rectangle.getWidth()/2, rectangle.getHeight()/2), // size
-                    BodyDef.BodyType.StaticBody, world, 1f, true);
-        }
-    }
-
-
 }
