@@ -1,10 +1,5 @@
 package com.mygdx.game.Screens;
 
-import static com.mygdx.game.Constants.META;
-import static com.mygdx.game.Constants.PLAYER;
-import static com.mygdx.game.Constants.PPM;
-import static com.mygdx.game.Constants.WALLS;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,29 +7,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BodyHolder;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ObjectManager;
-import com.mygdx.game.Tools.ShapeFactory;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
@@ -60,49 +45,37 @@ public class PlayScreen implements Screen {
 
     private Stage stage;
     private Vector2 baseVector;
+    private final OrthographicCamera camera;
+    private final TiledMapRenderer tiledMapRenderer;
     private final SpriteBatch batch;
     private final World world;
     private final Box2DDebugRenderer b2rd;
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
     private final Body player;
     private long tTotal = 0;
-    private final TiledMap map;
-    private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    private ButtonCreator buttonCreator;
-    private Texture playerTexture;
-    private Sprite playerSprite;
-    private BodyHolder bodyHolder;
-    private ObjectManager objectManager;
-    private MapLoader mapLoader;
+    private final ButtonCreator buttonCreator;
+    private final Texture playerTexture;
+    private final Sprite playerSprite;
+    private final MapLoader mapLoader;
 
     public PlayScreen() {
+
         batch = new SpriteBatch();
-
-        map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
-        float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
-        float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
-
-        camera = new OrthographicCamera(mapWidth,mapHeight);
-        camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
-        camera.zoom = 0.3f;
-        viewport = new FitViewport(mapWidth/PPM, mapHeight/PPM,camera);
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
 
-        playerTexture = new Texture(Gdx.files.internal("Cars/pitstop_car_16.png"));
+        mapLoader = new MapLoader(world);
+
+        camera = mapLoader.getCamera();
+        tiledMapRenderer = mapLoader.getTileMapRenderer();
+
+        playerTexture = new Texture(Gdx.files.internal("Cars/CarBlueYellowF1.png"));
         playerSprite = new Sprite(playerTexture);
         playerSprite.setSize(2.2f, 4f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
-        objectManager = new ObjectManager(world);
-        player = objectManager.createPlayer(map);
-        objectManager.createWalls(map);
-        objectManager.createMeta(map);
-
+        player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator(stage);
         stage = buttonCreator.createButtons();
@@ -116,14 +89,14 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
+        update();
         baseVector = new Vector2(0, 0);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-
 
         if (System.currentTimeMillis() - tTotal > TICK) {
 
@@ -145,6 +118,7 @@ public class PlayScreen implements Screen {
             processInput();
             tTotal = System.currentTimeMillis();
         }
+
         handleDrift();
 
         draw();
@@ -296,7 +270,7 @@ public class PlayScreen implements Screen {
         batch.end();
     }
 
-    private void update(float delta) {
+    private void update() {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
@@ -305,7 +279,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        mapLoader.getViewport().update(width, height, true);
     }
 
     @Override
@@ -329,7 +303,6 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2rd.dispose();
         stage.dispose();
-        map.dispose();
         playerTexture.dispose();
         playerTexture.dispose();
     }

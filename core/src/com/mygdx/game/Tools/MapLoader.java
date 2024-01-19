@@ -1,53 +1,63 @@
 package com.mygdx.game.Tools;
 
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import static com.mygdx.game.Constants.PPM;
+
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MapLoader implements Disposable {
 
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
+    private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
-    private static final String MAP_WALL = "wall";
-    private static final String MAP_PLAYER = "player";
-    private static final float OBJECT_DENSITY = 1f;
-    private static final float PLAYER_DENSITY = 0.4f;
-
-
-    private final World mWorld;
-    private final TiledMap mMap;
+    private final TiledMap map;
+    private final Body player;
 
     public MapLoader(World world) {
-        this.mWorld = world;
-        mMap = new TmxMapLoader().load("MAP_NAME");
+        map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
+        float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
+        float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
-        final Array<RectangleMapObject> walls = mMap.getLayers().get(MAP_WALL).getObjects().getByType(RectangleMapObject.class);
-        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
-            Rectangle rectangle = rObject.getRectangle();
-            ShapeFactory.createRectangle(
-                    new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
-                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-                    BodyDef.BodyType.StaticBody, mWorld, OBJECT_DENSITY, false);
-        }
+
+        camera = new OrthographicCamera(mapWidth,mapHeight);
+        camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
+        camera.zoom = 0.3f;
+        viewport = new FitViewport(mapWidth/PPM, mapHeight/PPM,camera);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
+
+        ObjectManager objectManager = new ObjectManager(world);
+        player = objectManager.createPlayer(map);
+        objectManager.createWalls(map);
+        objectManager.createMeta(map);
     }
 
-    public Body getPlayer() {
-        final Rectangle rectangle = mMap.getLayers().get(MAP_PLAYER).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
-        return ShapeFactory.createRectangle(
-                new Vector2(rectangle.getX() + rectangle.getWidth() / 2, rectangle.getY() + rectangle.getHeight() / 2), // position
-                new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2), // size
-                BodyDef.BodyType.DynamicBody, mWorld, PLAYER_DENSITY, false);
+    public Body getPlayer(){
+        return player;
     }
 
+    public OrthographicCamera getCamera(){
+        return camera;
+    }
 
+    public Viewport getViewport(){
+        return viewport;
+    }
+
+    public TiledMapRenderer getTileMapRenderer(){
+        return tiledMapRenderer;
+    }
+    
     @Override
     public void dispose() {
-        mMap.dispose();
+        map.dispose();
     }
 }
