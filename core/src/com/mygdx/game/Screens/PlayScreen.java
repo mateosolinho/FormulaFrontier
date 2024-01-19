@@ -1,5 +1,6 @@
 package com.mygdx.game.Screens;
 
+import static com.mygdx.game.Constants.META;
 import static com.mygdx.game.Constants.PLAYER;
 import static com.mygdx.game.Constants.PPM;
 import static com.mygdx.game.Constants.WALLS;
@@ -93,6 +94,7 @@ public class PlayScreen implements Screen {
 
         player = getPlayer();
         getWalls();
+        getMeta();
 
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator(stage);
@@ -344,5 +346,16 @@ public class PlayScreen implements Screen {
                     BodyDef.BodyType.StaticBody, world, 1f, false);
         }
     }
+    public void getMeta(){
+        final Array<RectangleMapObject> walls = map.getLayers().get(META).getObjects().getByType(RectangleMapObject.class);
+        for (RectangleMapObject rObject : new Array.ArrayIterator<RectangleMapObject>(walls)) {
+            Rectangle rectangle = rObject.getRectangle();
+            ShapeFactory.createRectangle(
+                    new Vector2((rectangle.getX()+rectangle.getWidth()/2), (rectangle.getY()+rectangle.getHeight()/2)), // position
+                    new Vector2(rectangle.getWidth()/2, rectangle.getHeight()/2), // size
+                    BodyDef.BodyType.StaticBody, world, 1f, true);
+        }
+    }
+
 
 }

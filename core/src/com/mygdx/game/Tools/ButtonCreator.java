@@ -2,9 +2,12 @@ package com.mygdx.game.Tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -14,29 +17,47 @@ public class ButtonCreator {
     private ImageButton imageButtonIzquierda;
     private ImageButton imageButtonArriba;
     private ImageButton imageButtonAbajo;
+    private Label lblVuelta;
 
+    float screenWidth = Gdx.graphics.getWidth();
+    float screenHeight = Gdx.graphics.getHeight();
     public ButtonCreator(Stage stage) {
         this.stage = stage;
+        createStage();
         createButtons();
+//        createLabels();
+    }
+
+
+    private void createStage() {
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void createLabels() {
+//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Formula1-Regular-1.ttf"));
+//        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+//        parameter.size = 20; // Tamaño de la fuente
+//        Skin skin = new Skin();
+//        BitmapFont fontlbl = new BitmapFont(Gdx.files.internal("Fonts/formula1Regular.ttf"));
+//        skin.add("default", fontlbl);
+//
+//        Label.LabelStyle labelStyle = new Label.LabelStyle();
+//        labelStyle.font = skin.getFont("default");
+//
+//        lblVuelta = new Label("HOLAAAAAAAAAAAAAAA", labelStyle);
+//        lblVuelta.setPosition(14 * screenWidth / 20f, -screenHeight / 3f);
+
     }
 
     public Stage createButtons() {
 
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-
-        // Se le asgina una textura a cada botón
-//        Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/flecha-derecha.png"));
-//        Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/flecha-izquierda.png"));
-//        Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/flecha-arriba.png"));
-//        Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/flecha-abajo.png"));
 
         Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/derechaBien.png"));
         Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/izquierdaBien.png"));
         Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/arribaBien.png"));
         Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/abajoBien.png"));
 
-        // Creación de cada botón y asignación de la textura y el estilo
         ImageButton.ImageButtonStyle styleDerecha = new ImageButton.ImageButtonStyle();
         styleDerecha.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureDerecha));
         imageButtonDerecha = new ImageButton(styleDerecha);
@@ -52,10 +73,6 @@ public class ButtonCreator {
         ImageButton.ImageButtonStyle styleAbajo = new ImageButton.ImageButtonStyle();
         styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
         imageButtonAbajo = new ImageButton(styleAbajo);
-
-
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
 
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
