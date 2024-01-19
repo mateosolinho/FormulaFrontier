@@ -8,113 +8,71 @@ import com.mygdx.game.Tools.ShapeFactory;
 
 public abstract class BodyHolder {
 
-    // Constantes para direcciones
     protected static final int DIRECTION_NONE = 0;
     protected static final int DIRECTION_FORWARD = 1;
     protected static final int DIRECTION_BACKWARD = 2;
 
-    // Punto en el cual comienza a derrapar
     private static final float DRIFT_OFFSET = 1.0f;
 
-    private Vector2 forwardSpeed;
-    private Vector2 lateralSpeed;
+    private Vector2 mForwardSpeed;
+    private Vector2 mLateralSpeed;
 
-    private final Body body;
-    private float drift = 1;
+    private final Body mBody;
+    private float mDrift = 1;
+    private final int mId;
 
-    /**
-     * Constructor para un objeto BodyHolder.
-     *
-     * @param mBody Cuerpo Box2D asociado al objeto.
-     */
     public BodyHolder(final Body mBody) {
-        this.body = mBody;
+        this.mBody = mBody;
+        mId = -1;
     }
 
-    /**
-     * Constructor para crear un nuevo objeto BodyHolder con un cuerpo rectangular.
-     *
-     * @param position Posición inicial del objeto.
-     * @param size Tamaño del objeto.
-     * @param type Tipo de cuerpo Box2D (estático, dinámico o cinemático).
-     * @param world Instancia del mundo Box2D donde se creará el cuerpo.
-     * @param density Densidad del cuerpo para simulación de física.
-     * @param sensor Indica si el cuerpo debe ser un sensor (no afecta colisiones físicas).
-     */
-    public BodyHolder(Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density, boolean sensor){
-        body = ShapeFactory.createRectangle(position, size, type, world, density, sensor);
+    public BodyHolder(final Vector2 position, final Vector2 size, final BodyDef.BodyType type, final World world, float density, final boolean sensor, final int id) {
+        mBody = ShapeFactory.createRectangle(position, size, type, world, density, sensor);
+        this.mId = id;
     }
 
-    /**
-     * Actualiza el estado del objeto en el mundo.
-     *
-     * @param delta Tiempo transcurrido desde la última actualización.
-     */
     public void update(final float delta) {
-        forwardSpeed = getForwardVelocity();
-        lateralSpeed = getLateralVelocity();
-        if (lateralSpeed.len() < DRIFT_OFFSET){
-            killDrift();
-        } else {
-            handleDrift();
+        if (mDrift < 1) {
+            mForwardSpeed = getForwardVelocity();
+            mLateralSpeed = getLateralVelocity();
+            if (mLateralSpeed.len() < DRIFT_OFFSET && mId > 1) {
+                killDrift();
+            } else {
+                handleDrift();
+            }
         }
     }
 
-
     public void setDrift(final float drift) {
-
-        this.drift = drift;
+        this.mDrift = drift;
     }
 
     public Body getBody() {
-
-        return body;
+        return mBody;
     }
 
-    /**
-     * Maneja el drift del objeto aplicando velocidades laterales.
-     */
     private void handleDrift() {
         final Vector2 forwardSpeed = getForwardVelocity();
         final Vector2 lateralSpeed = getLateralVelocity();
-        body.setLinearVelocity(forwardSpeed.x + lateralSpeed.x * drift, forwardSpeed.y + lateralSpeed.y * drift);
+        mBody.setLinearVelocity(forwardSpeed.x + lateralSpeed.x * mDrift, forwardSpeed.y + lateralSpeed.y * mDrift);
     }
 
-    /**
-     * Obtiene la velocidad hacia adelante del objeto.
-     *
-     * @return Vector de velocidad hacia adelante.
-     */
     private Vector2 getForwardVelocity() {
-        final Vector2 currentNormal = body.getWorldVector(new Vector2(0, 1));
-        final float dotProduct = currentNormal.dot(body.getLinearVelocity());
+        final Vector2 currentNormal = mBody.getWorldVector(new Vector2(0, 1));
+        final float dotProduct = currentNormal.dot(mBody.getLinearVelocity());
         return multiply(dotProduct, currentNormal);
     }
 
-    /**
-     * Reinica el drift del objeto a su velocidad original.
-     */
     public void killDrift() {
-
-        body.setLinearVelocity(forwardSpeed);
+        mBody.setLinearVelocity(mForwardSpeed);
     }
 
-    /**
-     * Obtiene la velocidad lateral del objeto.
-     *
-     * @return Vector de velocidad lateral.
-     */
     private Vector2 getLateralVelocity() {
-        final Vector2 currentNormal = body.getWorldVector(new Vector2(1, 0));
-        final float dotProduct = currentNormal.dot(body.getLinearVelocity());
+        final Vector2 currentNormal = mBody.getWorldVector(new Vector2(1, 0));
+        final float dotProduct = currentNormal.dot(mBody.getLinearVelocity());
         return multiply(dotProduct, currentNormal);
     }
 
-    /**
-     * Determina la dirección del objeto (adelante, atrás o ninguna).
-     *
-     * @return Dirección del objeto.
-     */
     public int direction() {
         final float tolerance = 0.2f;
         if (getLocalVelocity().y < -tolerance) {
@@ -126,24 +84,11 @@ public abstract class BodyHolder {
         }
     }
 
-    /**
-     * Obtiene la velocidad del objeto.
-     *
-     * @return Vector de velocidad local.
-     */
     private Vector2 getLocalVelocity() {
-        return body.getLocalVector(body.getLinearVelocityFromLocalPoint(new Vector2(0, 0)));
+        return mBody.getLocalVector(mBody.getLinearVelocityFromLocalPoint(new Vector2(0, 0)));
     }
 
-    /**
-     * Multiplica un escalar por un vector.
-     *
-     * @param a Escalar.
-     * @param v Vector a multiplicar.
-     * @return Nuevo vector resultado de la multiplicación.
-     */
     private Vector2 multiply(float a, Vector2 v) {
-
         return new Vector2(a * v.x, a * v.y);
     }
 }

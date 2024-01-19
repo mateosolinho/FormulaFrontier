@@ -32,6 +32,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BodyHolder;
 import com.mygdx.game.Tools.ButtonCreator;
+import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ObjectManager;
 import com.mygdx.game.Tools.ShapeFactory;
 
@@ -74,6 +75,7 @@ public class PlayScreen implements Screen {
     private Sprite playerSprite;
     private BodyHolder bodyHolder;
     private ObjectManager objectManager;
+    private MapLoader mapLoader;
 
     public PlayScreen() {
         batch = new SpriteBatch();
