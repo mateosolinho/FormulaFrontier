@@ -71,9 +71,9 @@ public class PlayScreen implements Screen {
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
 
-        playerTexture = new Texture(Gdx.files.internal("Cars/CarBlueYellowF1.png"));
+        playerTexture = new Texture(Gdx.files.internal("Cars/hyundaiVerde.png"));
         playerSprite = new Sprite(playerTexture);
-        playerSprite.setSize(2.2f, 4f);
+        playerSprite.setSize(3f, 4.2f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
         player = mapLoader.getPlayer();
