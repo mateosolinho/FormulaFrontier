@@ -38,7 +38,9 @@ public class MapLoader implements Disposable {
         ObjectManager objectManager = new ObjectManager(world);
         player = objectManager.createPlayer(map);
         objectManager.createWalls(map);
-        objectManager.createMeta(map, sensorContactListener);
+        objectManager.createMeta(map);
+        objectManager.createCheckpoint1(map);
+        objectManager.createCheckpoint2(map);
     }
 
     public Body getPlayer(){
