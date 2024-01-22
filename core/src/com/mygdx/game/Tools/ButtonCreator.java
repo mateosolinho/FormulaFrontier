@@ -1,11 +1,15 @@
 package com.mygdx.game.Tools;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -23,7 +27,7 @@ public class ButtonCreator {
         this.stage = stage;
         createStage();
         createButtons();
-//        createLabels();
+        createLabels();
     }
 
 
@@ -33,19 +37,21 @@ public class ButtonCreator {
     }
 
     private void createLabels() {
-//        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/Formula1-Regular-1.ttf"));
-//        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-//        parameter.size = 20; // Tamaño de la fuente
-//        Skin skin = new Skin();
-//        BitmapFont fontlbl = new BitmapFont(Gdx.files.internal("Fonts/formula1Regular.ttf"));
-//        skin.add("default", fontlbl);
-//
-//        Label.LabelStyle labelStyle = new Label.LabelStyle();
-//        labelStyle.font = skin.getFont("default");
-//
-//        lblVuelta = new Label("HOLAAAAAAAAAAAAAAA", labelStyle);
-//        lblVuelta.setPosition(14 * screenWidth / 20f, -screenHeight / 3f);
+        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
+        font.font.getData().setScale(50/font.font.getCapHeight());
 
+        Table table = new Table();
+        table.center();
+        table.setFillParent(true);
+
+//        Label gameOverLabel = new Label("GAME OVER", font);
+        Label playAgainLabel = new Label("Vuelta: 0/5", font);
+
+//        table.add(gameOverLabel).expandX();
+//        table.row();
+        table.add(playAgainLabel).expandX().padTop(200f).left().padLeft(130f);
+
+        stage.addActor(table);
     }
 
     public Stage createButtons() {

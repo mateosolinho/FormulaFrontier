@@ -28,6 +28,7 @@ public class ObjectManager {
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
                 new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
                 BodyDef.BodyType.DynamicBody, world, 0.4f, false);
+
     }
 
     public void createWalls(TiledMap map) {
