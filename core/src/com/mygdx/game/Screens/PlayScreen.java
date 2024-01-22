@@ -20,6 +20,7 @@ import com.mygdx.game.BodyHolder;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ObjectManager;
+import com.mygdx.game.Tools.SensorContactListener;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
@@ -80,6 +81,8 @@ public class PlayScreen implements Screen {
         buttonCreator = new ButtonCreator(stage);
         stage = buttonCreator.createButtons();
         handleInput();
+
+        world.setContactListener(new SensorContactListener(buttonCreator));
     }
 
     @Override

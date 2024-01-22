@@ -21,6 +21,7 @@ public class MapLoader implements Disposable {
 
     private final TiledMap map;
     private final Body player;
+    private SensorContactListener sensorContactListener;
 
     public MapLoader(World world) {
         map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
@@ -37,7 +38,7 @@ public class MapLoader implements Disposable {
         ObjectManager objectManager = new ObjectManager(world);
         player = objectManager.createPlayer(map);
         objectManager.createWalls(map);
-        objectManager.createMeta(map);
+        objectManager.createMeta(map, sensorContactListener);
     }
 
     public Body getPlayer(){

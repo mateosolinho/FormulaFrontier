@@ -45,11 +45,11 @@ public class ButtonCreator {
         table.setFillParent(true);
 
 //        Label gameOverLabel = new Label("GAME OVER", font);
-        Label playAgainLabel = new Label("Vuelta: 0/5", font);
+        lblVuelta = new Label("Vuelta: 0/5", font);
 
 //        table.add(gameOverLabel).expandX();
 //        table.row();
-        table.add(playAgainLabel).expandX().padTop(200f).left().padLeft(130f);
+        table.add(lblVuelta).expandX().padTop(200f).left().padLeft(130f);
 
         stage.addActor(table);
     }
@@ -130,5 +130,9 @@ public class ButtonCreator {
 
     public ImageButton getImageButtonAbajo() {
         return imageButtonAbajo;
+    }
+
+    public void updateVueltas(int vueltas) {
+        lblVuelta.setText("Vuelta: " + vueltas +" / 5");
     }
 }
