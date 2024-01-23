@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -32,7 +33,7 @@ public class MapLoader implements Disposable {
         camera = new OrthographicCamera(mapWidth,mapHeight);
         camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
         camera.zoom = 0.3f;
-        viewport = new FitViewport(mapWidth/PPM, mapHeight/PPM,camera);
+        viewport = new FillViewport(mapWidth/PPM, mapHeight/PPM,camera);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
 
         ObjectManager objectManager = new ObjectManager(world);

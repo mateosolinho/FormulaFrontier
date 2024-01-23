@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.Screens.PlayScreen;
 
 public class ButtonCreator {
     private Stage stage;
@@ -22,17 +20,15 @@ public class ButtonCreator {
     private ImageButton imageButtonAbajo;
     public static Label lblVuelta;
     public static Label lblTiempo;
-    public static Label t2;
+    public static Label lblBestTime;
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
-    public ButtonCreator(Stage stage) {
-        this.stage = stage;
+    public ButtonCreator() {
         createStage();
         createButtons();
         createLabels();
     }
-
 
     private void createStage() {
         stage = new Stage(new ScreenViewport());
@@ -40,22 +36,28 @@ public class ButtonCreator {
     }
 
     private void createLabels() {
-        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
-        font.font.getData().setScale(50/font.font.getCapHeight());
+        Label.LabelStyle f1Font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
+        f1Font.font.getData().setScale(50/f1Font.font.getCapHeight());
 
-        Table table = new Table();
-       table.center();
-        table.setFillParent(true);
+        lblTiempo = new Label("TIEMPO", f1Font);
+        lblVuelta = new Label("Vuelta: 0/5", f1Font);
+        lblBestTime = new Label("Vuelta2: ", f1Font);
 
-        lblTiempo = new Label("TIEMPO", font);
-        lblVuelta = new Label("Vuelta: 0/5", font);
-        t2 = new Label("Vuelta2: ", font);
+        lblTiempo.setHeight(screenHeight * 0.15f);
+        lblTiempo.setWidth(screenWidth * 0.15f);
+        lblTiempo.setPosition(14 * screenWidth / 20f, screenHeight - screenHeight * 0.5f);
 
-        table.row();
-        table.add(lblVuelta).expandX().padTop(200f).padLeft(130f).left();
-        table.add(lblTiempo).expandX().padTop(400f).padRight(300f).right();
-        table.add(t2).expandX().padTop(200f).padRight(300f).right();
-        stage.addActor(table);
+        lblVuelta.setHeight(screenHeight * 0.15f);
+        lblVuelta.setWidth(screenWidth * 0.15f);
+        lblVuelta.setPosition(2 * screenWidth / 20f, -screenHeight / 20f);
+
+        lblBestTime.setHeight(screenHeight * 0.15f);
+        lblBestTime.setWidth(screenWidth * 0.15f);
+        lblBestTime.setPosition(14 * screenWidth / 20f, -screenHeight / 3f);
+
+        stage.addActor(lblTiempo);
+        stage.addActor(lblVuelta);
+        stage.addActor(lblBestTime);
     }
 
     public Stage createButtons() {

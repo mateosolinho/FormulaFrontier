@@ -16,16 +16,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.BodyHolder;
 import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
-import com.mygdx.game.Tools.ObjectManager;
 import com.mygdx.game.Tools.SensorContactListener;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
@@ -50,6 +44,7 @@ public class PlayScreen implements Screen {
     private final int TICK = 50;
 
     private Stage stage;
+    private Stage stage2;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
     private final TiledMapRenderer tiledMapRenderer;
@@ -84,8 +79,8 @@ public class PlayScreen implements Screen {
 
         player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
-        buttonCreator = new ButtonCreator(stage);
-        stage = buttonCreator.createButtons();
+        buttonCreator = new ButtonCreator();
+        stage2 = buttonCreator.createButtons();
         handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
     }
@@ -103,7 +98,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         ButtonCreator.lblTiempo.setText(TimeAttack.getTiempoActual());
-        ButtonCreator.t2.setText(timeAttack.getLastTime() + "");
+        ButtonCreator.lblBestTime.setText(timeAttack.getLastTime() + "");
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
@@ -132,8 +127,8 @@ public class PlayScreen implements Screen {
         handleDrift();
 
         draw();
-        stage.act(delta);
-        stage.draw();
+        stage2.act(delta);
+        stage2.draw();
     }
 
     /**
