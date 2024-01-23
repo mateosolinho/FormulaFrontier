@@ -8,13 +8,13 @@ import java.util.Calendar;
 import java.util.Collections;
 
 public class TimeAttack {
+    @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 
     static public ArrayList<Long> tiempos = new ArrayList<>();
     static private boolean startTime = false;
     static private long tiempo = 0;
-    long lastTime;
 
     public static String getTiempoActual() {
         if (startTime) {
@@ -37,15 +37,15 @@ public class TimeAttack {
     }
 
     public void setStartTime(boolean startTime) {
-        this.startTime = startTime;
+        TimeAttack.startTime = startTime;
     }
 
     public String getLastTime() {
         if (tiempos.isEmpty()) {
-            return "No recorded times yet.";
+            return "Best: 00:00";
         }
 
         long bestTime = Collections.min(tiempos);
-        return "BEST TIME: " + formatTiempo(bestTime);
+        return "Best: " + formatTiempo(bestTime);
     }
 }

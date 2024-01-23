@@ -1,6 +1,5 @@
 package com.mygdx.game.Tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -10,13 +9,10 @@ import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class SensorContactListener implements ContactListener {
-    private int vueltas;
+    private int vVueltas;
     private boolean isCheck1Activated = false;
     private boolean isCheck2Activated = false;
-    private ButtonCreator buttonCreator;
-    private boolean isMeta = false;
-    TimeAttack timeAttack;
-
+    private final ButtonCreator buttonCreator;
 
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
@@ -33,11 +29,7 @@ public class SensorContactListener implements ContactListener {
         }
         if ("player".equals(fixtureA.getBody().getUserData()) && "check2".equals(fixtureB.getBody().getUserData())
                 || "check2".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-            if (isCheck1Activated) {
-                isCheck2Activated = true;
-            } else {
-                isCheck2Activated = false;
-            }
+            isCheck2Activated = isCheck1Activated;
         }
 
         if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
@@ -49,20 +41,16 @@ public class SensorContactListener implements ContactListener {
             if (isCheck2Activated) {
                 if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
                         || "meta".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-                    vueltas++;
+                    vVueltas++;
 
                     TimeAttack.addNewTime();
                     TimeAttack.setTiempo(0);
-                    buttonCreator.updateVueltas(vueltas);
+                    buttonCreator.updateVueltas(vVueltas);
                     isCheck1Activated = false;
                     isCheck2Activated = false;
                 }
             }
         }
-    }
-
-    public boolean getIsMeta() {
-        return isMeta;
     }
 
     @Override

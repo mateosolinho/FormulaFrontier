@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -45,15 +44,15 @@ public class ButtonCreator {
 
         lblTiempo.setHeight(screenHeight * 0.15f);
         lblTiempo.setWidth(screenWidth * 0.15f);
-        lblTiempo.setPosition(14 * screenWidth / 20f, screenHeight - screenHeight * 0.5f);
+        lblTiempo.setPosition(screenWidth / 2.2f, 6 * screenHeight / 20f);
 
         lblVuelta.setHeight(screenHeight * 0.15f);
         lblVuelta.setWidth(screenWidth * 0.15f);
-        lblVuelta.setPosition(2 * screenWidth / 20f, -screenHeight / 20f);
+        lblVuelta.setPosition(1.5f * screenWidth / 20f, 6 * screenHeight / 20f);
 
         lblBestTime.setHeight(screenHeight * 0.15f);
         lblBestTime.setWidth(screenWidth * 0.15f);
-        lblBestTime.setPosition(14 * screenWidth / 20f, -screenHeight / 3f);
+        lblBestTime.setPosition(14 * screenWidth / 20f, 6 * screenHeight / 20f);
 
         stage.addActor(lblTiempo);
         stage.addActor(lblVuelta);

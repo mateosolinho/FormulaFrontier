@@ -7,14 +7,12 @@ import static com.mygdx.game.Constants.META;
 import static com.mygdx.game.Constants.PLAYER;
 import static com.mygdx.game.Constants.WALLS;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -47,34 +45,29 @@ public class ObjectManager {
         }
     }
 
-    public Body createMeta(TiledMap map) {
+    public void createMeta(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(META).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body bodyMeta = ShapeFactory.createRectangle(
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
                 new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
                 BodyDef.BodyType.DynamicBody, world, 0.4f, true);
         bodyMeta.setUserData("meta");
-        return bodyMeta;
     }
 
-    public Body createCheckpoint1(TiledMap map){
+    public void createCheckpoint1(TiledMap map){
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT1).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check1 = ShapeFactory.createRectangle(
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
                 new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
                 BodyDef.BodyType.StaticBody, world, 0.4f, true);
         check1.setUserData("check1");
-        return check1;
     }
-    public Body createCheckpoint2(TiledMap map){
+    public void createCheckpoint2(TiledMap map){
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT2).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check2 = ShapeFactory.createRectangle(
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
                 new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
                 BodyDef.BodyType.StaticBody, world, 0.4f, true);
         check2.setUserData("check2");
-        return check2;
     }
-
-
 }

@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MapLoader implements Disposable {
@@ -22,7 +21,6 @@ public class MapLoader implements Disposable {
 
     private final TiledMap map;
     private final Body player;
-    private SensorContactListener sensorContactListener;
 
     public MapLoader(World world) {
         map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
