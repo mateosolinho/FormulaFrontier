@@ -20,7 +20,7 @@ public class ButtonCreator {
     private ImageButton imageButtonIzquierda;
     private ImageButton imageButtonArriba;
     private ImageButton imageButtonAbajo;
-    private Label lblVuelta;
+    public static Label lblVuelta;
     public static Label lblTiempo;
     public static Label t2;
 
@@ -47,16 +47,13 @@ public class ButtonCreator {
        table.center();
         table.setFillParent(true);
 
-        lblTiempo = new Label("TIEMPO "+ PlayScreen.tiempo, font);
+        lblTiempo = new Label("TIEMPO", font);
         lblVuelta = new Label("Vuelta: 0/5", font);
         t2 = new Label("Vuelta2: ", font);
-       // table.top();
 
         table.row();
         table.add(lblVuelta).expandX().padTop(200f).padLeft(130f).left();
         table.add(lblTiempo).expandX().padTop(400f).padRight(300f).right();
-
-     //   table.row();
         table.add(t2).expandX().padTop(200f).padRight(300f).right();
         stage.addActor(table);
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class SensorContactListener implements ContactListener {
@@ -13,15 +14,12 @@ public class SensorContactListener implements ContactListener {
     private boolean isCheck1Activated = false;
     private boolean isCheck2Activated = false;
     private ButtonCreator buttonCreator;
-    private boolean isMeta;
+    private boolean isMeta = false;
+    TimeAttack timeAttack;
 
 
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
-    }
-
-    public boolean getIsMeta() {
-        return isMeta;
     }
 
     @Override
@@ -44,7 +42,7 @@ public class SensorContactListener implements ContactListener {
 
         if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
                 || "meta".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-            PlayScreen.sumaTiempo = true;
+                    PlayScreen.timeAttack.setStartTime(true);
         }
 
         if (isCheck1Activated) {
@@ -52,14 +50,19 @@ public class SensorContactListener implements ContactListener {
                 if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
                         || "meta".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
                     vueltas++;
-                    PlayScreen.tiempos.add(PlayScreen.tiempo);
-                    PlayScreen.tiempo=0;
+
+                    TimeAttack.addNewTime();
+                    TimeAttack.setTiempo(0);
                     buttonCreator.updateVueltas(vueltas);
                     isCheck1Activated = false;
                     isCheck2Activated = false;
                 }
             }
         }
+    }
+
+    public boolean getIsMeta() {
+        return isMeta;
     }
 
     @Override

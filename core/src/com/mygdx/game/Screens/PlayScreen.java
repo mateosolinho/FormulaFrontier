@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.BodyHolder;
+import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ObjectManager;
@@ -48,8 +49,6 @@ public class PlayScreen implements Screen {
 
     private final int TICK = 50;
 
-    static public ArrayList<Long> tiempos = new ArrayList<>();
-
     private Stage stage;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
@@ -64,22 +63,16 @@ public class PlayScreen implements Screen {
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
-    public static long tiempo = 0;
-    public static boolean sumaTiempo = false;
-    SimpleDateFormat dateFormat;
-    Calendar cal;
+    static public TimeAttack timeAttack = new TimeAttack();
 
     public PlayScreen() {
-
         batch = new SpriteBatch();
-        dateFormat = new SimpleDateFormat("ss:SS");
-        cal = Calendar.getInstance();
-
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
 
         mapLoader = new MapLoader(world);
+        //timeAttack = new TimeAttack();
 
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
@@ -94,18 +87,12 @@ public class PlayScreen implements Screen {
         buttonCreator = new ButtonCreator(stage);
         stage = buttonCreator.createButtons();
         handleInput();
-
         world.setContactListener(new SensorContactListener(buttonCreator));
     }
 
     @Override
     public void show() {
 
-    }
-
-    public String formatTiempo(long tiempo) {
-        cal.setTimeInMillis(tiempo);
-        return dateFormat.format(cal.getTime());
     }
 
     @Override
@@ -115,19 +102,11 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        ButtonCreator.lblTiempo.setText(TimeAttack.getTiempoActual());
+        ButtonCreator.t2.setText(timeAttack.getLastTime() + "");
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
-        if (sumaTiempo) {
-            tiempo += delta * 1000;
-
-            ButtonCreator.lblTiempo.setText(formatTiempo(tiempo));
-            if (tiempos.size() > 0) {
-                ButtonCreator.t2.setText(formatTiempo(tiempos.get(0)));
-            }
-            ButtonCreator.lblTiempo.setWidth(10);
-
-        }
 
         if (System.currentTimeMillis() - tTotal > TICK) {
 
