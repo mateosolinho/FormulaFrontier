@@ -67,7 +67,6 @@ public class PlayScreen implements Screen {
         b2rd = new Box2DDebugRenderer();
 
         mapLoader = new MapLoader(world);
-        //timeAttack = new TimeAttack();
 
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
@@ -98,7 +97,11 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         ButtonCreator.lblTiempo.setText(TimeAttack.getTiempoActual());
-        ButtonCreator.lblBestTime.setText(timeAttack.getLastTime() + "");
+        ButtonCreator.lblBestTime.setText(timeAttack.getBestTime() + " ");
+        if (SensorContactListener.vVueltas > 0) {
+            ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
+        }
+
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();

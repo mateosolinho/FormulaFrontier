@@ -9,7 +9,7 @@ import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class SensorContactListener implements ContactListener {
-    private int vVueltas;
+    public static int vVueltas;
     private boolean isCheck1Activated = false;
     private boolean isCheck2Activated = false;
     private final ButtonCreator buttonCreator;

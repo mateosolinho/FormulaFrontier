@@ -20,6 +20,7 @@ public class ButtonCreator {
     public static Label lblVuelta;
     public static Label lblTiempo;
     public static Label lblBestTime;
+    public static Label lblLastTime;
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
@@ -38,13 +39,14 @@ public class ButtonCreator {
         Label.LabelStyle f1Font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
         f1Font.font.getData().setScale(50/f1Font.font.getCapHeight());
 
-        lblTiempo = new Label("TIEMPO", f1Font);
-        lblVuelta = new Label("Vuelta: 0/5", f1Font);
-        lblBestTime = new Label("Vuelta2: ", f1Font);
+        lblTiempo = new Label("", f1Font);
+        lblVuelta = new Label("Lap: 0 / 5", f1Font);
+        lblBestTime = new Label("", f1Font);
+        lblLastTime = new Label("", f1Font);
 
         lblTiempo.setHeight(screenHeight * 0.15f);
         lblTiempo.setWidth(screenWidth * 0.15f);
-        lblTiempo.setPosition(screenWidth / 2.2f, 6 * screenHeight / 20f);
+        lblTiempo.setPosition(screenWidth / 2.4f, 6 * screenHeight / 20f);
 
         lblVuelta.setHeight(screenHeight * 0.15f);
         lblVuelta.setWidth(screenWidth * 0.15f);
@@ -54,9 +56,14 @@ public class ButtonCreator {
         lblBestTime.setWidth(screenWidth * 0.15f);
         lblBestTime.setPosition(14 * screenWidth / 20f, 6 * screenHeight / 20f);
 
+        lblLastTime.setHeight(screenHeight * 0.15f);
+        lblLastTime.setWidth(screenWidth * 0.15f);
+        lblLastTime.setPosition(14f * screenWidth / 20f, 4 * screenHeight / 20f);
+
         stage.addActor(lblTiempo);
         stage.addActor(lblVuelta);
         stage.addActor(lblBestTime);
+        stage.addActor(lblLastTime);
     }
 
     public Stage createButtons() {
@@ -138,6 +145,6 @@ public class ButtonCreator {
     }
 
     public void updateVueltas(int vueltas) {
-        lblVuelta.setText("Vuelta: " + vueltas +" / 5");
+        lblVuelta.setText("Lap: " + vueltas +" / 5");
     }
 }
