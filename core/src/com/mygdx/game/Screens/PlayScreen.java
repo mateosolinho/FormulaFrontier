@@ -22,6 +22,10 @@ import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.ObjectManager;
 import com.mygdx.game.Tools.SensorContactListener;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
 
@@ -44,6 +48,8 @@ public class PlayScreen implements Screen {
 
     private final int TICK = 50;
 
+    static public ArrayList<Long> tiempos = new ArrayList<>();
+
     private Stage stage;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
@@ -58,10 +64,17 @@ public class PlayScreen implements Screen {
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
+    public static long tiempo = 0;
+    public static boolean sumaTiempo = false;
+    SimpleDateFormat dateFormat;
+    Calendar cal;
 
     public PlayScreen() {
 
         batch = new SpriteBatch();
+        dateFormat = new SimpleDateFormat("ss:SS");
+        cal = Calendar.getInstance();
+
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
@@ -90,6 +103,11 @@ public class PlayScreen implements Screen {
 
     }
 
+    public String formatTiempo(long tiempo) {
+        cal.setTimeInMillis(tiempo);
+        return dateFormat.format(cal.getTime());
+    }
+
     @Override
     public void render(float delta) {
         update();
@@ -100,6 +118,16 @@ public class PlayScreen implements Screen {
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+        if (sumaTiempo) {
+            tiempo += delta * 1000;
+
+            ButtonCreator.lblTiempo.setText(formatTiempo(tiempo));
+            if (tiempos.size() > 0) {
+                ButtonCreator.t2.setText(formatTiempo(tiempos.get(0)));
+            }
+            ButtonCreator.lblTiempo.setWidth(10);
+
+        }
 
         if (System.currentTimeMillis() - tTotal > TICK) {
 
@@ -277,7 +305,7 @@ public class PlayScreen implements Screen {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
-        world.step(1/60f,5,3);
+        world.step(1 / 60f, 5, 3);
     }
 
     @Override

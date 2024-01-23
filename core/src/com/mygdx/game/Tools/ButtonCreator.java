@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Screens.PlayScreen;
 
 public class ButtonCreator {
     private Stage stage;
@@ -20,6 +21,8 @@ public class ButtonCreator {
     private ImageButton imageButtonArriba;
     private ImageButton imageButtonAbajo;
     private Label lblVuelta;
+    public static Label lblTiempo;
+    public static Label t2;
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
@@ -41,16 +44,20 @@ public class ButtonCreator {
         font.font.getData().setScale(50/font.font.getCapHeight());
 
         Table table = new Table();
-        table.center();
+       table.center();
         table.setFillParent(true);
 
-//        Label gameOverLabel = new Label("GAME OVER", font);
+        lblTiempo = new Label("TIEMPO "+ PlayScreen.tiempo, font);
         lblVuelta = new Label("Vuelta: 0/5", font);
+        t2 = new Label("Vuelta2: ", font);
+       // table.top();
 
-//        table.add(gameOverLabel).expandX();
-//        table.row();
-        table.add(lblVuelta).expandX().padTop(200f).left().padLeft(130f);
+        table.row();
+        table.add(lblVuelta).expandX().padTop(200f).padLeft(130f).left();
+        table.add(lblTiempo).expandX().padTop(400f).padRight(300f).right();
 
+     //   table.row();
+        table.add(t2).expandX().padTop(200f).padRight(300f).right();
         stage.addActor(table);
     }
 
