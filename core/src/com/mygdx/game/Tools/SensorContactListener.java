@@ -25,16 +25,20 @@ public class SensorContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
+
         if ("player".equals(fixtureA.getBody().getUserData()) && "check1".equals(fixtureB.getBody().getUserData())
                 || "check1".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-            Gdx.app.log("Contact", "¡El jugador y el checkpoint1 han colisionado!");
             isCheck1Activated = true;
         }
         if ("player".equals(fixtureA.getBody().getUserData()) && "check2".equals(fixtureB.getBody().getUserData())
                 || "check2".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-            Gdx.app.log("Contact", "¡El jugador y el checkpoint2 han colisionado!");
-            isCheck2Activated = true;
+            if (isCheck1Activated) {
+                isCheck2Activated = true;
+            } else {
+                isCheck2Activated = false;
+            }
         }
+
         if (isCheck1Activated) {
             if (isCheck2Activated) {
                 if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
