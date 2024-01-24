@@ -36,7 +36,7 @@ public class TimeAttack {
 
     public static String formatTiempoMarcas(long tiempo) {
         cal.setTimeInMillis(tiempo);
-        return dateFormatMarcas.format(cal.getTime());
+        return dateFormat.format(cal.getTime());
     }
 
     public static void addNewTime() {
@@ -53,7 +53,7 @@ public class TimeAttack {
 
     public String getBestTime() {
         if (tiempos.isEmpty()) {
-            return "Best: 00:00";
+            return "Best: 00:00:00";
         }
 
         bestTime = Collections.min(tiempos);

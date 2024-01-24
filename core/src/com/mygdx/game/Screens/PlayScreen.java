@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
@@ -53,7 +55,9 @@ public class PlayScreen implements Screen {
     private final Box2DDebugRenderer b2rd;
     private final Body player;
     private long tTotal = 0;
+    private boolean isPausePressed;
 
+    private Game game;
     private final ButtonCreator buttonCreator;
     private final Texture playerTexture;
     private final Sprite playerSprite;
@@ -65,9 +69,9 @@ public class PlayScreen implements Screen {
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
-
+        isPausePressed = false;
         mapLoader = new MapLoader(world);
-
+        game = new Game();
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
 
@@ -79,7 +83,7 @@ public class PlayScreen implements Screen {
         player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator();
-        stage2 = buttonCreator.createButtons();
+        stage2 = buttonCreator.createPauseButton();
         handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
     }
@@ -100,6 +104,10 @@ public class PlayScreen implements Screen {
         ButtonCreator.lblBestTime.setText(timeAttack.getBestTime() + " ");
         if (SensorContactListener.vVueltas > 0) {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
+        }
+        if (isPausePressed){
+            game.setScreen(new PauseScreen());
+
         }
 
         camera.update();
@@ -265,6 +273,14 @@ public class PlayScreen implements Screen {
                 isLeftPressed = false;
             }
         });
+
+        buttonCreator.getImageButtonPause().addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("pause", "pase");
+                isPausePressed = true;
+            }
+        });
     }
 
     private void draw() {
@@ -311,7 +327,6 @@ public class PlayScreen implements Screen {
         world.dispose();
         b2rd.dispose();
         stage.dispose();
-        playerTexture.dispose();
         playerTexture.dispose();
     }
 }

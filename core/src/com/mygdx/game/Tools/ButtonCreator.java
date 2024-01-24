@@ -17,6 +17,7 @@ public class ButtonCreator {
     private ImageButton imageButtonIzquierda;
     private ImageButton imageButtonArriba;
     private ImageButton imageButtonAbajo;
+    private ImageButton imageButtonPause;
     public static Label lblVuelta;
     public static Label lblTiempo;
     public static Label lblBestTime;
@@ -26,8 +27,9 @@ public class ButtonCreator {
     float screenHeight = Gdx.graphics.getHeight();
     public ButtonCreator() {
         createStage();
-        createButtons();
-        createLabels();
+        createGameButtons();
+        createGameLabels();
+        createPauseButton();
     }
 
     private void createStage() {
@@ -35,7 +37,7 @@ public class ButtonCreator {
         Gdx.input.setInputProcessor(stage);
     }
 
-    private void createLabels() {
+    private void createGameLabels() {
         Label.LabelStyle f1Font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
         f1Font.font.getData().setScale(50/f1Font.font.getCapHeight());
 
@@ -54,11 +56,11 @@ public class ButtonCreator {
 
         lblBestTime.setHeight(screenHeight * 0.15f);
         lblBestTime.setWidth(screenWidth * 0.15f);
-        lblBestTime.setPosition(14 * screenWidth / 20f, 6 * screenHeight / 20f);
+        lblBestTime.setPosition(13 * screenWidth / 20f, 6 * screenHeight / 20f);
 
         lblLastTime.setHeight(screenHeight * 0.15f);
         lblLastTime.setWidth(screenWidth * 0.15f);
-        lblLastTime.setPosition(14f * screenWidth / 20f, 4 * screenHeight / 20f);
+        lblLastTime.setPosition(13 * screenWidth / 20f, 4 * screenHeight / 20f);
 
         stage.addActor(lblTiempo);
         stage.addActor(lblVuelta);
@@ -66,7 +68,7 @@ public class ButtonCreator {
         stage.addActor(lblLastTime);
     }
 
-    public Stage createButtons() {
+    public void createGameButtons() {
 
         Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/derechaBien.png"));
         Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/izquierdaBien.png"));
@@ -124,6 +126,27 @@ public class ButtonCreator {
         stage.addActor(imageButtonArriba);
         stage.addActor(imageButtonAbajo);
 
+    }
+
+    public Stage createPauseButton() {
+
+        Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/pause.png"));
+
+        ImageButton.ImageButtonStyle stylePause = new ImageButton.ImageButtonStyle();
+        stylePause.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePause));
+        imageButtonPause = new ImageButton(stylePause);
+
+        stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
+
+        imageButtonPause.setHeight(screenHeight * 0.1f);
+        imageButtonPause.setWidth(screenWidth * 0.1f);
+        imageButtonPause.setPosition(18.2f * screenWidth / 20f, 7.5f * screenHeight / 20f);
+
+        stylePause.imageUp.setMinWidth(200f);
+        stylePause.imageUp.setMinHeight(200f);
+
+        stage.addActor(imageButtonPause);
+
         return stage;
 
     }
@@ -143,6 +166,8 @@ public class ButtonCreator {
     public ImageButton getImageButtonAbajo() {
         return imageButtonAbajo;
     }
+
+    public ImageButton getImageButtonPause(){return  imageButtonPause;}
 
     public void updateVueltas(int vueltas) {
         lblVuelta.setText("Lap: " + vueltas +" / 5");

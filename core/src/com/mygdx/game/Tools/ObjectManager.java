@@ -38,11 +38,14 @@ public class ObjectManager {
         Array<RectangleMapObject> walls = map.getLayers().get(WALLS).getObjects().getByType(RectangleMapObject.class);
         for (RectangleMapObject rObject : new Array.ArrayIterator<>(walls)) {
             Rectangle rectangle = rObject.getRectangle();
-            ShapeFactory.createRectangle(
+           Body bodyWalls = ShapeFactory.createRectangle(
                     new Vector2((rectangle.getX() + rectangle.getWidth() / 2), (rectangle.getY() + rectangle.getHeight() / 2)),
                     new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2),
                     BodyDef.BodyType.StaticBody, world, 1f, false);
+        bodyWalls.setUserData("wall");
         }
+
+
     }
 
     public void createMeta(TiledMap map) {
