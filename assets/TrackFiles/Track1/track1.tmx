@@ -2,12 +2,6 @@
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="left-down" width="155" height="87" tilewidth="128" tileheight="128" infinite="0" nextlayerid="14" nextobjectid="181">
  <tileset firstgid="1" source="assetsTrack1.tsx"/>
  <tileset firstgid="362" source="asphalt_1.tsx"/>
- <tileset firstgid="426" source="asphalt_2.tsx"/>
- <tileset firstgid="476" source="DHLLogo.tsx"/>
- <tileset firstgid="576" source="RolexGreen.tsx"/>
- <tileset firstgid="676" source="heineken.tsx"/>
- <tileset firstgid="716" source="emirates.tsx"/>
- <tileset firstgid="816" source="logofiabien.tsx"/>
  <layer id="7" name="fueraPista" width="155" height="87">
   <data encoding="base64" compression="zlib">
    eJztwzENAAAMA6DOX/3r6T0PkNBLqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqquo7x4TY6w==

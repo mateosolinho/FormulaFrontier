@@ -2,6 +2,7 @@ package com.mygdx.game.Tools;
 
 import static com.mygdx.game.Constants.PPM;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -30,8 +31,12 @@ public class MapLoader implements Disposable {
 
         camera = new OrthographicCamera(mapWidth,mapHeight);
         camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
-        camera.zoom = 0.3f;
-        viewport = new FillViewport(mapWidth/PPM, mapHeight/PPM,camera);
+        // Pista 1
+//        camera.zoom = 0.3f;
+        // Pista 2
+        camera.zoom = 2f;
+
+        viewport = new FillViewport(Gdx.graphics.getWidth()/PPM, Gdx.graphics.getHeight()/PPM,camera);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
 
         ObjectManager objectManager = new ObjectManager(world);

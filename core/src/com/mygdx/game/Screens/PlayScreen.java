@@ -36,7 +36,7 @@ public class PlayScreen implements Screen {
 
     private final static float DRIVE_SPEED = 150.0f;
     private final static float TURN_SPEED = 2.5f;
-    private final static float MAX_SPEED = 50.0f;
+    private final static float MAX_SPEED = 55.0f;
 
     private int driveDirection = DRIVE_DIRECTION_NONE;
     private int turnDirection = TURN_DIRECTION_NONE;
