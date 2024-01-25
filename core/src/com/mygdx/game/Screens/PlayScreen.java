@@ -64,14 +64,14 @@ public class PlayScreen implements Screen {
     private final MapLoader mapLoader;
     static public TimeAttack timeAttack = new TimeAttack();
 
-    public PlayScreen() {
+    public PlayScreen(Game game) {
+        this.game = game;
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
         isPausePressed = false;
         mapLoader = new MapLoader(world);
-        game = new Game();
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
 
@@ -279,7 +279,7 @@ public class PlayScreen implements Screen {
         buttonCreator.getImageButtonPause().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("pause", "pase");
+                game.setScreen(new PauseScreen());
                 isPausePressed = true;
             }
         });

@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -26,9 +25,13 @@ public class ButtonCreator {
     private ImageButton imageButtonStart;
     private ImageButton imageButtonSettings;
     private ImageButton imageButtonPuntuaciones;
+    private ImageButton imageButtonTutorial;
+    private ImageButton imageButtonExit;
+    private Label lblTitulo;
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
+
     public ButtonCreator() {
         createStage();
     }
@@ -40,7 +43,7 @@ public class ButtonCreator {
 
     public void createGameLabels() {
         Label.LabelStyle f1Font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
-        f1Font.font.getData().setScale(50/f1Font.font.getCapHeight());
+        f1Font.font.getData().setScale(50 / f1Font.font.getCapHeight());
 
         lblTiempo = new Label("", f1Font);
         lblVuelta = new Label("Lap: 0 / 5", f1Font);
@@ -152,11 +155,20 @@ public class ButtonCreator {
     }
 
     public Stage createMainButtons() {
+        Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
+        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+
+        lblTitulo = new Label("FORMULA \nFRONTIER", f1FontTitle);
+
+        lblTitulo.setHeight(screenHeight * 0.15f);
+        lblTitulo.setWidth(screenWidth * 0.15f);
+        lblTitulo.setPosition(screenWidth / 3.1f, 4f * screenHeight / 20f);
 
         Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/mainUI/start.png"));
         Texture buttonTextureSettings = new Texture(Gdx.files.internal("UI/mainUI/settings.png"));
         Texture buttonTexturePuntuaciones = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
-
+        Texture buttonTextureTutorial = new Texture(Gdx.files.internal("UI/mainUI/tutorial.png"));
+        Texture buttonTextureExit = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
 
         ImageButton.ImageButtonStyle styleStart = new ImageButton.ImageButtonStyle();
         styleStart.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePause));
@@ -170,32 +182,57 @@ public class ButtonCreator {
         stylePuntuaciones.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePuntuaciones));
         imageButtonPuntuaciones = new ImageButton(stylePuntuaciones);
 
+        ImageButton.ImageButtonStyle styleTutorial = new ImageButton.ImageButtonStyle();
+        styleTutorial.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTutorial));
+        imageButtonTutorial = new ImageButton(styleTutorial);
+
+        ImageButton.ImageButtonStyle styleExit = new ImageButton.ImageButtonStyle();
+        styleExit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureExit));
+        imageButtonExit = new ImageButton(styleExit);
+
         stage.getViewport().getCamera().position.set(screenWidth / 2, 0, 0);
 
         imageButtonStart.setHeight(screenHeight * 0.1f);
         imageButtonStart.setWidth(screenWidth * 0.1f);
-        imageButtonStart.setPosition( screenWidth / 2.2f, 2f * screenHeight / 20f);
+        imageButtonStart.setPosition(screenWidth / 2.2f, 0.5f * -screenHeight / 20f);
 
         imageButtonSettings.setHeight(screenHeight * 0.1f);
         imageButtonSettings.setWidth(screenWidth * 0.1f);
-        imageButtonSettings.setPosition( screenWidth / 4.4f,  2 * -screenHeight / 20f);
+        imageButtonSettings.setPosition(screenWidth / 4.4f, 4 * -screenHeight / 20f);
 
         imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
         imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
-        imageButtonPuntuaciones.setPosition( screenWidth / 4.4f,  6 * -screenHeight / 20f);
+        imageButtonPuntuaciones.setPosition(screenWidth / 4.4f, 8 * -screenHeight / 20f);
 
-        styleStart.imageUp.setMinWidth(500f);
-        styleStart.imageUp.setMinHeight(300f);
+        imageButtonTutorial.setHeight(screenHeight * 0.1f);
+        imageButtonTutorial.setWidth(screenWidth * 0.1f);
+        imageButtonTutorial.setPosition(3 * screenWidth / 4.4f, 4 * -screenHeight / 20f);
 
-        styleSettings.imageUp.setMinWidth(500f);
-        styleSettings.imageUp.setMinHeight(300f);
+        imageButtonExit.setHeight(screenHeight * 0.1f);
+        imageButtonExit.setWidth(screenWidth * 0.1f);
+        imageButtonExit.setPosition(3 * screenWidth / 4.4f, 8 * -screenHeight / 20f);
 
-        stylePuntuaciones.imageUp.setMinWidth(500f);
-        stylePuntuaciones.imageUp.setMinHeight(300f);
+        styleStart.imageUp.setMinWidth(500);
+        styleStart.imageUp.setMinHeight(300);
+
+        styleSettings.imageUp.setMinWidth(500);
+        styleSettings.imageUp.setMinHeight(300);
+
+        stylePuntuaciones.imageUp.setMinWidth(500);
+        stylePuntuaciones.imageUp.setMinHeight(300);
+
+        styleTutorial.imageUp.setMinWidth(500);
+        styleTutorial.imageUp.setMinHeight(300);
+
+        styleExit.imageUp.setMinWidth(500);
+        styleExit.imageUp.setMinHeight(300);
 
         stage.addActor(imageButtonStart);
         stage.addActor(imageButtonSettings);
         stage.addActor(imageButtonPuntuaciones);
+        stage.addActor(imageButtonTutorial);
+        stage.addActor(imageButtonExit);
+        stage.addActor(lblTitulo);
 
 
         return stage;
@@ -217,9 +254,31 @@ public class ButtonCreator {
         return imageButtonAbajo;
     }
 
-    public ImageButton getImageButtonPause(){return  imageButtonPause;}
+    public ImageButton getImageButtonPause() {
+        return imageButtonPause;
+    }
+
+    public ImageButton getImageButtonStart() {
+        return imageButtonStart;
+    }
+
+    public ImageButton getImageButtonSettings() {
+        return imageButtonSettings;
+    }
+
+    public ImageButton getImageButtonPuntuaciones() {
+        return imageButtonPuntuaciones;
+    }
+
+    public ImageButton getImageButtonTutorial() {
+        return imageButtonTutorial;
+    }
+
+    public ImageButton getImageButtonExit() {
+        return imageButtonExit;
+    }
 
     public void updateVueltas(int vueltas) {
-        lblVuelta.setText("Lap: " + vueltas +" / 5");
+        lblVuelta.setText("Lap: " + vueltas + " / 5");
     }
 }
