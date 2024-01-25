@@ -30,10 +30,7 @@ public class MapLoader implements Disposable {
 
 
         camera = new OrthographicCamera(mapWidth,mapHeight);
-        camera.setToOrtho(false, mapWidth/ PPM , mapHeight / PPM);
-        // Pista 1
-//        camera.zoom = 0.3f;
-        // Pista 2
+        camera.setToOrtho(false, mapWidth / PPM , mapHeight / PPM);
         camera.zoom = 2f;
 
         viewport = new FillViewport(Gdx.graphics.getWidth()/PPM, Gdx.graphics.getHeight()/PPM,camera);

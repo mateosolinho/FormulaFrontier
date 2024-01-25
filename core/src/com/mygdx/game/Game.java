@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.mygdx.game.Screens.MainScreen;
 import com.mygdx.game.Screens.PauseScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -7,7 +8,7 @@ public class Game extends com.badlogic.gdx.Game {
 
     @Override
     public void create() {
-        setScreen(new PlayScreen());
+        setScreen(new MainScreen());
     }
 
     @Override

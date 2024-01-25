@@ -83,6 +83,8 @@ public class PlayScreen implements Screen {
         player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator();
+        buttonCreator.createGameButtons();
+        buttonCreator.createGameLabels();
         stage2 = buttonCreator.createPauseButton();
         handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
