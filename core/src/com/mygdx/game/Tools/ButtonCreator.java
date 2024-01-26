@@ -160,9 +160,11 @@ public class ButtonCreator {
 
         lblTitulo = new Label("FORMULA \nFRONTIER", f1FontTitle);
 
+        float labelWidth = lblTitulo.getWidth();
+
         lblTitulo.setHeight(screenHeight * 0.15f);
         lblTitulo.setWidth(screenWidth * 0.15f);
-        lblTitulo.setPosition(screenWidth / 3.1f, 4f * screenHeight / 20f);
+        lblTitulo.setPosition((screenWidth - labelWidth) / 2, 4f * screenHeight / 20f);
 
         Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/mainUI/start.png"));
         Texture buttonTextureSettings = new Texture(Gdx.files.internal("UI/mainUI/settings.png"));
@@ -194,23 +196,23 @@ public class ButtonCreator {
 
         imageButtonStart.setHeight(screenHeight * 0.1f);
         imageButtonStart.setWidth(screenWidth * 0.1f);
-        imageButtonStart.setPosition(screenWidth / 2.2f, 0.5f * -screenHeight / 20f);
+        imageButtonStart.setPosition((screenWidth - imageButtonStart.getWidth()) / 2, 0.5f * -screenHeight / 20f);
 
         imageButtonSettings.setHeight(screenHeight * 0.1f);
         imageButtonSettings.setWidth(screenWidth * 0.1f);
-        imageButtonSettings.setPosition(screenWidth / 4.4f, 4 * -screenHeight / 20f);
+        imageButtonSettings.setPosition((screenWidth - imageButtonSettings.getWidth()) / 4f, 4 * -screenHeight / 20f);
 
         imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
         imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
-        imageButtonPuntuaciones.setPosition(screenWidth / 4.4f, 8 * -screenHeight / 20f);
+        imageButtonPuntuaciones.setPosition((screenWidth - imageButtonPuntuaciones.getWidth())/ 4f, 8 * -screenHeight / 20f);
 
         imageButtonTutorial.setHeight(screenHeight * 0.1f);
         imageButtonTutorial.setWidth(screenWidth * 0.1f);
-        imageButtonTutorial.setPosition(3 * screenWidth / 4.4f, 4 * -screenHeight / 20f);
+        imageButtonTutorial.setPosition((2.75f * screenWidth - imageButtonPuntuaciones.getWidth()) / 4f, 4 * -screenHeight / 20f);
 
         imageButtonExit.setHeight(screenHeight * 0.1f);
         imageButtonExit.setWidth(screenWidth * 0.1f);
-        imageButtonExit.setPosition(3 * screenWidth / 4.4f, 8 * -screenHeight / 20f);
+        imageButtonExit.setPosition((2.75f * screenWidth - imageButtonExit.getWidth()) / 4f, 8 * -screenHeight / 20f);
 
         styleStart.imageUp.setMinWidth(500);
         styleStart.imageUp.setMinHeight(300);
