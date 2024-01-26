@@ -27,6 +27,7 @@ public class ButtonCreator {
     private ImageButton imageButtonPuntuaciones;
     private ImageButton imageButtonTutorial;
     private ImageButton imageButtonExit;
+    private ImageButton imageButtonVolver;
     private Label lblTitulo;
 
     float screenWidth = Gdx.graphics.getWidth();
@@ -72,11 +73,12 @@ public class ButtonCreator {
         stage.addActor(lblLastTime);
     }
 
-    public void createGameButtons() {
+    public Stage createGameButtons() {
 
         Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/gameUI/derechaBien.png"));
         Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/gameUI/izquierdaBien.png"));
         Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/gameUI/arribaBien.png"));
+        Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/gameUI/pause.png"));
         Texture buttonTextureAbajo = new Texture(Gdx.files.internal("UI/gameUI/abajoBien.png"));
 
         ImageButton.ImageButtonStyle styleDerecha = new ImageButton.ImageButtonStyle();
@@ -95,7 +97,15 @@ public class ButtonCreator {
         styleAbajo.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureAbajo));
         imageButtonAbajo = new ImageButton(styleAbajo);
 
+        ImageButton.ImageButtonStyle stylePause = new ImageButton.ImageButtonStyle();
+        stylePause.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePause));
+        imageButtonPause = new ImageButton(stylePause);
+
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
+
+        imageButtonPause.setHeight(screenHeight * 0.1f);
+        imageButtonPause.setWidth(screenWidth * 0.1f);
+        imageButtonPause.setPosition(18.2f * screenWidth / 20f, 7.5f * screenHeight / 20f);
 
         imageButtonDerecha.setHeight(screenHeight * 0.15f);
         imageButtonDerecha.setWidth(screenWidth * 0.15f);
@@ -125,31 +135,62 @@ public class ButtonCreator {
         styleAbajo.imageUp.setMinWidth(200f);
         styleAbajo.imageUp.setMinHeight(200f);
 
+        stylePause.imageUp.setMinWidth(200f);
+        stylePause.imageUp.setMinHeight(200f);
+
         stage.addActor(imageButtonDerecha);
         stage.addActor(imageButtonIzquierda);
         stage.addActor(imageButtonArriba);
         stage.addActor(imageButtonAbajo);
+        stage.addActor(imageButtonPause);
 
+
+        return stage;
     }
 
-    public Stage createPauseButton() {
+    public Stage createPauseScreenButtons() {
+        Texture buttonTextureExitPause = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
+        Texture buttonTexturePuntosPause = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
+        Texture buttonTextureVolver = new Texture(Gdx.files.internal("UI/pauseUI/volver.png"));
 
-        Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/gameUI/pause.png"));
+        ImageButton.ImageButtonStyle stylePauseExit = new ImageButton.ImageButtonStyle();
+        stylePauseExit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureExitPause));
+        imageButtonExit = new ImageButton(stylePauseExit);
 
-        ImageButton.ImageButtonStyle stylePause = new ImageButton.ImageButtonStyle();
-        stylePause.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePause));
-        imageButtonPause = new ImageButton(stylePause);
+        ImageButton.ImageButtonStyle stylePauseVolver = new ImageButton.ImageButtonStyle();
+        stylePauseVolver.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureVolver));
+        imageButtonVolver = new ImageButton(stylePauseVolver);
+
+        ImageButton.ImageButtonStyle stylePuntuaciones = new ImageButton.ImageButtonStyle();
+        stylePuntuaciones.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePuntosPause));
+        imageButtonPuntuaciones = new ImageButton(stylePuntuaciones);
 
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
-        imageButtonPause.setHeight(screenHeight * 0.1f);
-        imageButtonPause.setWidth(screenWidth * 0.1f);
-        imageButtonPause.setPosition(18.2f * screenWidth / 20f, 7.5f * screenHeight / 20f);
+        imageButtonExit.setHeight(screenHeight * 0.1f);
+        imageButtonExit.setWidth(screenWidth * 0.1f);
+        imageButtonExit.setPosition((screenWidth - imageButtonExit.getWidth()) / 2, 8 * -screenHeight / 20f);
 
-        stylePause.imageUp.setMinWidth(200f);
-        stylePause.imageUp.setMinHeight(200f);
+        imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
+        imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
+        imageButtonPuntuaciones.setPosition((screenWidth - imageButtonExit.getWidth()) / 2, 5 * -screenHeight / 20f);
 
-        stage.addActor(imageButtonPause);
+        imageButtonVolver.setHeight(screenHeight * 0.1f);
+        imageButtonVolver.setWidth(screenWidth * 0.1f);
+        imageButtonVolver.setPosition((screenWidth - imageButtonVolver.getWidth()) / 2, -screenHeight / 20f);
+
+        stylePauseExit.imageUp.setMinWidth(500);
+        stylePauseExit.imageUp.setMinHeight(300);
+
+        stylePauseVolver.imageUp.setMinWidth(500);
+        stylePauseVolver.imageUp.setMinHeight(300);
+
+        stylePuntuaciones.imageUp.setMinWidth(500);
+        stylePuntuaciones.imageUp.setMinHeight(300);
+
+        stage.addActor(imageButtonExit);
+        stage.addActor(imageButtonVolver);
+        stage.addActor(imageButtonPuntuaciones);
 
         return stage;
     }
@@ -204,7 +245,7 @@ public class ButtonCreator {
 
         imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
         imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
-        imageButtonPuntuaciones.setPosition((screenWidth - imageButtonPuntuaciones.getWidth())/ 4f, 8 * -screenHeight / 20f);
+        imageButtonPuntuaciones.setPosition((screenWidth - imageButtonPuntuaciones.getWidth()) / 4f, 8 * -screenHeight / 20f);
 
         imageButtonTutorial.setHeight(screenHeight * 0.1f);
         imageButtonTutorial.setWidth(screenWidth * 0.1f);

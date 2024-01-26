@@ -83,9 +83,8 @@ public class PlayScreen implements Screen {
         player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator();
-        buttonCreator.createGameButtons();
         buttonCreator.createGameLabels();
-        stage2 = buttonCreator.createPauseButton();
+        stage2 = buttonCreator.createGameButtons();
         handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
     }
@@ -108,7 +107,7 @@ public class PlayScreen implements Screen {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
         }
         if (isPausePressed){
-            game.setScreen(new PauseScreen());
+            game.setScreen(new PauseScreen(game));
 
         }
 
@@ -279,7 +278,7 @@ public class PlayScreen implements Screen {
         buttonCreator.getImageButtonPause().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new PauseScreen());
+                game.setScreen(new PauseScreen(game));
                 isPausePressed = true;
             }
         });
