@@ -45,7 +45,7 @@ public class PlayScreen implements Screen {
 
     private final int TICK = 50;
 
-    private Stage stage;
+    private final Stage stage;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
     private final TiledMapRenderer tiledMapRenderer;
@@ -56,13 +56,12 @@ public class PlayScreen implements Screen {
     private long tTotal = 0;
     private boolean isPausePressed;
 
-    private Game game;
+    private final Game game;
     private final ButtonCreator buttonCreator;
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
     static public TimeAttack timeAttack = new TimeAttack();
-    public boolean pause=false;
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -80,6 +79,7 @@ public class PlayScreen implements Screen {
         playerSprite.setSize(3f, 4.2f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
+        TimeAttack.resetTimes();
         player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator();

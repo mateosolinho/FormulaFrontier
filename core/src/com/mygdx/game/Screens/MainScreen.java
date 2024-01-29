@@ -13,9 +13,9 @@ import com.mygdx.game.Tools.ButtonCreator;
 import java.util.Stack;
 
 public class MainScreen implements Screen {
-    ButtonCreator buttonCreator;
+    private final ButtonCreator buttonCreator;
     private final Stage stage;
-    private Game game;
+    private final Game game;
     static PlayScreen playScreen;
     public MainScreen(Game game){
         this.game = game;
@@ -68,11 +68,8 @@ public class MainScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("Start" , "Pulsado Start");
-                if (playScreen==null){
-                    MainScreen.playScreen=new PlayScreen(game);
-                }
-                game.setScreen(MainScreen.playScreen);
-
+                game.setScreen(MainScreen.playScreen = new PlayScreen(game));
+                //TODO que si empiezo una nueva partida se reinicie todo
             }
         });
 

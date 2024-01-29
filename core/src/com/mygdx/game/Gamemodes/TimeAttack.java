@@ -22,6 +22,10 @@ public class TimeAttack {
     long lastTime = 0;
     long bestTime = 0;
 
+    public static void resetTimes(){
+        tiempos.clear();
+        tiempo = 0;
+    }
     public static String getTiempoActual() {
         if (startTime) {
             tiempo += Gdx.graphics.getDeltaTime() * 1000;
