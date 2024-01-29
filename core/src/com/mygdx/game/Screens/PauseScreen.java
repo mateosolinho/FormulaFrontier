@@ -3,21 +3,25 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 public class PauseScreen implements Screen {
-    ButtonCreator buttonCreator;
-    Stage stage;
-    Game game;
+    private final ButtonCreator buttonCreator;
+    private final Stage stage;
+    private final Game game;
 
-    public PauseScreen(Game game){
+    public PauseScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createPauseScreenButtons();
-//        handleInput();
+        handleInput();
+        Gdx.app.log("Entra", "Entra");
     }
+
     @Override
     public void show() {
 
@@ -54,6 +58,24 @@ public class PauseScreen implements Screen {
 
     @Override
     public void dispose() {
+
+    }
+
+    private void handleInput() {
+        buttonCreator.getImageButtonVolver().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.input.setInputProcessor(MainScreen.playScreen.getStage());
+                game.setScreen(MainScreen.playScreen);
+            }
+        });
+        buttonCreator.getImageButtonExit().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MainScreen(game));
+            }
+        });
+
 
     }
 }

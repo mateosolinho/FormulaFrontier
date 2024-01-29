@@ -277,7 +277,6 @@ public class ButtonCreator {
         stage.addActor(imageButtonExit);
         stage.addActor(lblTitulo);
 
-
         return stage;
     }
 
@@ -319,6 +318,10 @@ public class ButtonCreator {
 
     public ImageButton getImageButtonExit() {
         return imageButtonExit;
+    }
+
+    public ImageButton getImageButtonVolver() {
+        return imageButtonVolver;
     }
 
     public void updateVueltas(int vueltas) {

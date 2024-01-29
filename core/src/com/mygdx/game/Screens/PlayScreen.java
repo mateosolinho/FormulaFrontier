@@ -46,7 +46,6 @@ public class PlayScreen implements Screen {
     private final int TICK = 50;
 
     private Stage stage;
-    private Stage stage2;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
     private final TiledMapRenderer tiledMapRenderer;
@@ -63,6 +62,7 @@ public class PlayScreen implements Screen {
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
     static public TimeAttack timeAttack = new TimeAttack();
+    public boolean pause=false;
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -84,19 +84,21 @@ public class PlayScreen implements Screen {
         player.setLinearDamping(0.5f);
         buttonCreator = new ButtonCreator();
         buttonCreator.createGameLabels();
-        stage2 = buttonCreator.createGameButtons();
+        stage = buttonCreator.createGameButtons();
         handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
     }
 
+    public Stage getStage() {
+        return stage;
+    }
+
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        update();
         baseVector = new Vector2(0, 0);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -107,9 +109,9 @@ public class PlayScreen implements Screen {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
         }
         if (isPausePressed){
-            game.setScreen(new PauseScreen(game));
-
+            isPausePressed=false;
         }
+        update();
 
         camera.update();
         tiledMapRenderer.setView(camera);
@@ -139,8 +141,8 @@ public class PlayScreen implements Screen {
         handleDrift();
 
         draw();
-        stage2.act(delta);
-        stage2.draw();
+        stage.act(delta);
+        stage.draw();
     }
 
     /**
@@ -280,6 +282,7 @@ public class PlayScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new PauseScreen(game));
                 isPausePressed = true;
+
             }
         });
     }

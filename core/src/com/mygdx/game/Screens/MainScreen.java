@@ -16,7 +16,7 @@ public class MainScreen implements Screen {
     ButtonCreator buttonCreator;
     private final Stage stage;
     private Game game;
-
+    static PlayScreen playScreen;
     public MainScreen(Game game){
         this.game = game;
         buttonCreator = new ButtonCreator();
@@ -68,7 +68,11 @@ public class MainScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("Start" , "Pulsado Start");
-                game.setScreen(new PlayScreen(game));
+                if (playScreen==null){
+                    MainScreen.playScreen=new PlayScreen(game);
+                }
+                game.setScreen(MainScreen.playScreen);
+
             }
         });
 
