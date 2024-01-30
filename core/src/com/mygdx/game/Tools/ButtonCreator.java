@@ -30,6 +30,7 @@ public class ButtonCreator {
     private ImageButton imageButtonExit;
     private ImageButton imageButtonVolver;
     private ImageButton imageButtonMusicON;
+    private ImageButton imageButtonVibracion;
     private Label lblTitulo;
 
     float screenWidth = Gdx.graphics.getWidth();
@@ -155,6 +156,7 @@ public class ButtonCreator {
         Texture buttonTexturePuntosPause = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
         Texture buttonTextureVolver = new Texture(Gdx.files.internal("UI/pauseUI/volver.png"));
         Texture buttonTextureMusicON = new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"));
+        Texture buttonTextureVibracion = new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"));
 
         ImageButton.ImageButtonStyle stylePauseExit = new ImageButton.ImageButtonStyle();
         stylePauseExit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureExitPause));
@@ -172,6 +174,10 @@ public class ButtonCreator {
         stylePauseMusicON.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureMusicON));
         imageButtonMusicON = new ImageButton(stylePauseMusicON);
 
+        ImageButton.ImageButtonStyle styleVibracion = new ImageButton.ImageButtonStyle();
+        styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureVibracion));
+        imageButtonVibracion = new ImageButton(styleVibracion);
+
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
         imageButtonExit.setHeight(screenHeight * 0.1f);
@@ -188,7 +194,11 @@ public class ButtonCreator {
 
         imageButtonMusicON.setHeight(screenHeight * 0.1f);
         imageButtonMusicON.setWidth(screenWidth * 0.1f);
-        imageButtonMusicON.setPosition((screenWidth / 0.65f - imageButtonVolver.getWidth()) / 2, -screenHeight / 20f);
+        imageButtonMusicON.setPosition((2.80f * screenWidth - imageButtonExit.getWidth()) / 4f, -screenHeight / 20f);
+
+        imageButtonVibracion.setHeight(screenHeight * 0.1f);
+        imageButtonVibracion.setWidth(screenWidth * 0.1f);
+        imageButtonVibracion.setPosition((screenWidth - imageButtonVibracion.getWidth()) / 4f, -screenHeight / 20f);
 
         stylePauseExit.imageUp.setMinWidth(500);
         stylePauseExit.imageUp.setMinHeight(300);
@@ -199,13 +209,17 @@ public class ButtonCreator {
         stylePuntuaciones.imageUp.setMinWidth(500);
         stylePuntuaciones.imageUp.setMinHeight(300);
 
-        stylePauseMusicON.imageUp.setMinWidth(500);
-        stylePauseMusicON.imageUp.setMinHeight(300);
+        stylePauseMusicON.imageUp.setMinWidth(2400);
+        stylePauseMusicON.imageUp.setMinHeight(1700);
+
+        styleVibracion.imageUp.setMinWidth(2400);
+        styleVibracion.imageUp.setMinHeight(1700);
 
         stage.addActor(imageButtonExit);
         stage.addActor(imageButtonVolver);
         stage.addActor(imageButtonPuntuaciones);
         stage.addActor(imageButtonMusicON);
+        stage.addActor(imageButtonVibracion);
 
         return stage;
     }
@@ -341,6 +355,10 @@ public class ButtonCreator {
 
     public ImageButton getImageButtonMusicON() {
         return imageButtonMusicON;
+    }
+
+    public ImageButton getImageButtonVibracion() {
+        return imageButtonVibracion;
     }
 
     public void updateVueltas(int vueltas) {

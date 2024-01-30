@@ -94,8 +94,28 @@ public class PauseScreen implements Screen {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
                     musicOn = true;
                 }
-                style.imageUp.setMinWidth(500);
-                style.imageUp.setMinHeight(300);
+                style.imageUp.setMinWidth(2400);
+                style.imageUp.setMinHeight(1700);
+                button.setStyle(style);
+            }
+        });
+
+        buttonCreator.getImageButtonVibracion().addListener(new ClickListener() {
+            boolean vibracion = true;
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ImageButton button = buttonCreator.getImageButtonVibracion();
+                ImageButton.ImageButtonStyle style = button.getStyle();
+
+                if (vibracion) {
+                    style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
+                    vibracion = false;
+                } else {
+                    style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
+                    vibracion = true;
+                }
+                style.imageUp.setMinWidth(2400);
+                style.imageUp.setMinHeight(1700);
                 button.setStyle(style);
             }
         });

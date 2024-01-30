@@ -24,8 +24,8 @@ public class MapLoader implements Disposable {
     private final Body player;
 
     public MapLoader(World world) {
-        map = new TmxMapLoader().load("TrackFiles/TestTrack/new_map.tmx");
-//        map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
+//        map = new TmxMapLoader().load("TrackFiles/TestTrack/new_map.tmx");
+        map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
         float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
         float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
