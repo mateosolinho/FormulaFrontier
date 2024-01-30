@@ -37,14 +37,12 @@ public class SensorContactListener implements ContactListener {
         if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
                 || "meta".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
                     PlayScreen.timeAttack.setStartTime(true);
+
         }
 
         if ("player".equals(fixtureA.getBody().getUserData()) && "wall".equals(fixtureB.getBody().getUserData())
                 || "wall".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
             Gdx.input.vibrate(55);
-
-//            Gdx.app.log("vibra", "vibra");
-//            Gdx.input.vibrate(Input.VibrationType.LIGHT);
         }
 
 

@@ -12,8 +12,6 @@ import java.util.Collections;
 public class TimeAttack {
     @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
-    @SuppressWarnings("SimpleDateFormat")
-    private static final SimpleDateFormat dateFormatMarcas = new SimpleDateFormat("ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 
     static public ArrayList<Long> tiempos = new ArrayList<>();
@@ -24,7 +22,9 @@ public class TimeAttack {
 
     public static void resetTimes(){
         tiempos.clear();
+        startTime=false;
         tiempo = 0;
+
     }
     public static String getTiempoActual() {
         if (startTime) {

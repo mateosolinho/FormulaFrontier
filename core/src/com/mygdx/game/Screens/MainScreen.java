@@ -8,7 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
+import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Tools.ButtonCreator;
+import com.mygdx.game.Tools.SensorContactListener;
 
 import java.util.Stack;
 
@@ -68,8 +70,10 @@ public class MainScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("Start" , "Pulsado Start");
+                TimeAttack.resetTimes();
                 game.setScreen(MainScreen.playScreen = new PlayScreen(game));
                 //TODO que si empiezo una nueva partida se reinicie todo
+                SensorContactListener.vVueltas = 0;
             }
         });
 
