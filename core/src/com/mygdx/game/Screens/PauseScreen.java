@@ -3,9 +3,14 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
@@ -75,7 +80,25 @@ public class PauseScreen implements Screen {
                 game.setScreen(new MainScreen(game));
             }
         });
+        buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {
+            boolean musicOn = true;
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ImageButton button = buttonCreator.getImageButtonMusicON();
+                ImageButton.ImageButtonStyle style = button.getStyle();
 
+                if (musicOn) {
+                    style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
+                    musicOn = false;
+                } else {
+                    style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
+                    musicOn = true;
+                }
+                style.imageUp.setMinWidth(500);
+                style.imageUp.setMinHeight(300);
+                button.setStyle(style);
+            }
+        });
 
     }
 }
