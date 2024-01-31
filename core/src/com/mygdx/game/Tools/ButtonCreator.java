@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
 
 public class ButtonCreator {
     private Stage stage;
@@ -31,6 +33,8 @@ public class ButtonCreator {
     private ImageButton imageButtonVolver;
     private ImageButton imageButtonMusicON;
     private ImageButton imageButtonVibracion;
+    private ImageButton imageButtonRace;
+    private ImageButton imageButtonTimeAttack;
     private Label lblTitulo;
 
     float screenWidth = Gdx.graphics.getWidth();
@@ -266,15 +270,15 @@ public class ButtonCreator {
 
         imageButtonStart.setHeight(screenHeight * 0.1f);
         imageButtonStart.setWidth(screenWidth * 0.1f);
-        imageButtonStart.setPosition((screenWidth - imageButtonStart.getWidth()) / 2, 0.5f * -screenHeight / 20f);
+        imageButtonStart.setPosition((screenWidth - imageButtonStart.getWidth()) / 2, (-screenHeight) / 20);
 
         imageButtonSettings.setHeight(screenHeight * 0.1f);
         imageButtonSettings.setWidth(screenWidth * 0.1f);
-        imageButtonSettings.setPosition((screenWidth - imageButtonSettings.getWidth()) / 4f, 4 * -screenHeight / 20f);
+        imageButtonSettings.setPosition(screenWidth / 4f, 4 * -screenHeight / 20f);
 
         imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
         imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
-        imageButtonPuntuaciones.setPosition((screenWidth - imageButtonPuntuaciones.getWidth()) / 4f, 8 * -screenHeight / 20f);
+        imageButtonPuntuaciones.setPosition(screenWidth / 4f, 8 * -screenHeight / 20f);
 
         imageButtonTutorial.setHeight(screenHeight * 0.1f);
         imageButtonTutorial.setWidth(screenWidth * 0.1f);
@@ -309,56 +313,82 @@ public class ButtonCreator {
         return stage;
     }
 
+    public Stage createGamemodeButtons() {
+        Texture buttonTextureRace = new Texture(Gdx.files.internal("UI/mainUI/gamemodeRace.png"));
+        Texture buttonTextureTime = new Texture(Gdx.files.internal("UI/mainUI/gamemodeTime.png"));
+
+        ImageButton.ImageButtonStyle styleRace = new ImageButton.ImageButtonStyle();
+        styleRace.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
+        imageButtonRace = new ImageButton(styleRace);
+
+        ImageButton.ImageButtonStyle styleTime = new ImageButton.ImageButtonStyle();
+        styleTime.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTime));
+        imageButtonTimeAttack = new ImageButton(styleTime);
+
+        styleRace.imageUp.setMinWidth(500);
+        styleRace.imageUp.setMinHeight(300);
+
+        styleTime.imageUp.setMinWidth(500);
+        styleTime.imageUp.setMinHeight(300);
+
+        imageButtonRace.setHeight(screenHeight * 0.5f);
+        imageButtonRace.setWidth(screenWidth * 0.5f);
+        imageButtonRace.setPosition(0.05f * (screenWidth - imageButtonRace.getWidth()) / 2, (screenHeight - imageButtonRace.getHeight()) / 2);
+
+        imageButtonTimeAttack.setHeight(screenHeight * 0.5f);
+        imageButtonTimeAttack.setWidth(screenWidth * 0.5f);
+        imageButtonTimeAttack.setPosition(2 *( screenWidth - imageButtonTimeAttack.getWidth()) / 2, (screenHeight - imageButtonTimeAttack.getHeight()) / 2);
+
+        stage.addActor(imageButtonRace);
+        stage.addActor(imageButtonTimeAttack);
+
+        return stage;
+    }
+
     public ImageButton getImageButtonDerecha() {
         return imageButtonDerecha;
     }
-
     public ImageButton getImageButtonIzquierda() {
         return imageButtonIzquierda;
     }
-
     public ImageButton getImageButtonArriba() {
         return imageButtonArriba;
     }
-
     public ImageButton getImageButtonAbajo() {
         return imageButtonAbajo;
     }
-
     public ImageButton getImageButtonPause() {
         return imageButtonPause;
     }
-
     public ImageButton getImageButtonStart() {
         return imageButtonStart;
     }
-
     public ImageButton getImageButtonSettings() {
         return imageButtonSettings;
     }
-
     public ImageButton getImageButtonPuntuaciones() {
         return imageButtonPuntuaciones;
     }
-
     public ImageButton getImageButtonTutorial() {
         return imageButtonTutorial;
     }
-
     public ImageButton getImageButtonExit() {
         return imageButtonExit;
     }
-
     public ImageButton getImageButtonVolver() {
         return imageButtonVolver;
     }
-
     public ImageButton getImageButtonMusicON() {
         return imageButtonMusicON;
     }
-
     public ImageButton getImageButtonVibracion() {
         return imageButtonVibracion;
+    }
+    public ImageButton getImageButtonRace() {
+        return imageButtonRace;
+    }
+    public ImageButton getImageButtonTimeAttack() {
+        return imageButtonTimeAttack;
     }
 
     public void updateVueltas(int vueltas) {

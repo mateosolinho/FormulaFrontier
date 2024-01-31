@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,12 +20,14 @@ public class MainScreen implements Screen {
     private final Stage stage;
     private final Game game;
     static PlayScreen playScreen;
-    public MainScreen(Game game){
+
+    public MainScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createMainButtons();
         handleInput();
     }
+
     @Override
     public void show() {
 
@@ -34,6 +37,7 @@ public class MainScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         stage.act(delta);
         stage.draw();
@@ -65,43 +69,38 @@ public class MainScreen implements Screen {
     }
 
     private void handleInput() {
-
-        buttonCreator.getImageButtonStart().addListener(new ClickListener(){
+        buttonCreator.getImageButtonStart().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("Start" , "Pulsado Start");
-                TimeAttack.resetTimes();
-                game.setScreen(MainScreen.playScreen = new PlayScreen(game));
-                //TODO que si empiezo una nueva partida se reinicie todo
-                SensorContactListener.vVueltas = 0;
+                game.setScreen(new GameModeScreen(game));
             }
         });
 
-        buttonCreator.getImageButtonSettings().addListener(new ClickListener(){
+        buttonCreator.getImageButtonSettings().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new PauseScreen(game));
             }
         });
 
-        buttonCreator.getImageButtonPuntuaciones().addListener(new ClickListener(){
+        buttonCreator.getImageButtonPuntuaciones().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("Puntos" , "Pulsado Puntos");
+                Gdx.app.log("Puntos", "Pulsado Puntos");
             }
         });
 
-        buttonCreator.getImageButtonTutorial().addListener(new ClickListener(){
+        buttonCreator.getImageButtonTutorial().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("Tuto" , "Pulsado Tuto");
+                Gdx.app.log("Tuto", "Pulsado Tuto");
             }
         });
 
-        buttonCreator.getImageButtonExit().addListener(new ClickListener(){
+        buttonCreator.getImageButtonExit().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("Salir" , "Pulsado Salir");
+                Gdx.app.log("Salir", "Pulsado Salir");
                 Gdx.app.exit();
             }
         });

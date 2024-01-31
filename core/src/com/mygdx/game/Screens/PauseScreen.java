@@ -24,7 +24,6 @@ public class PauseScreen implements Screen {
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createPauseScreenButtons();
         handleInput();
-        Gdx.app.log("Entra", "Entra");
     }
 
     @Override
