@@ -13,18 +13,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
+import com.mygdx.game.Others.NameInputListener;
 
 public class ButtonCreator {
     private Stage stage;
+    public static Label lblVuelta;
+    public static Label lblTiempo;
+    public static Label lblBestTime;
+    public static Label lblLastTime;
+    private Label lblTitulo;
+    private Label lblInfoSelection;
     private ImageButton imageButtonDerecha;
     private ImageButton imageButtonIzquierda;
     private ImageButton imageButtonArriba;
     private ImageButton imageButtonAbajo;
     private ImageButton imageButtonPause;
-    public static Label lblVuelta;
-    public static Label lblTiempo;
-    public static Label lblBestTime;
-    public static Label lblLastTime;
     private ImageButton imageButtonStart;
     private ImageButton imageButtonSettings;
     private ImageButton imageButtonPuntuaciones;
@@ -35,7 +38,8 @@ public class ButtonCreator {
     private ImageButton imageButtonVibracion;
     private ImageButton imageButtonRace;
     private ImageButton imageButtonTimeAttack;
-    private Label lblTitulo;
+    private ImageButton imageButtonSelectionCar;
+    private ImageButton imageButtonSelectionCircuit;
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
@@ -238,7 +242,7 @@ public class ButtonCreator {
 
         lblTitulo.setHeight(screenHeight * 0.15f);
         lblTitulo.setWidth(screenWidth * 0.15f);
-        lblTitulo.setPosition((screenWidth - labelWidth) / 2, 4f * screenHeight / 20f);
+        lblTitulo.setPosition((1.02f * screenWidth - labelWidth) / 2, 4f * screenHeight / 20f);
 
         Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/mainUI/start.png"));
         Texture buttonTextureSettings = new Texture(Gdx.files.internal("UI/mainUI/settings.png"));
@@ -341,6 +345,42 @@ public class ButtonCreator {
 
         stage.addActor(imageButtonRace);
         stage.addActor(imageButtonTimeAttack);
+
+        return stage;
+    }
+
+    public Stage createSelectionButtons(){
+        Texture buttonTextureRace = new Texture(Gdx.files.internal("UI/mainUI/cars.png"));
+        Texture buttonTextureTime = new Texture(Gdx.files.internal("UI/mainUI/circuit.png"));
+
+        NameInputListener inputListener = new NameInputListener();
+
+        Gdx.input.getTextInput(inputListener, "Enter your name", "", "Name");
+
+        ImageButton.ImageButtonStyle styleCars = new ImageButton.ImageButtonStyle();
+        styleCars.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
+        imageButtonSelectionCar = new ImageButton(styleCars);
+
+        ImageButton.ImageButtonStyle styleCircuit = new ImageButton.ImageButtonStyle();
+        styleCircuit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTime));
+        imageButtonSelectionCircuit = new ImageButton(styleCircuit);
+
+        styleCars.imageUp.setMinWidth(500);
+        styleCars.imageUp.setMinHeight(300);
+
+        styleCircuit.imageUp.setMinWidth(500);
+        styleCircuit.imageUp.setMinHeight(300);
+
+        imageButtonSelectionCar.setHeight(screenHeight * 0.5f);
+        imageButtonSelectionCar.setWidth(screenWidth * 0.5f);
+        imageButtonSelectionCar.setPosition(0.05f * (screenWidth - imageButtonSelectionCar.getWidth()) / 2, (screenHeight - imageButtonSelectionCar.getHeight()) / 2);
+
+        imageButtonSelectionCircuit.setHeight(screenHeight * 0.5f);
+        imageButtonSelectionCircuit.setWidth(screenWidth * 0.5f);
+        imageButtonSelectionCircuit.setPosition(2 *( screenWidth - imageButtonSelectionCircuit.getWidth()) / 2, (screenHeight - imageButtonSelectionCircuit.getHeight()) / 2);
+
+        stage.addActor(imageButtonSelectionCar);
+        stage.addActor(imageButtonSelectionCircuit);
 
         return stage;
     }

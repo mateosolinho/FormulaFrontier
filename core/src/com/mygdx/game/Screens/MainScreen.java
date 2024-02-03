@@ -93,6 +93,7 @@ public class MainScreen implements Screen {
         buttonCreator.getImageButtonTutorial().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new SelectionScreen(game));
                 Gdx.app.log("Tuto", "Pulsado Tuto");
             }
         });
