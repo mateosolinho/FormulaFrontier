@@ -10,9 +10,9 @@ public class PreferencesManager {
 
     }
 
-    public void GuardarDatos() {
+    public void GuardarDatos(String name) {
         Preferences prefs = Gdx.app.getPreferences("Datos");
-        prefs.putString("nombre", "valor");
+        prefs.putString("nombre", name);
         prefs.putInteger("puntuacion", 1000);
         prefs.flush();
     }

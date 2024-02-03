@@ -353,9 +353,7 @@ public class ButtonCreator {
         Texture buttonTextureRace = new Texture(Gdx.files.internal("UI/mainUI/cars.png"));
         Texture buttonTextureTime = new Texture(Gdx.files.internal("UI/mainUI/circuit.png"));
 
-        NameInputListener inputListener = new NameInputListener();
-
-        Gdx.input.getTextInput(inputListener, "Enter your name", "", "Name");
+        Gdx.input.getTextInput(new NameInputListener(), "Enter your name", "", "Name");
 
         ImageButton.ImageButtonStyle styleCars = new ImageButton.ImageButtonStyle();
         styleCars.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
@@ -429,6 +427,12 @@ public class ButtonCreator {
     }
     public ImageButton getImageButtonTimeAttack() {
         return imageButtonTimeAttack;
+    }
+    public ImageButton getImageButtonSelectionCar() {
+        return imageButtonSelectionCar;
+    }
+    public ImageButton getImageButtonSelectionCircuit() {
+        return imageButtonSelectionCircuit;
     }
 
     public void updateVueltas(int vueltas) {

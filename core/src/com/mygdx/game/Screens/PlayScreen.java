@@ -19,8 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
+import com.mygdx.game.Others.NameInputListener;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
+import com.mygdx.game.Tools.PreferencesManager;
 import com.mygdx.game.Tools.SensorContactListener;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
@@ -62,6 +64,8 @@ public class PlayScreen implements Screen {
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
     static public TimeAttack timeAttack = new TimeAttack();
+    private final PreferencesManager preferencesManager;
+    private final NameInputListener nameInputListener;
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -73,6 +77,8 @@ public class PlayScreen implements Screen {
         mapLoader = new MapLoader(world);
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
+        preferencesManager = new PreferencesManager();
+        nameInputListener = new NameInputListener();
 
         playerTexture = new Texture(Gdx.files.internal("Cars/hyundaiVerde.png"));
         playerSprite = new Sprite(playerTexture);
