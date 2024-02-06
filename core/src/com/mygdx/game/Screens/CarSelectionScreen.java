@@ -11,17 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
-public class SelectionScreen implements Screen {
+public class CarSelectionScreen implements Screen {
 
     private Game game;
     private ButtonCreator buttonCreator;
     private Stage stage;
-    private String rutaCoche;
+    public static String rutaCoche;
 
-    public SelectionScreen(Game game) {
+    public CarSelectionScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
-//        stage = buttonCreator.createSelectionButtons();
         stage = buttonCreator.createCarButtons();
         handleInput();
     }
@@ -32,8 +31,11 @@ public class SelectionScreen implements Screen {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
 
-                    Gdx.app.log("Coche,", "entro" + b.getName());
-                    rutaCoche = b.getName() + ".png";
+                    CarSelectionScreen.rutaCoche ="Cars/" +  b.getName().trim() + ".png";
+                    Gdx.app.log("Coche,", b.getName() + ".png");
+                    if (rutaCoche != null){
+                        game.setScreen(new PlayScreen(game));
+                    }
                 }
             });
         }
@@ -78,7 +80,8 @@ public class SelectionScreen implements Screen {
 
     }
 
-    public String getRutaCoche() {
-        return rutaCoche;
-    }
+//    public String getRutaCoche() {
+//        Gdx.app.log("sel", rutaCoche + " ");
+//        return rutaCoche;
+//    }
 }

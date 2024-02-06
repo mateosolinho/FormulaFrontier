@@ -1,16 +1,17 @@
 package com.mygdx.game.Others;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 public class NameInputListener implements Input.TextInputListener {
-    private String playerName;
+    static private String playerName;
 
     @Override
     public void input(String text) {
         if (text != null) {
             playerName = text;
         } else {
-            playerName = "No sabe poner su nombre por lo visto";
+            playerName = "Por lo visto no sabe poner su nombre";
         }
     }
 
@@ -20,6 +21,7 @@ public class NameInputListener implements Input.TextInputListener {
     }
 
     public String getName() {
+        Gdx.app.log("Nombre", playerName + " ");
         return playerName;
     }
 }

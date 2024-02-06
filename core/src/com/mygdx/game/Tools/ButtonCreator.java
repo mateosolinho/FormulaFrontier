@@ -1,6 +1,7 @@
 package com.mygdx.game.Tools;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,7 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Others.NameInputListener;
+
+import java.util.ArrayList;
 
 public class ButtonCreator {
     private Stage stage;
@@ -40,6 +44,15 @@ public class ButtonCreator {
     private ImageButton imageButtonTimeAttack;
     private ImageButton imageButtonSelectionCar;
     private ImageButton imageButtonSelectionCircuit;
+    //   private ImageButton imageButtonCars;
+    private ArrayList<ImageButton> listaCoches = new ArrayList<>();
+
+    private ImageButton imageButtonCar1;
+    private ImageButton imageButtonCar2;
+    private ImageButton imageButtonCar3;
+    private ImageButton imageButtonCar4;
+    private ImageButton imageButtonCar5;
+    private ImageButton imageButtonCar6;
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
@@ -58,7 +71,7 @@ public class ButtonCreator {
         f1Font.font.getData().setScale(50 / f1Font.font.getCapHeight());
 
         lblTiempo = new Label("", f1Font);
-        lblVuelta = new Label("Lap: 0 / 5", f1Font);
+        lblVuelta = new Label("Lap: ", f1Font);
         lblBestTime = new Label("", f1Font);
         lblLastTime = new Label("", f1Font);
 
@@ -341,7 +354,7 @@ public class ButtonCreator {
 
         imageButtonTimeAttack.setHeight(screenHeight * 0.5f);
         imageButtonTimeAttack.setWidth(screenWidth * 0.5f);
-        imageButtonTimeAttack.setPosition(2 *( screenWidth - imageButtonTimeAttack.getWidth()) / 2, (screenHeight - imageButtonTimeAttack.getHeight()) / 2);
+        imageButtonTimeAttack.setPosition(2 * (screenWidth - imageButtonTimeAttack.getWidth()) / 2, (screenHeight - imageButtonTimeAttack.getHeight()) / 2);
 
         stage.addActor(imageButtonRace);
         stage.addActor(imageButtonTimeAttack);
@@ -349,11 +362,11 @@ public class ButtonCreator {
         return stage;
     }
 
-    public Stage createSelectionButtons(){
+    public Stage createSelectionButtons() {
         Texture buttonTextureRace = new Texture(Gdx.files.internal("UI/mainUI/cars.png"));
         Texture buttonTextureTime = new Texture(Gdx.files.internal("UI/mainUI/circuit.png"));
 
-        Gdx.input.getTextInput(new NameInputListener(), "Enter your name", "", "Name");
+//        Gdx.input.getTextInput(new NameInputListener(), "Enter your name", "", "Name");
 
         ImageButton.ImageButtonStyle styleCars = new ImageButton.ImageButtonStyle();
         styleCars.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
@@ -375,7 +388,7 @@ public class ButtonCreator {
 
         imageButtonSelectionCircuit.setHeight(screenHeight * 0.5f);
         imageButtonSelectionCircuit.setWidth(screenWidth * 0.5f);
-        imageButtonSelectionCircuit.setPosition(2 *( screenWidth - imageButtonSelectionCircuit.getWidth()) / 2, (screenHeight - imageButtonSelectionCircuit.getHeight()) / 2);
+        imageButtonSelectionCircuit.setPosition(2 * (screenWidth - imageButtonSelectionCircuit.getWidth()) / 2, (screenHeight - imageButtonSelectionCircuit.getHeight()) / 2);
 
         stage.addActor(imageButtonSelectionCar);
         stage.addActor(imageButtonSelectionCircuit);
@@ -383,59 +396,134 @@ public class ButtonCreator {
         return stage;
     }
 
+    public Stage createCarButtons() {
+        Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
+        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+
+        Label lblSelection = new Label("Car Selection", f1FontTitle);
+
+        float labelWidth = lblSelection.getWidth();
+
+        lblSelection.setHeight(screenHeight * 0.15f);
+        lblSelection.setWidth(screenWidth * 0.15f);
+        lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
+
+        stage.addActor(lblSelection);
+        FileHandle assetsFolder = Gdx.files.internal("Cars");
+        if (assetsFolder.isDirectory()) {
+            FileHandle[] files = assetsFolder.list();
+
+            float initialPositionX = (0.42f * screenWidth) / 2;
+            float initialPositionY = (0.9f * screenHeight) / 2;
+            float auxX = initialPositionX;
+            float auxY = initialPositionY;
+
+            float gapx = 0.19f * screenWidth;
+            float gapY = 0.35f * screenHeight;
+            for (int i = 0; i < files.length; i++) {
+                FileHandle file = files[i];
+                Gdx.app.log("File", file + " ");
+
+                Texture buttonTextureCars = new Texture(Gdx.files.internal(file.toString()));
+                ImageButton.ImageButtonStyle styleCars = new ImageButton.ImageButtonStyle();
+                styleCars.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureCars));
+                ImageButton imageButtonCars = new ImageButton(styleCars);
+
+                imageButtonCars.setHeight(screenHeight * 0.2f);
+                imageButtonCars.setWidth(screenWidth * 0.2f);
+
+                imageButtonCars.setPosition(auxX, auxY);
+                imageButtonCars.setName(" " + i);
+                auxX += gapx;
+
+                if (i == files.length / 2 - 1) {
+                    auxX = initialPositionX;
+                    auxY -= gapY;
+                }
+                Gdx.app.log("pos", auxX + ":" + auxY);
+                listaCoches.add(imageButtonCars);
+                stage.addActor(imageButtonCars);
+
+
+            }
+        }
+        return stage;
+    }
+
+
     public ImageButton getImageButtonDerecha() {
         return imageButtonDerecha;
     }
+
     public ImageButton getImageButtonIzquierda() {
         return imageButtonIzquierda;
     }
+
     public ImageButton getImageButtonArriba() {
         return imageButtonArriba;
     }
+
     public ImageButton getImageButtonAbajo() {
         return imageButtonAbajo;
     }
+
     public ImageButton getImageButtonPause() {
         return imageButtonPause;
     }
+
     public ImageButton getImageButtonStart() {
         return imageButtonStart;
     }
+
     public ImageButton getImageButtonSettings() {
         return imageButtonSettings;
     }
+
     public ImageButton getImageButtonPuntuaciones() {
         return imageButtonPuntuaciones;
     }
+
     public ImageButton getImageButtonTutorial() {
         return imageButtonTutorial;
     }
+
     public ImageButton getImageButtonExit() {
         return imageButtonExit;
     }
+
     public ImageButton getImageButtonVolver() {
         return imageButtonVolver;
     }
+
     public ImageButton getImageButtonMusicON() {
         return imageButtonMusicON;
     }
+
     public ImageButton getImageButtonVibracion() {
         return imageButtonVibracion;
     }
+
     public ImageButton getImageButtonRace() {
         return imageButtonRace;
     }
+
     public ImageButton getImageButtonTimeAttack() {
         return imageButtonTimeAttack;
     }
+
     public ImageButton getImageButtonSelectionCar() {
         return imageButtonSelectionCar;
     }
+
     public ImageButton getImageButtonSelectionCircuit() {
         return imageButtonSelectionCircuit;
     }
 
+    public ArrayList<ImageButton> getImageButtonCars() {
+        return listaCoches;
+    }
+
     public void updateVueltas(int vueltas) {
-        lblVuelta.setText("Lap: " + vueltas + " / 5");
+        lblVuelta.setText("Lap: " + vueltas);
     }
 }

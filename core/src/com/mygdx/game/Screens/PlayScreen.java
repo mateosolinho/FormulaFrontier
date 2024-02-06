@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
-import com.mygdx.game.Others.NameInputListener;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.PreferencesManager;
@@ -63,9 +62,8 @@ public class PlayScreen implements Screen {
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
+    private final CarSelectionScreen carSelectionScreen;
     static public TimeAttack timeAttack = new TimeAttack();
-    private final PreferencesManager preferencesManager;
-    private final NameInputListener nameInputListener;
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -77,12 +75,12 @@ public class PlayScreen implements Screen {
         mapLoader = new MapLoader(world);
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
-        preferencesManager = new PreferencesManager();
-        nameInputListener = new NameInputListener();
+        carSelectionScreen = new CarSelectionScreen(game);
 
-        playerTexture = new Texture(Gdx.files.internal("Cars/hyundaiVerde.png"));
+        Gdx.app.log("Coche", CarSelectionScreen.rutaCoche + " ");
+        playerTexture = new Texture(Gdx.files.internal(CarSelectionScreen.rutaCoche));
         playerSprite = new Sprite(playerTexture);
-        playerSprite.setSize(3f, 4.2f);
+        playerSprite.setSize(2f, 3.6f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
         TimeAttack.resetTimes();
@@ -168,11 +166,15 @@ public class PlayScreen implements Screen {
     boolean isLeftPressed = false;
 
     private void processInput() {
+//        int a=Integer.parseInt(CarSelectionScreen.rutaCoche.trim().replace("Cars/","").split("\\.")[0]);
         switch (turnDirection) {
             case TURN_DIRECTION_RIGHT:
+
                 player.setAngularVelocity(-TURN_SPEED);
+//                player.setAngularVelocity(-TURN_SPEED*a*2);
                 break;
             case TURN_DIRECTION_LEFT:
+//                player.setAngularVelocity(TURN_SPEED*a*2);
                 player.setAngularVelocity(TURN_SPEED);
                 break;
             default:
