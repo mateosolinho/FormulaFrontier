@@ -44,15 +44,9 @@ public class ButtonCreator {
     private ImageButton imageButtonTimeAttack;
     private ImageButton imageButtonSelectionCar;
     private ImageButton imageButtonSelectionCircuit;
-    //   private ImageButton imageButtonCars;
-    private ArrayList<ImageButton> listaCoches = new ArrayList<>();
-
-    private ImageButton imageButtonCar1;
-    private ImageButton imageButtonCar2;
-    private ImageButton imageButtonCar3;
-    private ImageButton imageButtonCar4;
-    private ImageButton imageButtonCar5;
-    private ImageButton imageButtonCar6;
+    private ImageButton imageButtonTrack1;
+    private ImageButton imageButtonTrack2;
+    private final ArrayList<ImageButton> listaCoches = new ArrayList<>();
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
@@ -450,6 +444,44 @@ public class ButtonCreator {
         return stage;
     }
 
+    public Stage createMapsButtons(){
+        Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
+        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+
+        Label lblSelection = new Label("Circuit Selection", f1FontTitle);
+
+        float labelWidth = lblSelection.getWidth();
+
+        lblSelection.setHeight(screenHeight * 0.15f);
+        lblSelection.setWidth(screenWidth * 0.15f);
+        lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
+
+        Texture buttonTextureRace = new Texture(Gdx.files.internal("TrackFiles/Track1/track1.png"));
+        Texture buttonTextureTime = new Texture(Gdx.files.internal("TrackFiles/Track2/track2.png"));
+
+        ImageButton.ImageButtonStyle styleTrack1 = new ImageButton.ImageButtonStyle();
+        styleTrack1.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
+        imageButtonTrack1 = new ImageButton(styleTrack1);
+
+        ImageButton.ImageButtonStyle styleTrack2 = new ImageButton.ImageButtonStyle();
+        styleTrack2.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTime));
+        imageButtonTrack2 = new ImageButton(styleTrack2);
+
+        imageButtonTrack1.setHeight(screenHeight * 0.5f);
+        imageButtonTrack1.setWidth(screenWidth * 0.5f);
+        imageButtonTrack1.setPosition(0.05f * (screenWidth - imageButtonTrack1.getWidth()) / 2, (screenHeight - imageButtonTrack1.getHeight()) / 2);
+
+        imageButtonTrack2.setHeight(screenHeight * 0.5f);
+        imageButtonTrack2.setWidth(screenWidth * 0.5f);
+        imageButtonTrack2.setPosition(2 * (screenWidth - imageButtonTrack2.getWidth()) / 2, (screenHeight - imageButtonTrack2.getHeight()) / 2);
+
+        stage.addActor(imageButtonTrack1);
+        stage.addActor(imageButtonTrack2);
+        stage.addActor(lblSelection);
+
+        return stage;
+    }
+
 
     public ImageButton getImageButtonDerecha() {
         return imageButtonDerecha;
@@ -511,12 +543,12 @@ public class ButtonCreator {
         return imageButtonTimeAttack;
     }
 
-    public ImageButton getImageButtonSelectionCar() {
-        return imageButtonSelectionCar;
+    public ImageButton getImageButtonTrack1() {
+        return imageButtonTrack1;
     }
 
-    public ImageButton getImageButtonSelectionCircuit() {
-        return imageButtonSelectionCircuit;
+    public ImageButton getImageButtonTrack2() {
+        return imageButtonTrack2;
     }
 
     public ArrayList<ImageButton> getImageButtonCars() {

@@ -22,21 +22,11 @@ public class SelectionScreen implements Screen {
         this.game = game;
         buttonCreator = new ButtonCreator();
 //        stage = buttonCreator.createSelectionButtons();
-        stage = buttonCreator.createCarButtons();
         handleInput();
     }
 
     private void handleInput() {
-        for (final ImageButton b : buttonCreator.getImageButtonCars()) {
-            b.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
 
-                    Gdx.app.log("Coche,", "entro" + b.getName());
-                    rutaCoche = b.getName() + ".png";
-                }
-            });
-        }
     }
 
     @Override

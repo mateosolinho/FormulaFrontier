@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.Screens.CircuitSelectionScreen;
 
 public class MapLoader implements Disposable {
 
@@ -24,8 +25,7 @@ public class MapLoader implements Disposable {
     private final Body player;
 
     public MapLoader(World world) {
-//        map = new TmxMapLoader().load("TrackFiles/TestTrack/new_map.tmx");
-        map = new TmxMapLoader().load("TrackFiles/Track1/track1.tmx");
+        map = new TmxMapLoader().load(CircuitSelectionScreen.rutaCircuito);
         float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
         float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 

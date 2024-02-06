@@ -19,7 +19,6 @@ public class MainScreen implements Screen {
     private final ButtonCreator buttonCreator;
     private final Stage stage;
     private final Game game;
-    static PlayScreen playScreen;
 
     public MainScreen(Game game) {
         this.game = game;

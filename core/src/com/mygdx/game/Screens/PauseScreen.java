@@ -76,8 +76,8 @@ public class PauseScreen implements Screen {
         buttonCreator.getImageButtonVolver().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.input.setInputProcessor(MainScreen.playScreen.getStage());
-                game.setScreen(MainScreen.playScreen);
+                Gdx.input.setInputProcessor(CircuitSelectionScreen.playScreen.getStage());
+                game.setScreen(CircuitSelectionScreen.playScreen);
             }
         });
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {

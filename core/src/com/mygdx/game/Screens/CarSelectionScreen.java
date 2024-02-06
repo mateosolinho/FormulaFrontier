@@ -34,7 +34,7 @@ public class CarSelectionScreen implements Screen {
                     CarSelectionScreen.rutaCoche ="Cars/" +  b.getName().trim() + ".png";
                     Gdx.app.log("Coche,", b.getName() + ".png");
                     if (rutaCoche != null){
-                        game.setScreen(new PlayScreen(game));
+                        game.setScreen(new CircuitSelectionScreen(game));
                     }
                 }
             });

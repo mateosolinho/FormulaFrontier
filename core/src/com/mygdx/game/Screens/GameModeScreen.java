@@ -28,7 +28,7 @@ public class GameModeScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 TimeAttack.resetTimes();
-                game.setScreen(MainScreen.playScreen = new PlayScreen(game));
+                game.setScreen(CircuitSelectionScreen.playScreen = new PlayScreen(game));
                 SensorContactListener.vVueltas = 0;
             }
         });
