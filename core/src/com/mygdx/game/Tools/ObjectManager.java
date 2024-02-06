@@ -44,8 +44,6 @@ public class ObjectManager {
                     BodyDef.BodyType.StaticBody, world, 1f, false);
         bodyWalls.setUserData("wall");
         }
-
-
     }
 
     public void createMeta(TiledMap map) {
@@ -72,5 +70,17 @@ public class ObjectManager {
                 new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
                 BodyDef.BodyType.StaticBody, world, 0.4f, true);
         check2.setUserData("check2");
+    }
+
+    public void createExterior(TiledMap map) {
+        Array<RectangleMapObject> walls = map.getLayers().get("fuera").getObjects().getByType(RectangleMapObject.class);
+        for (RectangleMapObject rObject : new Array.ArrayIterator<>(walls)) {
+            Rectangle rectangle = rObject.getRectangle();
+            Body bodyExt = ShapeFactory.createRectangle(
+                    new Vector2((rectangle.getX() + rectangle.getWidth() / 2), (rectangle.getY() + rectangle.getHeight() / 2)),
+                    new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2),
+                    BodyDef.BodyType.StaticBody, world, 1f, true);
+            bodyExt.setUserData("ext");
+        }
     }
 }

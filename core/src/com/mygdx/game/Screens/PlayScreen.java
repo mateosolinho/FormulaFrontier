@@ -37,9 +37,9 @@ public class PlayScreen implements Screen {
 
     private final static float DRIFT = 0.99f;
 
-    private final static float DRIVE_SPEED = 150.0f;
-    private final static float TURN_SPEED = 2.5f;
-    private final static float MAX_SPEED = 55.0f;
+    private static float DRIVE_SPEED = 150.0f;
+    private static float TURN_SPEED = 2.5f;
+    private static float MAX_SPEED = 55.0f;
 
     private int driveDirection = DRIVE_DIRECTION_NONE;
     private int turnDirection = TURN_DIRECTION_NONE;
@@ -64,6 +64,9 @@ public class PlayScreen implements Screen {
     private final MapLoader mapLoader;
     private final CarSelectionScreen carSelectionScreen;
     static public TimeAttack timeAttack = new TimeAttack();
+
+    private static final float TARGET_FPS = 60;
+    private static final float TIME_PER_FRAME = 1f / TARGET_FPS;
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -103,6 +106,17 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        if (deltaTime < TIME_PER_FRAME) {
+            try {
+                Thread.sleep((long) ((TIME_PER_FRAME - deltaTime) * 1000));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Gdx.app.log("FPS", Gdx.graphics.getFramesPerSecond() + " ");
         baseVector = new Vector2(0, 0);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -294,6 +308,14 @@ public class PlayScreen implements Screen {
             }
         });
     }
+
+    public static void modifyDriveSpeed(float newSpeed, float newTurnSpeed, float newMaxSpeed) {
+        DRIVE_SPEED = newSpeed;
+        TURN_SPEED = newTurnSpeed;
+        MAX_SPEED = newMaxSpeed;
+    }
+
+
 
     private void draw() {
         batch.setProjectionMatrix(camera.combined);

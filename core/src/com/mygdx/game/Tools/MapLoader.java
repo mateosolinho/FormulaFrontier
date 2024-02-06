@@ -43,6 +43,7 @@ public class MapLoader implements Disposable {
         objectManager.createMeta(map);
         objectManager.createCheckpoint1(map);
         objectManager.createCheckpoint2(map);
+        objectManager.createExterior(map);
     }
 
     public Body getPlayer(){
