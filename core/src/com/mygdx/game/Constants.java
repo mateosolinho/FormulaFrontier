@@ -7,4 +7,5 @@ public class Constants {
     public static final String META = "meta";
     public static final String CHECKPOINT1 = "checkpoint1";
     public static final String CHECKPOINT2 = "checkpoint2";
+    public static final String CHECKPOINT3 = "checkpoint3";
 }

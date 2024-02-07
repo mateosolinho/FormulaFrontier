@@ -9,13 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Others.NameInputListener;
+import com.mygdx.game.Game;
 
 import java.util.ArrayList;
 
@@ -26,7 +22,6 @@ public class ButtonCreator {
     public static Label lblBestTime;
     public static Label lblLastTime;
     private Label lblTitulo;
-    private Label lblInfoSelection;
     private ImageButton imageButtonDerecha;
     private ImageButton imageButtonIzquierda;
     private ImageButton imageButtonArriba;
@@ -215,6 +210,12 @@ public class ButtonCreator {
         imageButtonVibracion.setWidth(screenWidth * 0.1f);
         imageButtonVibracion.setPosition((screenWidth - imageButtonVibracion.getWidth()) / 4f, -screenHeight / 20f);
 
+
+        if (Game.vibracion) {
+            styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
+        } else {
+            styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
+        }
         stylePauseExit.imageUp.setMinWidth(500);
         stylePauseExit.imageUp.setMinHeight(300);
 
@@ -444,7 +445,7 @@ public class ButtonCreator {
         return stage;
     }
 
-    public Stage createMapsButtons(){
+    public Stage createMapsButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
 

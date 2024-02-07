@@ -2,12 +2,10 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -83,7 +81,7 @@ public class PauseScreen implements Screen {
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (nameInputListener.getName() != null){
+                if (nameInputListener.getName() != null) {
                     preferencesManager.GuardarDatos(nameInputListener.getName());
                     Gdx.app.log("Nombre", nameInputListener.getName() + " ");
                 }
@@ -112,19 +110,18 @@ public class PauseScreen implements Screen {
         });
 
         buttonCreator.getImageButtonVibracion().addListener(new ClickListener() {
-            boolean vibracion = true;
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ImageButton button = buttonCreator.getImageButtonVibracion();
                 ImageButton.ImageButtonStyle style = button.getStyle();
 
-                if (vibracion) {
+                if (Game.vibracion) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
-                    vibracion = false;
+                    Game.vibracion = false;
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
-                    vibracion = true;
+                    Game.vibracion = true;
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
@@ -133,4 +130,6 @@ public class PauseScreen implements Screen {
         });
 
     }
+
+
 }

@@ -21,7 +21,6 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
-import com.mygdx.game.Tools.PreferencesManager;
 import com.mygdx.game.Tools.SensorContactListener;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
@@ -62,11 +61,10 @@ public class PlayScreen implements Screen {
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
-    private final CarSelectionScreen carSelectionScreen;
     static public TimeAttack timeAttack = new TimeAttack();
 
     private static final float TARGET_FPS = 60;
-    private static final float TIME_PER_FRAME = 1f / TARGET_FPS;
+    private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -78,7 +76,6 @@ public class PlayScreen implements Screen {
         mapLoader = new MapLoader(world);
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
-        carSelectionScreen = new CarSelectionScreen(game);
 
         Gdx.app.log("Coche", CarSelectionScreen.rutaCoche + " ");
         playerTexture = new Texture(Gdx.files.internal(CarSelectionScreen.rutaCoche));

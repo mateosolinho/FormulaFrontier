@@ -1,10 +1,9 @@
 package com.mygdx.game;
 
 import com.mygdx.game.Screens.MainScreen;
-import com.mygdx.game.Screens.PauseScreen;
-import com.mygdx.game.Screens.PlayScreen;
 
 public class Game extends com.badlogic.gdx.Game {
+    public static boolean vibracion = true;
 
     @Override
     public void create() {

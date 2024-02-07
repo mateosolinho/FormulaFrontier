@@ -3,6 +3,7 @@ package com.mygdx.game.Tools;
 
 import static com.mygdx.game.Constants.CHECKPOINT1;
 import static com.mygdx.game.Constants.CHECKPOINT2;
+import static com.mygdx.game.Constants.CHECKPOINT3;
 import static com.mygdx.game.Constants.META;
 import static com.mygdx.game.Constants.PLAYER;
 import static com.mygdx.game.Constants.WALLS;
@@ -70,6 +71,14 @@ public class ObjectManager {
                 new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
                 BodyDef.BodyType.StaticBody, world, 0.4f, true);
         check2.setUserData("check2");
+    }
+    public void createCheckpoint3(TiledMap map){
+        Rectangle playerRectangle = map.getLayers().get(CHECKPOINT3).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
+        Body check3 = ShapeFactory.createRectangle(
+                new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
+                new Vector2(playerRectangle.getWidth() / 2, playerRectangle.getHeight() / 2),
+                BodyDef.BodyType.StaticBody, world, 0.4f, true);
+        check3.setUserData("check3");
     }
 
     public void createExterior(TiledMap map) {
