@@ -210,7 +210,6 @@ public class ButtonCreator {
         imageButtonVibracion.setWidth(screenWidth * 0.1f);
         imageButtonVibracion.setPosition((screenWidth - imageButtonVibracion.getWidth()) / 4f, -screenHeight / 20f);
 
-
         if (Game.vibracion) {
             styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
         } else {

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -23,8 +24,11 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.SensorContactListener;
 
+import java.util.ArrayList;
+
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
+    private TextureAtlas atlas;
 
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
@@ -65,9 +69,20 @@ public class PlayScreen implements Screen {
 
     private static final float TARGET_FPS = 60;
     private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
+    private final ArrayList<Texture> semaforos = new ArrayList<>();
+    private float timeSemaforo = 0;
+    private int spriteSemaforo = 0;
+    int imgWitdh = new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")).getWidth();
+    int imgHeight = new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")).getHeight();
 
     public PlayScreen(Game game) {
         this.game = game;
+        semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")));
+        semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_1.png")));
+        semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_2.png")));
+        semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_3.png")));
+        semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")));
+        semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_5.png")));
         batch = new SpriteBatch();
 
         world = new World(new Vector2(0, 0), true);
@@ -91,6 +106,7 @@ public class PlayScreen implements Screen {
         stage = buttonCreator.createGameButtons();
         handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
+
     }
 
     public Stage getStage() {
@@ -103,6 +119,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        timeSemaforo = timeSemaforo + delta;
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         if (deltaTime < TIME_PER_FRAME) {
@@ -113,7 +130,6 @@ public class PlayScreen implements Screen {
             }
         }
 
-        Gdx.app.log("FPS", Gdx.graphics.getFramesPerSecond() + " ");
         baseVector = new Vector2(0, 0);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -123,10 +139,10 @@ public class PlayScreen implements Screen {
         if (SensorContactListener.vVueltas > 0) {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
         }
-        if (isPausePressed){
-            isPausePressed=false;
+        if (isPausePressed) {
+            isPausePressed = false;
         }
-        update();
+        update(delta);
 
         camera.update();
         tiledMapRenderer.setView(camera);
@@ -154,7 +170,6 @@ public class PlayScreen implements Screen {
         }
 
         handleDrift();
-
         draw();
         stage.act(delta);
         stage.draw();
@@ -177,15 +192,12 @@ public class PlayScreen implements Screen {
     boolean isLeftPressed = false;
 
     private void processInput() {
-//        int a=Integer.parseInt(CarSelectionScreen.rutaCoche.trim().replace("Cars/","").split("\\.")[0]);
         switch (turnDirection) {
             case TURN_DIRECTION_RIGHT:
 
                 player.setAngularVelocity(-TURN_SPEED);
-//                player.setAngularVelocity(-TURN_SPEED*a*2);
                 break;
             case TURN_DIRECTION_LEFT:
-//                player.setAngularVelocity(TURN_SPEED*a*2);
                 player.setAngularVelocity(TURN_SPEED);
                 break;
             default:
@@ -296,7 +308,7 @@ public class PlayScreen implements Screen {
             }
         });
 
-        buttonCreator.getImageButtonPause().addListener(new ClickListener(){
+        buttonCreator.getImageButtonPause().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new PauseScreen(game));
@@ -313,7 +325,6 @@ public class PlayScreen implements Screen {
     }
 
 
-
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
         b2rd.render(world, camera.combined);
@@ -322,10 +333,23 @@ public class PlayScreen implements Screen {
         playerSprite.setPosition(player.getPosition().x - playerSprite.getWidth() / 2, player.getPosition().y - playerSprite.getHeight() / 2);
         playerSprite.setRotation(player.getAngle() * MathUtils.radiansToDegrees);
         playerSprite.draw(batch);
+
+        float tick = 1f;
+
+        if (timeSemaforo > tick) {
+            spriteSemaforo++;
+            timeSemaforo = 0;
+        }
+        if (spriteSemaforo < semaforos.size()) {
+            batch.draw(semaforos.get(spriteSemaforo),
+                    player.getPosition().x - 15 / 2f,
+                    player.getPosition().y - 11.1f / 2f,
+                    15, 11.1f);
+        }
         batch.end();
     }
 
-    private void update() {
+    private void update(float dt) {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
