@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -20,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
+import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.SensorContactListener;
@@ -28,8 +28,6 @@ import java.util.ArrayList;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
-    private TextureAtlas atlas;
-
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
     private final static int DRIVE_DIRECTION_BACKWARD = 2;
@@ -59,12 +57,14 @@ public class PlayScreen implements Screen {
     private final Body player;
     private long tTotal = 0;
     private boolean isPausePressed;
+    private boolean isSemaforoActive;
 
     private final Game game;
     private final ButtonCreator buttonCreator;
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
+    private AudioManager audioManager;
     static public TimeAttack timeAttack = new TimeAttack();
 
     private static final float TARGET_FPS = 60;
@@ -72,8 +72,7 @@ public class PlayScreen implements Screen {
     private final ArrayList<Texture> semaforos = new ArrayList<>();
     private float timeSemaforo = 0;
     private int spriteSemaforo = 0;
-    int imgWitdh = new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")).getWidth();
-    int imgHeight = new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")).getHeight();
+
 
     public PlayScreen(Game game) {
         this.game = game;
@@ -104,8 +103,13 @@ public class PlayScreen implements Screen {
         buttonCreator = new ButtonCreator();
         buttonCreator.createGameLabels();
         stage = buttonCreator.createGameButtons();
-        handleInput();
         world.setContactListener(new SensorContactListener(buttonCreator));
+
+            audioManager = MainScreen.getAudioManager();
+        if (Game.musica) {
+            audioManager.stopMusicMenu();
+            audioManager.startSemaforoMusic();
+        }
 
     }
 
@@ -119,6 +123,9 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if (!Game.musica){
+            audioManager.stopMusicCarrera();
+        }
         timeSemaforo = timeSemaforo + delta;
         float deltaTime = Gdx.graphics.getDeltaTime();
 
@@ -260,12 +267,17 @@ public class PlayScreen implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isUpPressed = true;
+//                audioManager.startCocheAcelerando();
+//                if (audioManager != null)
+//                    audioManager.stopAudioReduciendo();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 isUpPressed = false;
+//                audioManager.stopAudioAcelerando();
+//                audioManager.startCocheReduciendo();
             }
         });
 
@@ -316,6 +328,7 @@ public class PlayScreen implements Screen {
 
             }
         });
+
     }
 
     public static void modifyDriveSpeed(float newSpeed, float newTurnSpeed, float newMaxSpeed) {
@@ -345,8 +358,15 @@ public class PlayScreen implements Screen {
                     player.getPosition().x - 15 / 2f,
                     player.getPosition().y - 11.1f / 2f,
                     15, 11.1f);
+            isSemaforoActive = true;
         }
         batch.end();
+        if (spriteSemaforo == 5) {
+            isSemaforoActive = false;
+            handleInput();
+            spriteSemaforo = 6;
+            audioManager.startMusicCarrera();
+        }
     }
 
     private void update(float dt) {

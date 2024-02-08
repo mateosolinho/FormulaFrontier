@@ -215,6 +215,12 @@ public class ButtonCreator {
         } else {
             styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
         }
+
+        if (Game.musica) {
+            stylePauseMusicON.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
+        } else {
+            stylePauseMusicON.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
+        }
         stylePauseExit.imageUp.setMinWidth(500);
         stylePauseExit.imageUp.setMinHeight(300);
 

@@ -1,5 +1,7 @@
 package com.mygdx.game.Screens;
 
+import static com.mygdx.game.Screens.MainScreen.audioManager;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Game;
 import com.mygdx.game.Others.NameInputListener;
+import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
@@ -21,6 +24,7 @@ public class PauseScreen implements Screen {
     private final Game game;
     PreferencesManager preferencesManager;
     NameInputListener nameInputListener;
+    AudioManager audioManager;
 
     public PauseScreen(Game game) {
         this.game = game;
@@ -28,6 +32,7 @@ public class PauseScreen implements Screen {
         nameInputListener = new NameInputListener();
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createPauseScreenButtons();
+        audioManager = MainScreen.getAudioManager();
         handleInput();
     }
 
@@ -85,6 +90,7 @@ public class PauseScreen implements Screen {
                     preferencesManager.GuardarDatos(nameInputListener.getName());
                     Gdx.app.log("Nombre", nameInputListener.getName() + " ");
                 }
+                audioManager.stopMusicCarrera();
                 game.setScreen(new MainScreen(game));
             }
         });
@@ -99,9 +105,11 @@ public class PauseScreen implements Screen {
                 if (musicOn) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
                     musicOn = false;
+                    Game.musica = true;
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
                     musicOn = true;
+                    Game.musica = false;
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
@@ -119,9 +127,11 @@ public class PauseScreen implements Screen {
                 if (Game.vibracion) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
                     Game.vibracion = false;
+
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
                     Game.vibracion = true;
+
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);

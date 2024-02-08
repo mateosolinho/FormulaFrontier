@@ -7,18 +7,30 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
+import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 
 public class MainScreen implements Screen {
     private final ButtonCreator buttonCreator;
     private final Stage stage;
     private final Game game;
+    public static AudioManager audioManager;
 
     public MainScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createMainButtons();
+        audioManager = new AudioManager();
         handleInput();
+        if (Game.musica) {
+            audioManager.startMusicMenu();
+        } else {
+            audioManager.stopMusicMenu();
+        }
+    }
+
+    public static AudioManager getAudioManager() {
+        return audioManager;
     }
 
     @Override
