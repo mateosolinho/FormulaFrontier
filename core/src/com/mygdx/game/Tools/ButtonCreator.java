@@ -450,11 +450,11 @@ public class ButtonCreator {
         return stage;
     }
 
-    public Stage createMapsButtons() {
+    public Stage createMapRecords() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
 
-        Label lblSelection = new Label("Circuit Selection", f1FontTitle);
+        Label lblSelection = new Label("Record Selection", f1FontTitle);
 
         float labelWidth = lblSelection.getWidth();
 
@@ -462,6 +462,14 @@ public class ButtonCreator {
         lblSelection.setWidth(screenWidth * 0.15f);
         lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
 
+        stage.addActor(lblSelection);
+
+        createMapButtonsDefault();
+
+        return stage;
+    }
+
+    public void createMapButtonsDefault() {
         Texture buttonTextureRace = new Texture(Gdx.files.internal("TrackFiles/Track1/track1.png"));
         Texture buttonTextureTime = new Texture(Gdx.files.internal("TrackFiles/Track2/track2.png"));
 
@@ -475,15 +483,31 @@ public class ButtonCreator {
 
         imageButtonTrack1.setHeight(screenHeight * 0.5f);
         imageButtonTrack1.setWidth(screenWidth * 0.5f);
-        imageButtonTrack1.setPosition(0.05f * (screenWidth - imageButtonTrack1.getWidth()) / 2, (screenHeight - imageButtonTrack1.getHeight()) / 2);
+        imageButtonTrack1.setPosition(0.05f * (screenWidth - imageButtonTrack1.getWidth()) / 2, 0.5f * (screenHeight - imageButtonTrack1.getHeight()) / 2);
 
         imageButtonTrack2.setHeight(screenHeight * 0.5f);
         imageButtonTrack2.setWidth(screenWidth * 0.5f);
-        imageButtonTrack2.setPosition(2 * (screenWidth - imageButtonTrack2.getWidth()) / 2, (screenHeight - imageButtonTrack2.getHeight()) / 2);
+        imageButtonTrack2.setPosition(2 * (screenWidth - imageButtonTrack2.getWidth()) / 2, 0.6f * (screenHeight - imageButtonTrack2.getHeight()) / 2);
 
         stage.addActor(imageButtonTrack1);
         stage.addActor(imageButtonTrack2);
+    }
+
+    public Stage createMapsButtons() {
+        Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
+        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+
+        Label lblSelection = new Label("Circuit Selection", f1FontTitle);
+
+        float labelWidth = lblSelection.getWidth();
+
+        lblSelection.setHeight(screenHeight * 0.15f);
+        lblSelection.setWidth(screenWidth * 0.15f);
+        lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
+
         stage.addActor(lblSelection);
+
+        createMapButtonsDefault();
 
         return stage;
     }
