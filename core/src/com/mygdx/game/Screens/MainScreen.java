@@ -84,7 +84,7 @@ public class MainScreen implements Screen {
         buttonCreator.getImageButtonSettings().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new PauseScreen(game));
+                game.setScreen(new MainPauseScreen(game));
             }
         });
 
