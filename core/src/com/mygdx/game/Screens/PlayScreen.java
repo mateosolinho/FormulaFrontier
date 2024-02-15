@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,6 +29,9 @@ import java.util.ArrayList;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
+    private static final float BOOST_THRESHOLD = 6.0f;
+    private static final float BOOST_FORCE = 500.0f;
+
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
     private final static int DRIVE_DIRECTION_BACKWARD = 2;
@@ -267,17 +271,12 @@ public class PlayScreen implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 isUpPressed = true;
-//                audioManager.startCocheAcelerando();
-//                if (audioManager != null)
-//                    audioManager.stopAudioReduciendo();
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 isUpPressed = false;
-//                audioManager.stopAudioAcelerando();
-//                audioManager.startCocheReduciendo();
             }
         });
 
@@ -373,7 +372,18 @@ public class PlayScreen implements Screen {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
+        float accelerometerX = Gdx.input.getAccelerometerX();
+
+        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer) && accelerometerX > BOOST_THRESHOLD) {
+            applyBoost();
+        }
+
         world.step(1 / 60f, 5, 3);
+    }
+
+    private void applyBoost() {
+        // Aplicar una fuerza adicional al coche en la dirección deseada
+        player.applyForceToCenter(player.getWorldVector(new Vector2(0, BOOST_FORCE)), true);
     }
 
     @Override
