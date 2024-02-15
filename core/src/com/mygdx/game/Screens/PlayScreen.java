@@ -29,8 +29,8 @@ import java.util.ArrayList;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
-    private static final float BOOST_THRESHOLD = 6.0f;
-    private static final float BOOST_FORCE = 500.0f;
+    private static final float BOOST_THRESHOLD = 7.0f; // Umbral de detección del boost
+    private static final float BOOST_FORCE = 300.0f; // Fuerza del boost
 
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
@@ -109,7 +109,7 @@ public class PlayScreen implements Screen {
         stage = buttonCreator.createGameButtons();
         world.setContactListener(new SensorContactListener(buttonCreator));
 
-            audioManager = MainScreen.getAudioManager();
+        audioManager = MainScreen.getAudioManager();
         if (Game.musica) {
             audioManager.stopMusicMenu();
             audioManager.startSemaforoMusic();
@@ -127,7 +127,7 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if (!Game.musica){
+        if (!Game.musica) {
             audioManager.stopMusicCarrera();
         }
         timeSemaforo = timeSemaforo + delta;
@@ -374,15 +374,16 @@ public class PlayScreen implements Screen {
 
         float accelerometerX = Gdx.input.getAccelerometerX();
 
-        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer) && accelerometerX > BOOST_THRESHOLD) {
-            applyBoost();
+        if (!isSemaforoActive) {
+            if (accelerometerX > BOOST_THRESHOLD) {
+                applyBoost();
+            }
         }
 
         world.step(1 / 60f, 5, 3);
     }
 
     private void applyBoost() {
-        // Aplicar una fuerza adicional al coche en la dirección deseada
         player.applyForceToCenter(player.getWorldVector(new Vector2(0, BOOST_FORCE)), true);
     }
 
