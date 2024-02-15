@@ -19,24 +19,15 @@ public class CircuitRecordsScreen implements Screen {
     public CircuitRecordsScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
-        stage = buttonCreator.createMapRecords();
+        stage = buttonCreator.createLabelsRecords();
         handleInput();
     }
 
     private void handleInput() {
-        buttonCreator.getImageButtonTrack1().addListener(new ClickListener() {
+        buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(CircuitSelectionScreen.playScreen = new PlayScreen(game));
-                SensorContactListener.vVueltas = 0;
-            }
-        });
-
-        buttonCreator.getImageButtonTrack2().addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(CircuitSelectionScreen.playScreen = new PlayScreen(game));
-                SensorContactListener.vVueltas = 0;
+                game.setScreen(new MainScreen(game));
             }
         });
     }

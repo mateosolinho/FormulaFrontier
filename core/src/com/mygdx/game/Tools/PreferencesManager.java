@@ -10,16 +10,20 @@ public class PreferencesManager {
 
     }
 
-    public void GuardarDatos(String name) {
+    public void GuardarDatos() {
         Preferences prefs = Gdx.app.getPreferences("Datos");
-        prefs.putString("nombre", name);
-        prefs.putInteger("puntuacion", 1000);
+        prefs.putInteger("laps", 1000);
+        prefs.putInteger("tiempo1", 1000);
+        prefs.putInteger("tiempo2", 1000);
+        prefs.putInteger("tiempotTotal", 1000);
         prefs.flush();
     }
 
     public void CargarDatos() {
         Preferences prefs = Gdx.app.getPreferences("My Preferences");
-        String nombre = prefs.getString("nombre");
-        int puntuacion = prefs.getInteger("puntuacion");
+        int vueltasTotales = prefs.getInteger("laps");
+        int tiempo1 = prefs.getInteger("tiempo1");
+        int tiempo2 = prefs.getInteger("tiempo2");
+        int tiempoTotal = prefs.getInteger("tiempoTotal");
     }
 }

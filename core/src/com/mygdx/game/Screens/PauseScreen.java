@@ -1,7 +1,5 @@
 package com.mygdx.game.Screens;
 
-import static com.mygdx.game.Screens.MainScreen.audioManager;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Game;
-import com.mygdx.game.Others.NameInputListener;
 import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
@@ -23,13 +20,11 @@ public class PauseScreen implements Screen {
     private final Stage stage;
     private final Game game;
     PreferencesManager preferencesManager;
-    NameInputListener nameInputListener;
     AudioManager audioManager;
 
     public PauseScreen(Game game) {
         this.game = game;
         preferencesManager = new PreferencesManager();
-        nameInputListener = new NameInputListener();
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createPauseScreenButtons();
         audioManager = MainScreen.getAudioManager();
@@ -86,10 +81,6 @@ public class PauseScreen implements Screen {
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (nameInputListener.getName() != null) {
-                    preferencesManager.GuardarDatos(nameInputListener.getName());
-                    Gdx.app.log("Nombre", nameInputListener.getName() + " ");
-                }
                 audioManager.stopMusicCarrera();
                 game.setScreen(new MainScreen(game));
             }

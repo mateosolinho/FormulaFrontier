@@ -41,6 +41,7 @@ public class ButtonCreator {
     private ImageButton imageButtonSelectionCircuit;
     private ImageButton imageButtonTrack1;
     private ImageButton imageButtonTrack2;
+    private ImageButton imageButtonFlecha;
     private final ArrayList<ImageButton> listaCoches = new ArrayList<>();
 
     float screenWidth = Gdx.graphics.getWidth();
@@ -84,6 +85,20 @@ public class ButtonCreator {
         stage.addActor(lblVuelta);
         stage.addActor(lblBestTime);
         stage.addActor(lblLastTime);
+    }
+
+    public void createFlecha() {
+        Texture buttonTextureFlecha = new Texture(Gdx.files.internal("UI/mainUI/flecha.png"));
+
+        ImageButton.ImageButtonStyle styleFlecha = new ImageButton.ImageButtonStyle();
+        styleFlecha.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureFlecha));
+        imageButtonFlecha = new ImageButton(styleFlecha);
+
+        imageButtonFlecha.setHeight(screenHeight * 0.1f);
+        imageButtonFlecha.setWidth(screenWidth * 0.1f);
+        imageButtonFlecha.setPosition(0f * screenWidth / 2f, 6.7f * screenHeight / 20f);
+
+        stage.addActor(imageButtonFlecha);
     }
 
     public Stage createGameButtons() {
@@ -162,6 +177,9 @@ public class ButtonCreator {
     }
 
     public Stage createPauseScreenButtons() {
+
+        createFlecha();
+
         Texture buttonTextureExitPause = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
         Texture buttonTexturePuntosPause = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
         Texture buttonTextureVolver = new Texture(Gdx.files.internal("UI/pauseUI/volver.png"));
@@ -450,21 +468,54 @@ public class ButtonCreator {
         return stage;
     }
 
-    public Stage createMapRecords() {
+    public Stage createLabelsRecords() {
+        createFlecha();
+
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
-        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+        f1FontTitle.font.getData().setScale(35 / f1FontTitle.font.getCapHeight());
 
-        Label lblSelection = new Label("Record Selection", f1FontTitle);
 
-        float labelWidth = lblSelection.getWidth();
+        Label lblRecords = new Label("Records Screen ", f1FontTitle);
+        Label lblVueltasTotales = new Label("Laps elapsed: ", f1FontTitle);
+        Label lblTiempoTotal = new Label("Time played: ", f1FontTitle);
+        Label lblBestTime1 = new Label("Best Time Circuit 1: ", f1FontTitle);
+        Label lblBestTime2 = new Label("Best Time Circuit 2:", f1FontTitle);
 
-        lblSelection.setHeight(screenHeight * 0.15f);
-        lblSelection.setWidth(screenWidth * 0.15f);
-        lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
+        float labelWidthR = lblRecords.getWidth();
 
-        stage.addActor(lblSelection);
+        lblRecords.setHeight(screenHeight * 0.15f);
+        lblRecords.setWidth(screenWidth * 0.15f);
+        lblRecords.setPosition((screenWidth - labelWidthR) / 2, 14.5f * screenHeight / 20);
 
-        createMapButtonsDefault();
+        float labelWidthV = lblVueltasTotales.getWidth();
+
+        lblVueltasTotales.setHeight(screenHeight * 0.15f);
+        lblVueltasTotales.setWidth(screenWidth * 0.15f);
+        lblVueltasTotales.setPosition((0.7f * screenWidth - labelWidthV) / 2, 10.5f * screenHeight / 20);
+
+        float labelWidthVTt = lblTiempoTotal.getWidth();
+
+        lblTiempoTotal.setHeight(screenHeight * 0.15f);
+        lblTiempoTotal.setWidth(screenWidth * 0.15f);
+        lblTiempoTotal.setPosition((0.7f * screenWidth - labelWidthVTt) / 2, 7.5f * screenHeight / 20);
+
+        float labelWidthBt1 = lblBestTime1.getWidth();
+
+        lblBestTime1.setHeight(screenHeight * 0.15f);
+        lblBestTime1.setWidth(screenWidth * 0.15f);
+        lblBestTime1.setPosition((0.7f * screenWidth - labelWidthBt1) / 2, 4.5f * screenHeight / 20);
+
+        float labelWidthBt2 = lblBestTime2.getWidth();
+
+        lblBestTime2.setHeight(screenHeight * 0.15f);
+        lblBestTime2.setWidth(screenWidth * 0.15f);
+        lblBestTime2.setPosition((0.7f * screenWidth - labelWidthBt2) / 2, 1.5f * screenHeight / 20);
+
+        stage.addActor(lblVueltasTotales);
+        stage.addActor(lblTiempoTotal);
+        stage.addActor(lblBestTime1);
+        stage.addActor(lblBestTime2);
+        stage.addActor(lblRecords);
 
         return stage;
     }
@@ -579,6 +630,10 @@ public class ButtonCreator {
 
     public ImageButton getImageButtonTrack2() {
         return imageButtonTrack2;
+    }
+
+    public ImageButton getImageButtonFlecha() {
+        return imageButtonFlecha;
     }
 
     public ArrayList<ImageButton> getImageButtonCars() {
