@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class ButtonCreator {
     private Stage stage;
+    private final PreferencesManager preferencesManager;
     public static Label lblVuelta;
     public static Label lblTiempo;
     public static Label lblBestTime;
@@ -49,6 +50,7 @@ public class ButtonCreator {
 
     public ButtonCreator() {
         createStage();
+        preferencesManager = new PreferencesManager();
     }
 
     private void createStage() {
@@ -228,13 +230,13 @@ public class ButtonCreator {
         imageButtonVibracion.setWidth(screenWidth * 0.1f);
         imageButtonVibracion.setPosition((screenWidth - imageButtonVibracion.getWidth()) / 4f, -screenHeight / 20f);
 
-        if (Game.vibracion) {
+        if (PreferencesManager.getVibracion()) {
             styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
         } else {
             styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
         }
 
-        if (Game.musica) {
+        if (PreferencesManager.getMusica()) {
             stylePauseMusicON.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
         } else {
             stylePauseMusicON.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));

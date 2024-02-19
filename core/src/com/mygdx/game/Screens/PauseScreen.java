@@ -82,7 +82,8 @@ public class PauseScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 audioManager.stopMusicCarrera();
-                game.setScreen(new MainScreen(game));
+                Gdx.input.setInputProcessor(MainScreen.getStage());
+                game.setMainScreen();
             }
         });
         buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {
@@ -92,13 +93,15 @@ public class PauseScreen implements Screen {
                 ImageButton button = buttonCreator.getImageButtonMusicON();
                 ImageButton.ImageButtonStyle style = button.getStyle();
 
-                if (Game.musica) {
+                if (PreferencesManager.getMusica()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
-                    Game.musica = false;
+                    preferencesManager.guardarMusica(false);
+
                     audioManager.stopMusicCarrera();
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
-                    Game.musica = true;
+                    preferencesManager.guardarMusica(true);
+
                     audioManager.startMusicCarrera();
                 }
                 style.imageUp.setMinWidth(2400);
@@ -114,14 +117,12 @@ public class PauseScreen implements Screen {
                 ImageButton button = buttonCreator.getImageButtonVibracion();
                 ImageButton.ImageButtonStyle style = button.getStyle();
 
-                if (Game.vibracion) {
+                if (PreferencesManager.getVibracion()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
-                    Game.vibracion = false;
-
+                    preferencesManager.guardarVibracion(false);
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
-                    Game.vibracion = true;
-
+                    preferencesManager.guardarVibracion(true);
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);

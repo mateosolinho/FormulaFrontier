@@ -16,7 +16,7 @@ public class SensorContactListener implements ContactListener {
     private boolean isCheck2Activated = false;
     private boolean isCheck3Activated = false;
     private final ButtonCreator buttonCreator;
-    private PlayScreen playScreen;
+    private PreferencesManager preferencesManager;
 
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
@@ -57,7 +57,7 @@ public class SensorContactListener implements ContactListener {
 
         if ("player".equals(fixtureA.getBody().getUserData()) && "wall".equals(fixtureB.getBody().getUserData())
                 || "wall".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-            if (Game.vibracion) {
+            if (PreferencesManager.getVibracion()) {
                 Gdx.input.vibrate(55);
             }
         }

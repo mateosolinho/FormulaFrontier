@@ -10,7 +10,7 @@ public class AudioManager {
     Music raceMusic;
 
     public void startMusicMenu() {
-        if (Game.musica) {
+        if (PreferencesManager.getMusica()) {
             menuMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/audioMenu.mp3"));
             menuMusic.setLooping(true);
             menuMusic.play();

@@ -74,20 +74,22 @@ public class MainPauseScreen implements Screen {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainScreen(game));
+                Gdx.input.setInputProcessor(MainScreen.getStage());
+                game.setMainScreen();
             }
         });
         buttonCreator.getImageButtonVolver().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainScreen(game));
+                Gdx.input.setInputProcessor(MainScreen.getStage());
+                game.setMainScreen();
             }
         });
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                audioManager.stopMusicCarrera();
-                game.setScreen(new MainScreen(game));
+                Gdx.input.setInputProcessor(MainScreen.getStage());
+                game.setMainScreen();
             }
         });
         buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {
@@ -98,14 +100,14 @@ public class MainPauseScreen implements Screen {
                 ImageButton button = buttonCreator.getImageButtonMusicON();
                 ImageButton.ImageButtonStyle style = button.getStyle();
 
-                if (Game.musica) {
+                if (PreferencesManager.getMusica()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
-                    Game.musica = false;
+                    preferencesManager.guardarMusica(false);
                     audioManager.stopMusicMenu();
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
-                    Game.musica = true;
-//                    audioManager.startMusicMenu();
+                    preferencesManager.guardarMusica(true);
+                    audioManager.startMusicMenu();
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
@@ -120,13 +122,13 @@ public class MainPauseScreen implements Screen {
                 ImageButton button = buttonCreator.getImageButtonVibracion();
                 ImageButton.ImageButtonStyle style = button.getStyle();
 
-                if (Game.vibracion) {
+                if (PreferencesManager.getVibracion()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionOFF.png"))));
-                    Game.vibracion = false;
+                    preferencesManager.guardarVibracion(false);
 
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
-                    Game.vibracion = true;
+                    preferencesManager.guardarVibracion(true);
 
                 }
                 style.imageUp.setMinWidth(2400);

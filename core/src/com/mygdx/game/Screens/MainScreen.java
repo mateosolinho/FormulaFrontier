@@ -9,23 +9,29 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
+import com.mygdx.game.Tools.PreferencesManager;
 
 public class MainScreen implements Screen {
     private final ButtonCreator buttonCreator;
-    private final Stage stage;
+    private static Stage stage;
     private final Game game;
-    public static AudioManager audioManager;
+    private static AudioManager audioManager;
+    private boolean musicStarted = false;
+    PreferencesManager preferencesManager;
 
     public MainScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createMainButtons();
         audioManager = new AudioManager();
+        preferencesManager = new PreferencesManager();
         handleInput();
-        if (Game.musica) {
-            audioManager.startMusicMenu();
-        }
     }
+
+    public static Stage getStage(){
+        return stage;
+    }
+
 
     public static AudioManager getAudioManager() {
         return audioManager;
@@ -33,7 +39,10 @@ public class MainScreen implements Screen {
 
     @Override
     public void show() {
-
+        if (PreferencesManager.getMusica() && !musicStarted) {
+            audioManager.startMusicMenu();
+            musicStarted = true;
+        }
     }
 
     @Override

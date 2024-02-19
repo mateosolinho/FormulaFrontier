@@ -23,6 +23,7 @@ import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.MapLoader;
+import com.mygdx.game.Tools.PreferencesManager;
 import com.mygdx.game.Tools.SensorContactListener;
 
 import java.util.ArrayList;
@@ -70,6 +71,7 @@ public class PlayScreen implements Screen {
     private final MapLoader mapLoader;
     private AudioManager audioManager;
     static public TimeAttack timeAttack = new TimeAttack();
+    private PreferencesManager preferencesManager;
 
     private static final float TARGET_FPS = 60;
     private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
@@ -110,7 +112,7 @@ public class PlayScreen implements Screen {
         world.setContactListener(new SensorContactListener(buttonCreator));
 
         audioManager = MainScreen.getAudioManager();
-        if (Game.musica) {
+        if (PreferencesManager.getMusica()) {
             audioManager.stopMusicMenu();
             audioManager.startSemaforoMusic();
         }
@@ -363,7 +365,7 @@ public class PlayScreen implements Screen {
             handleInput();
             spriteSemaforo = 6;
             audioManager.startMusicCarrera();
-            if (!Game.musica) {
+            if (!PreferencesManager.getMusica()) {
                 audioManager.stopMusicCarrera();
             }
         }
@@ -379,7 +381,7 @@ public class PlayScreen implements Screen {
 
 
         Gdx.app.log("accelerometer", accelerometerX + " ");
-        if (!isSemaforoActive && Game.vibracion) {
+        if (!isSemaforoActive ) {
             if (accelerometerX < BOOST_THRESHOLD) {
                 accelerometerX = 0;
                 applyBoost();

@@ -3,12 +3,12 @@ package com.mygdx.game;
 import com.mygdx.game.Screens.MainScreen;
 
 public class Game extends com.badlogic.gdx.Game {
-    public static boolean vibracion = true;
-    public static boolean musica = true;
+    private MainScreen mainScreen;
 
     @Override
     public void create() {
-        setScreen(new MainScreen(this));
+        mainScreen = new MainScreen(this);
+        setScreen(mainScreen);
     }
 
     @Override
@@ -19,5 +19,9 @@ public class Game extends com.badlogic.gdx.Game {
     @Override
     public void dispose() {
         super.dispose();
+    }
+
+    public void setMainScreen() {
+        setScreen(mainScreen);
     }
 }
