@@ -2,7 +2,6 @@ package com.mygdx.game.Tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.mygdx.game.Game;
 
 public class AudioManager {
     Music menuMusic;

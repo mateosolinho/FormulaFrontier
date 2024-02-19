@@ -2,7 +2,9 @@ package com.mygdx.game.Gamemodes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.mygdx.game.Screens.CircuitSelectionScreen;
 import com.mygdx.game.Tools.ButtonCreator;
+import com.mygdx.game.Tools.PreferencesManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,18 +19,22 @@ public class TimeAttack {
     static public ArrayList<Long> tiempos = new ArrayList<>();
     static private boolean startTime = false;
     static private long tiempo = 0;
+    static private long tiempoTotal = 0;
     long lastTime = 0;
     long bestTime = 0;
+    static PreferencesManager preferencesManager = new PreferencesManager();
 
-    public static void resetTimes(){
+    public static void resetTimes() {
         tiempos.clear();
-        startTime=false;
+        startTime = false;
         tiempo = 0;
-
     }
+
     public static String getTiempoActual() {
         if (startTime) {
             tiempo += Gdx.graphics.getDeltaTime() * 1000;
+            tiempoTotal += Gdx.graphics.getDeltaTime() * 1000;
+            preferencesManager.guardarTiempoTotal(tiempoTotal);
         }
         return formatTiempo(tiempo);
     }
@@ -59,8 +65,15 @@ public class TimeAttack {
         if (tiempos.isEmpty()) {
             return "Best: 00:00:00";
         }
-
         bestTime = Collections.min(tiempos);
+        switch (CircuitSelectionScreen.rutaCircuito) {
+            case "TrackFiles/Track1/track1.tmx":
+                preferencesManager.guardarTiempo1(formatTiempoMarcas(bestTime));
+                break;
+            case "TrackFiles/Track2/track2.tmx":
+                preferencesManager.guardarTiempo2(formatTiempoMarcas(bestTime));
+                break;
+        }
         return "Best: " + formatTiempoMarcas(bestTime);
     }
 
@@ -78,7 +91,6 @@ public class TimeAttack {
         }
         return "Last: " + formatTiempoMarcas(lastTime);
     }
-
 
 
 }

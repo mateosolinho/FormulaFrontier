@@ -6,21 +6,22 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class SensorContactListener implements ContactListener {
     public static int vVueltas;
+    public static int vVueltasTotales;
     private boolean isCheck1Activated = false;
     private boolean isCheck2Activated = false;
     private boolean isCheck3Activated = false;
     private final ButtonCreator buttonCreator;
-    private PreferencesManager preferencesManager;
+    PreferencesManager preferencesManager;
 
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
-
+        preferencesManager = new PreferencesManager();
+        vVueltasTotales = preferencesManager.getVueltas();
     }
 
     @Override
@@ -68,10 +69,13 @@ public class SensorContactListener implements ContactListener {
                     if ("player".equals(fixtureA.getBody().getUserData()) && "meta".equals(fixtureB.getBody().getUserData())
                             || "meta".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
                         vVueltas++;
+                        vVueltasTotales++;
 
                         TimeAttack.addNewTime();
                         TimeAttack.setTiempo(0);
                         buttonCreator.updateVueltas(vVueltas);
+                        Gdx.app.log("vuelta", vVueltasTotales + " ");
+                        preferencesManager.guardarVueltas(vVueltasTotales);
                         isCheck1Activated = false;
                         isCheck2Activated = false;
                         isCheck3Activated = false;

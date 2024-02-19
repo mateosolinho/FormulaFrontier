@@ -11,13 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.Game;
 
 import java.util.ArrayList;
 
 public class ButtonCreator {
     private Stage stage;
     private final PreferencesManager preferencesManager;
+    public static Label lblVueltasTotales;
+    public static Label lblBestTime1;
+    public static Label lblBestTime2;
+    public static Label lblTiempoTotal;
     public static Label lblVuelta;
     public static Label lblTiempo;
     public static Label lblBestTime;
@@ -47,6 +50,8 @@ public class ButtonCreator {
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
+    int vueltasTotalest;
+
 
     public ButtonCreator() {
         createStage();
@@ -478,10 +483,14 @@ public class ButtonCreator {
 
 
         Label lblRecords = new Label("Records Screen ", f1FontTitle);
-        Label lblVueltasTotales = new Label("Laps elapsed: ", f1FontTitle);
-        Label lblTiempoTotal = new Label("Time played: ", f1FontTitle);
-        Label lblBestTime1 = new Label("Best Time Circuit 1: ", f1FontTitle);
-        Label lblBestTime2 = new Label("Best Time Circuit 2:", f1FontTitle);
+        Label lblVueltasDadas = new Label("Laps elapsed: ", f1FontTitle);
+        Label lblTiempo = new Label("Time played: ", f1FontTitle);
+        Label lblTime1 = new Label("Best Time Circuit 1: ", f1FontTitle);
+        Label lblTime2 = new Label("Best Time Circuit 2:", f1FontTitle);
+        lblVueltasTotales = new Label(preferencesManager.getVueltas() + " ", f1FontTitle);
+        lblTiempoTotal = new Label(preferencesManager.getTiempoTotal(), f1FontTitle);
+        lblBestTime1 = new Label(preferencesManager.getTiempo1(), f1FontTitle);
+        lblBestTime2 = new Label(preferencesManager.getTiempo2(), f1FontTitle);
 
         float labelWidthR = lblRecords.getWidth();
 
@@ -489,35 +498,65 @@ public class ButtonCreator {
         lblRecords.setWidth(screenWidth * 0.15f);
         lblRecords.setPosition((screenWidth - labelWidthR) / 2, 14.5f * screenHeight / 20);
 
-        float labelWidthV = lblVueltasTotales.getWidth();
+        float labelWidthV = lblVueltasDadas.getWidth();
 
-        lblVueltasTotales.setHeight(screenHeight * 0.15f);
-        lblVueltasTotales.setWidth(screenWidth * 0.15f);
-        lblVueltasTotales.setPosition((0.7f * screenWidth - labelWidthV) / 2, 10.5f * screenHeight / 20);
+        lblVueltasDadas.setHeight(screenHeight * 0.15f);
+        lblVueltasDadas.setWidth(screenWidth * 0.15f);
+        lblVueltasDadas.setPosition((0.7f * screenWidth - labelWidthV) / 2, 10.5f * screenHeight / 20);
 
         float labelWidthVTt = lblTiempoTotal.getWidth();
 
+        lblTiempo.setHeight(screenHeight * 0.15f);
+        lblTiempo.setWidth(screenWidth * 0.15f);
+        lblTiempo.setPosition((0.7f * screenWidth - labelWidthVTt) / 2, 7.5f * screenHeight / 20);
+
+        float labelWidthBt1 = lblTime1.getWidth();
+
+        lblTime1.setHeight(screenHeight * 0.15f);
+        lblTime1.setWidth(screenWidth * 0.15f);
+        lblTime1.setPosition((0.7f * screenWidth - labelWidthBt1) / 2, 4.5f * screenHeight / 20);
+
+        float labelWidthBt2 = lblTime2.getWidth();
+
+        lblTime2.setHeight(screenHeight * 0.15f);
+        lblTime2.setWidth(screenWidth * 0.15f);
+        lblTime2.setPosition((0.7f * screenWidth - labelWidthBt2) / 2, 1.5f * screenHeight / 20);
+
+        //=======================================================
+
+        float labelWidthVueltasTotales = lblVueltasTotales.getWidth();
+
+        lblVueltasTotales.setHeight(screenHeight * 0.15f);
+        lblVueltasTotales.setWidth(screenWidth * 0.15f);
+        lblVueltasTotales.setPosition((1.6f * screenWidth - labelWidthVueltasTotales) / 2, 10.5f * screenHeight / 20);
+
+        float labelTimeTotal = lblTiempoTotal.getWidth();
+
         lblTiempoTotal.setHeight(screenHeight * 0.15f);
         lblTiempoTotal.setWidth(screenWidth * 0.15f);
-        lblTiempoTotal.setPosition((0.7f * screenWidth - labelWidthVTt) / 2, 7.5f * screenHeight / 20);
+        lblTiempoTotal.setPosition((1.6f * screenWidth - labelTimeTotal) / 2, 7.5f * screenHeight / 20);
 
-        float labelWidthBt1 = lblBestTime1.getWidth();
+        float labelTime1 = lblBestTime1.getWidth();
 
         lblBestTime1.setHeight(screenHeight * 0.15f);
         lblBestTime1.setWidth(screenWidth * 0.15f);
-        lblBestTime1.setPosition((0.7f * screenWidth - labelWidthBt1) / 2, 4.5f * screenHeight / 20);
+        lblBestTime1.setPosition((1.6f * screenWidth - labelTime1) / 2, 4.5f * screenHeight / 20);
 
-        float labelWidthBt2 = lblBestTime2.getWidth();
+        float labelTime2 = lblBestTime2.getWidth();
 
         lblBestTime2.setHeight(screenHeight * 0.15f);
         lblBestTime2.setWidth(screenWidth * 0.15f);
-        lblBestTime2.setPosition((0.7f * screenWidth - labelWidthBt2) / 2, 1.5f * screenHeight / 20);
+        lblBestTime2.setPosition((1.6f * screenWidth - labelTime2) / 2, 1.5f * screenHeight / 20);
 
+        stage.addActor(lblVueltasDadas);
+        stage.addActor(lblTiempo);
+        stage.addActor(lblTime1);
+        stage.addActor(lblTime2);
+        stage.addActor(lblRecords);
         stage.addActor(lblVueltasTotales);
         stage.addActor(lblTiempoTotal);
         stage.addActor(lblBestTime1);
         stage.addActor(lblBestTime2);
-        stage.addActor(lblRecords);
 
         return stage;
     }
@@ -643,6 +682,14 @@ public class ButtonCreator {
     }
 
     public void updateVueltas(int vueltas) {
+        lblVuelta.setText("Lap: " + vueltas);
+    }
+
+    public void updateBestLap1(int vueltas) {
+        lblVuelta.setText("Lap: " + vueltas);
+    }
+
+    public void updateBestLap2(int vueltas) {
         lblVuelta.setText("Lap: " + vueltas);
     }
 }

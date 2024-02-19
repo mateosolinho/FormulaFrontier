@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
-import com.mygdx.game.Tools.SensorContactListener;
 
 public class CircuitRecordsScreen implements Screen {
 

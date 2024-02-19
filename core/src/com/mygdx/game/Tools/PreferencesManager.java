@@ -9,7 +9,7 @@ import java.util.Calendar;
 
 public class PreferencesManager {
     @SuppressWarnings("SimpleDateFormat")
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
@@ -25,40 +25,53 @@ public class PreferencesManager {
     }
 
     public int getVueltas() {
+        if (!prefs.contains("laps")) {
+            return 0;
+        }
         return prefs.getInteger("laps");
     }
 
     //==============================================================
 
-    public void guardarTiempo1(int tiempo1) {
-        prefs.putInteger("tiempo1", tiempo1);
+    public void guardarTiempo1(String tiempo1) {
+        prefs.putString("tiempo1", tiempo1);
         prefs.flush();
     }
 
-    public int getTiempo1() {
-        return prefs.getInteger("tiempo1");
+    public String getTiempo1() {
+        if (!prefs.contains("tiempo1")) {
+            return "00:00:00";
+        }
+        return prefs.getString("tiempo1");
     }
 
     //==============================================================
 
-    public void guardarTiempo2(int tiempo2) {
-        prefs.putInteger("tiempo2", tiempo2);
+    public void guardarTiempo2(String tiempo2) {
+        prefs.putString("tiempo2", tiempo2);
         prefs.flush();
     }
 
-    public int getTiempo2() {
-        return prefs.getInteger("tiempo2");
+    public String getTiempo2() {
+        if (!prefs.contains("tiempo2")) {
+            return "00:00:00";
+        }
+        return prefs.getString("tiempo2");
     }
 
     //==============================================================
 
-    public void guardarTiempoTotal(int tiempoTotal) {
-        prefs.putInteger("tiempoTotal", tiempoTotal);
+    public void guardarTiempoTotal(long tiempoTotal) {
+        prefs.putLong("tiempoTotal", tiempoTotal);
         prefs.flush();
     }
 
-    public int getTiempoTotal() {
-        return prefs.getInteger("tiempoTotal");
+    public String getTiempoTotal() {
+        if (!prefs.contains("tiempoTotal")) {
+            return "00:00:00";
+        }
+        Gdx.app.log("tiempo", prefs.getLong("tiempoTotal") + " ");
+        return formatTiempo(prefs.getLong("tiempoTotal"));
     }
 
     //==============================================================
