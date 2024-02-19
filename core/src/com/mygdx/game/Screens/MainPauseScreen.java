@@ -91,21 +91,21 @@ public class MainPauseScreen implements Screen {
             }
         });
         buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {
-            boolean musicOn = true;
+
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 ImageButton button = buttonCreator.getImageButtonMusicON();
                 ImageButton.ImageButtonStyle style = button.getStyle();
 
-                if (musicOn) {
+                if (Game.musica) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
-                    musicOn = false;
-                    Game.musica = true;
+                    Game.musica = false;
+                    audioManager.stopMusicMenu();
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
-                    musicOn = true;
-                    Game.musica = false;
+                    Game.musica = true;
+//                    audioManager.startMusicMenu();
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);

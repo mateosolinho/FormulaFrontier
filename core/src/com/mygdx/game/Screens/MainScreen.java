@@ -24,8 +24,6 @@ public class MainScreen implements Screen {
         handleInput();
         if (Game.musica) {
             audioManager.startMusicMenu();
-        } else {
-            audioManager.stopMusicMenu();
         }
     }
 

@@ -2,18 +2,19 @@ package com.mygdx.game.Tools;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.mygdx.game.Game;
 
 public class AudioManager {
     Music menuMusic;
     Music semaforoMusic;
     Music raceMusic;
-//    Music cocheAcelerando;
-//    Music cocheReduciendo;
 
     public void startMusicMenu() {
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/audioMenu.mp3"));
-        menuMusic.setLooping(true);
-        menuMusic.play();
+        if (Game.musica) {
+            menuMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/audioMenu.mp3"));
+            menuMusic.setLooping(true);
+            menuMusic.play();
+        }
     }
 
     public void stopMusicMenu() {
