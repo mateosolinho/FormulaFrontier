@@ -6,12 +6,9 @@ import com.badlogic.gdx.Preferences;
 
 public class PreferencesManager {
 
-    public PreferencesManager() {
-
-    }
+    Preferences prefs = Gdx.app.getPreferences("Datos");
 
     public void GuardarDatos() {
-        Preferences prefs = Gdx.app.getPreferences("Datos");
         prefs.putInteger("laps", 1000);
         prefs.putInteger("tiempo1", 1000);
         prefs.putInteger("tiempo2", 1000);

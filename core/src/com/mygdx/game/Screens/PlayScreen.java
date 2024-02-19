@@ -29,8 +29,8 @@ import java.util.ArrayList;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
-    private static final float BOOST_THRESHOLD = 9.5f; // Umbral de detección del boost
-    private static final float BOOST_FORCE = 150.0f; // Fuerza del boost
+    private static final float BOOST_THRESHOLD = 4;
+    private static final float BOOST_FORCE = 50.0f;
 
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
@@ -375,12 +375,12 @@ public class PlayScreen implements Screen {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
-        accelerometerX = Gdx.input.getAccelerometerZ();
+        accelerometerX = Gdx.input.getAccelerometerX();
 
 
         Gdx.app.log("accelerometer", accelerometerX + " ");
         if (!isSemaforoActive && Game.vibracion) {
-            if (accelerometerX > BOOST_THRESHOLD) {
+            if (accelerometerX < BOOST_THRESHOLD) {
                 accelerometerX = 0;
                 applyBoost();
             }
