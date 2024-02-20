@@ -26,7 +26,9 @@ public class CircuitRecordsScreen implements Screen {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new MainScreen(game));
+                Gdx.input.setInputProcessor(MainScreen.getStage());
+                game.setMainScreen();
+                dispose();
             }
         });
     }

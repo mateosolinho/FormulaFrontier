@@ -92,6 +92,7 @@ public class MainScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MainPauseScreen(game));
+                dispose();
             }
         });
 
@@ -99,22 +100,21 @@ public class MainScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new CircuitRecordsScreen(game));
-                Gdx.app.log("Puntos", "Pulsado Puntos");
+                dispose();
             }
         });
 
         buttonCreator.getImageButtonTutorial().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new SelectionScreen(game));
-                Gdx.app.log("Tuto", "Pulsado Tuto");
+                game.setScreen(new TutorialScreen(game));
+                dispose();
             }
         });
 
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("Salir", "Pulsado Salir");
                 Gdx.app.exit();
             }
         });

@@ -71,18 +71,12 @@ public class MainPauseScreen implements Screen {
     }
 
     private void handleInput() {
-        buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.input.setInputProcessor(MainScreen.getStage());
-                game.setMainScreen();
-            }
-        });
         buttonCreator.getImageButtonVolver().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.input.setInputProcessor(MainScreen.getStage());
                 game.setMainScreen();
+                dispose();
             }
         });
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
@@ -90,6 +84,7 @@ public class MainPauseScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.input.setInputProcessor(MainScreen.getStage());
                 game.setMainScreen();
+                dispose();
             }
         });
         buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {

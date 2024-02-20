@@ -2,7 +2,6 @@ package com.mygdx.game.Gamemodes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.mygdx.game.Screens.CircuitSelectionScreen;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
@@ -25,6 +24,7 @@ public class TimeAttack {
     static PreferencesManager preferencesManager = new PreferencesManager();
 
     public static void resetTimes() {
+            Gdx.app.log("timepobest" , PreferencesManager.getTiempo1Milis() + " ");
         tiempos.clear();
         startTime = false;
         tiempo = 0;
@@ -61,20 +61,19 @@ public class TimeAttack {
         TimeAttack.startTime = startTime;
     }
 
-    public String getBestTime() {
+    public void getBestTime() {
         if (tiempos.isEmpty()) {
-            return "Best: 00:00:00";
+            return;
         }
         bestTime = Collections.min(tiempos);
-        switch (CircuitSelectionScreen.rutaCircuito) {
-            case "TrackFiles/Track1/track1.tmx":
-                preferencesManager.guardarTiempo1(formatTiempoMarcas(bestTime));
-                break;
-            case "TrackFiles/Track2/track2.tmx":
-                preferencesManager.guardarTiempo2(formatTiempoMarcas(bestTime));
-                break;
+
+        long bestTimeFromPreferences = PreferencesManager.getTiempo1Milis();
+
+        if (bestTime < bestTimeFromPreferences) {
+            preferencesManager.guardarTiempo1Milis(bestTime);
         }
-        return "Best: " + formatTiempoMarcas(bestTime);
+
+        formatTiempo(PreferencesManager.getTiempo1Milis());
     }
 
     public String getLastTime() {
@@ -82,9 +81,10 @@ public class TimeAttack {
             lastTime = tiempos.get(tiempos.size() - 1);
         }
 
-        if (bestTime > lastTime) {
+            Gdx.app.log("timepob" , lastTime + " ");
+        if (PreferencesManager.getTiempo1Milis() > lastTime) {
             ButtonCreator.lblLastTime.setColor(Color.GREEN);
-        } else if (bestTime < lastTime) {
+        } else if (PreferencesManager.getTiempo1Milis() < lastTime) {
             ButtonCreator.lblLastTime.setColor(Color.RED);
         } else {
             ButtonCreator.lblLastTime.setColor(Color.GREEN);

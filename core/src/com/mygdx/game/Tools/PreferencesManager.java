@@ -13,7 +13,8 @@ public class PreferencesManager {
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        cal.setTimeInMillis(tiempo);
+        Gdx.app.log("t2",""+tiempo);
+        cal.setTimeInMillis(tiempo-3600000);
         return dateFormat.format(cal.getTime());
     }
 
@@ -32,31 +33,16 @@ public class PreferencesManager {
     }
 
     //==============================================================
-
-    public void guardarTiempo1(String tiempo1) {
-        prefs.putString("tiempo1", tiempo1);
+    public void guardarTiempo1Milis(long tiempo1) {
+        prefs.putLong("tiempo1Milis", tiempo1);
         prefs.flush();
     }
 
-    public String getTiempo1() {
-        if (!prefs.contains("tiempo1")) {
-            return "00:00:00";
+    public static long getTiempo1Milis() {
+        if (!prefs.contains("tiempo1Milis")) {
+            return 0;
         }
-        return prefs.getString("tiempo1");
-    }
-
-    //==============================================================
-
-    public void guardarTiempo2(String tiempo2) {
-        prefs.putString("tiempo2", tiempo2);
-        prefs.flush();
-    }
-
-    public String getTiempo2() {
-        if (!prefs.contains("tiempo2")) {
-            return "00:00:00";
-        }
-        return prefs.getString("tiempo2");
+        return prefs.getLong("tiempo1Milis");
     }
 
     //==============================================================
@@ -71,6 +57,7 @@ public class PreferencesManager {
             return "00:00:00";
         }
         Gdx.app.log("tiempo", prefs.getLong("tiempoTotal") + " ");
+        Gdx.app.log("tiempo", formatTiempo(prefs.getLong("tiempoTotal")) + " ");
         return formatTiempo(prefs.getLong("tiempoTotal"));
     }
 

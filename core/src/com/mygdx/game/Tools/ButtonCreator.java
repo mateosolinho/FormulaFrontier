@@ -12,7 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ButtonCreator {
     private Stage stage;
@@ -50,8 +52,16 @@ public class ButtonCreator {
 
     float screenWidth = Gdx.graphics.getWidth();
     float screenHeight = Gdx.graphics.getHeight();
-    int vueltasTotalest;
 
+    @SuppressWarnings("SimpleDateFormat")
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
+    private static final Calendar cal = Calendar.getInstance();
+
+    public static String formatTiempo(long tiempo) {
+        Gdx.app.log("t2",""+tiempo);
+        cal.setTimeInMillis(tiempo-3600000);
+        return dateFormat.format(cal.getTime());
+    }
 
     public ButtonCreator() {
         createStage();
@@ -103,7 +113,7 @@ public class ButtonCreator {
 
         imageButtonFlecha.setHeight(screenHeight * 0.1f);
         imageButtonFlecha.setWidth(screenWidth * 0.1f);
-        imageButtonFlecha.setPosition(0f * screenWidth / 2f, 6.7f * screenHeight / 20f);
+        imageButtonFlecha.setPosition(0f * screenWidth / 2f, 17.5f * screenHeight / 20f);
 
         stage.addActor(imageButtonFlecha);
     }
@@ -184,11 +194,7 @@ public class ButtonCreator {
     }
 
     public Stage createPauseScreenButtons() {
-
-        createFlecha();
-
         Texture buttonTextureExitPause = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
-        Texture buttonTexturePuntosPause = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
         Texture buttonTextureVolver = new Texture(Gdx.files.internal("UI/pauseUI/volver.png"));
         Texture buttonTextureMusicON = new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"));
         Texture buttonTextureVibracion = new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"));
@@ -200,10 +206,6 @@ public class ButtonCreator {
         ImageButton.ImageButtonStyle stylePauseVolver = new ImageButton.ImageButtonStyle();
         stylePauseVolver.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureVolver));
         imageButtonVolver = new ImageButton(stylePauseVolver);
-
-        ImageButton.ImageButtonStyle stylePuntuaciones = new ImageButton.ImageButtonStyle();
-        stylePuntuaciones.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePuntosPause));
-        imageButtonPuntuaciones = new ImageButton(stylePuntuaciones);
 
         ImageButton.ImageButtonStyle stylePauseMusicON = new ImageButton.ImageButtonStyle();
         stylePauseMusicON.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureMusicON));
@@ -218,10 +220,6 @@ public class ButtonCreator {
         imageButtonExit.setHeight(screenHeight * 0.1f);
         imageButtonExit.setWidth(screenWidth * 0.1f);
         imageButtonExit.setPosition((screenWidth - imageButtonExit.getWidth()) / 2, 6 * -screenHeight / 20f);
-
-        imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
-        imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
-        imageButtonPuntuaciones.setPosition((screenWidth - imageButtonExit.getWidth()) / 2, -screenHeight / 20f);
 
         imageButtonVolver.setHeight(screenHeight * 0.1f);
         imageButtonVolver.setWidth(screenWidth * 0.1f);
@@ -252,9 +250,6 @@ public class ButtonCreator {
         stylePauseVolver.imageUp.setMinWidth(500);
         stylePauseVolver.imageUp.setMinHeight(300);
 
-        stylePuntuaciones.imageUp.setMinWidth(500);
-        stylePuntuaciones.imageUp.setMinHeight(300);
-
         stylePauseMusicON.imageUp.setMinWidth(2400);
         stylePauseMusicON.imageUp.setMinHeight(1700);
 
@@ -263,7 +258,7 @@ public class ButtonCreator {
 
         stage.addActor(imageButtonExit);
         stage.addActor(imageButtonVolver);
-        stage.addActor(imageButtonPuntuaciones);
+//        stage.addActor(imageButtonPuntuaciones);
         stage.addActor(imageButtonMusicON);
         stage.addActor(imageButtonVibracion);
 
@@ -387,40 +382,6 @@ public class ButtonCreator {
         return stage;
     }
 
-    public Stage createSelectionButtons() {
-        Texture buttonTextureRace = new Texture(Gdx.files.internal("UI/mainUI/cars.png"));
-        Texture buttonTextureTime = new Texture(Gdx.files.internal("UI/mainUI/circuit.png"));
-
-//        Gdx.input.getTextInput(new NameInputListener(), "Enter your name", "", "Name");
-
-        ImageButton.ImageButtonStyle styleCars = new ImageButton.ImageButtonStyle();
-        styleCars.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
-        imageButtonSelectionCar = new ImageButton(styleCars);
-
-        ImageButton.ImageButtonStyle styleCircuit = new ImageButton.ImageButtonStyle();
-        styleCircuit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTime));
-        imageButtonSelectionCircuit = new ImageButton(styleCircuit);
-
-        styleCars.imageUp.setMinWidth(500);
-        styleCars.imageUp.setMinHeight(300);
-
-        styleCircuit.imageUp.setMinWidth(500);
-        styleCircuit.imageUp.setMinHeight(300);
-
-        imageButtonSelectionCar.setHeight(screenHeight * 0.5f);
-        imageButtonSelectionCar.setWidth(screenWidth * 0.5f);
-        imageButtonSelectionCar.setPosition(0.05f * (screenWidth - imageButtonSelectionCar.getWidth()) / 2, (screenHeight - imageButtonSelectionCar.getHeight()) / 2);
-
-        imageButtonSelectionCircuit.setHeight(screenHeight * 0.5f);
-        imageButtonSelectionCircuit.setWidth(screenWidth * 0.5f);
-        imageButtonSelectionCircuit.setPosition(2 * (screenWidth - imageButtonSelectionCircuit.getWidth()) / 2, (screenHeight - imageButtonSelectionCircuit.getHeight()) / 2);
-
-        stage.addActor(imageButtonSelectionCar);
-        stage.addActor(imageButtonSelectionCircuit);
-
-        return stage;
-    }
-
     public Stage createCarButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
@@ -485,12 +446,10 @@ public class ButtonCreator {
         Label lblRecords = new Label("Records Screen ", f1FontTitle);
         Label lblVueltasDadas = new Label("Laps elapsed: ", f1FontTitle);
         Label lblTiempo = new Label("Time played: ", f1FontTitle);
-        Label lblTime1 = new Label("Best Time Circuit 1: ", f1FontTitle);
-        Label lblTime2 = new Label("Best Time Circuit 2:", f1FontTitle);
+        Label lblTime1 = new Label("Best Time: ", f1FontTitle);
         lblVueltasTotales = new Label(preferencesManager.getVueltas() + " ", f1FontTitle);
         lblTiempoTotal = new Label(preferencesManager.getTiempoTotal(), f1FontTitle);
-        lblBestTime1 = new Label(preferencesManager.getTiempo1(), f1FontTitle);
-        lblBestTime2 = new Label(preferencesManager.getTiempo2(), f1FontTitle);
+        lblBestTime1 = new Label(formatTiempo(PreferencesManager.getTiempo1Milis()), f1FontTitle);
 
         float labelWidthR = lblRecords.getWidth();
 
@@ -516,12 +475,6 @@ public class ButtonCreator {
         lblTime1.setWidth(screenWidth * 0.15f);
         lblTime1.setPosition((0.7f * screenWidth - labelWidthBt1) / 2, 4.5f * screenHeight / 20);
 
-        float labelWidthBt2 = lblTime2.getWidth();
-
-        lblTime2.setHeight(screenHeight * 0.15f);
-        lblTime2.setWidth(screenWidth * 0.15f);
-        lblTime2.setPosition((0.7f * screenWidth - labelWidthBt2) / 2, 1.5f * screenHeight / 20);
-
         //=======================================================
 
         float labelWidthVueltasTotales = lblVueltasTotales.getWidth();
@@ -542,21 +495,13 @@ public class ButtonCreator {
         lblBestTime1.setWidth(screenWidth * 0.15f);
         lblBestTime1.setPosition((1.6f * screenWidth - labelTime1) / 2, 4.5f * screenHeight / 20);
 
-        float labelTime2 = lblBestTime2.getWidth();
-
-        lblBestTime2.setHeight(screenHeight * 0.15f);
-        lblBestTime2.setWidth(screenWidth * 0.15f);
-        lblBestTime2.setPosition((1.6f * screenWidth - labelTime2) / 2, 1.5f * screenHeight / 20);
-
         stage.addActor(lblVueltasDadas);
         stage.addActor(lblTiempo);
         stage.addActor(lblTime1);
-        stage.addActor(lblTime2);
         stage.addActor(lblRecords);
         stage.addActor(lblVueltasTotales);
         stage.addActor(lblTiempoTotal);
         stage.addActor(lblBestTime1);
-        stage.addActor(lblBestTime2);
 
         return stage;
     }

@@ -25,12 +25,14 @@ import com.mygdx.game.Tools.MapLoader;
 import com.mygdx.game.Tools.PreferencesManager;
 import com.mygdx.game.Tools.SensorContactListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
-    private static final float BOOST_THRESHOLD = 4;
-    private static final float BOOST_FORCE = 50.0f;
+    private static final float BOOST_THRESHOLD = 12;
+    private static final float BOOST_FORCE = 250.0f;
 
     private final static int DRIVE_DIRECTION_NONE = 0;
     private final static int DRIVE_DIRECTION_FORWARD = 1;
@@ -77,6 +79,14 @@ public class PlayScreen implements Screen {
     private final ArrayList<Texture> semaforos = new ArrayList<>();
     private float timeSemaforo = 0;
     private int spriteSemaforo = 0;
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
+    private static final Calendar cal = Calendar.getInstance();
+
+    public static String formatTiempo(long tiempo) {
+        Gdx.app.log("t2",""+tiempo);
+        cal.setTimeInMillis(tiempo-3600000);
+        return dateFormat.format(cal.getTime());
+    }
 
 
     public PlayScreen(Game game) {
@@ -144,8 +154,9 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        timeAttack.getBestTime();
         ButtonCreator.lblTiempo.setText(TimeAttack.getTiempoActual());
-        ButtonCreator.lblBestTime.setText(timeAttack.getBestTime() + " ");
+        ButtonCreator.lblBestTime.setText("Best: " + formatTiempo(PreferencesManager.getTiempo1Milis()));
         if (SensorContactListener.vVueltas > 0) {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
         }
@@ -338,7 +349,6 @@ public class PlayScreen implements Screen {
 
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
-        b2rd.render(world, camera.combined);
 
         batch.begin();
         playerSprite.setPosition(player.getPosition().x - playerSprite.getWidth() / 2, player.getPosition().y - playerSprite.getHeight() / 2);
@@ -376,12 +386,12 @@ public class PlayScreen implements Screen {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
-        accelerometerX = Gdx.input.getAccelerometerX();
+        accelerometerX = Gdx.input.getAccelerometerZ();
 
 
         Gdx.app.log("accelerometer", accelerometerX + " ");
         if (!isSemaforoActive ) {
-            if (accelerometerX < BOOST_THRESHOLD) {
+            if (accelerometerX > BOOST_THRESHOLD) {
                 accelerometerX = 0;
                 applyBoost();
             }
