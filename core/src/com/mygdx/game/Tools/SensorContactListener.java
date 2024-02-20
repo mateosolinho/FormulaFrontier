@@ -9,21 +9,62 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
+/**
+ * Listener para manejar los contactos entre sensores y otros cuerpos en el juego.
+ */
 public class SensorContactListener implements ContactListener {
-    public static int vVueltas;
-    public static int vVueltasTotales;
-    private boolean isCheck1Activated = false;
-    private boolean isCheck2Activated = false;
-    private boolean isCheck3Activated = false;
-    private final ButtonCreator buttonCreator;
-    PreferencesManager preferencesManager;
 
+    /**
+     * Número de vueltas en la sesión de juego actual
+     */
+    public static int vVueltas;
+
+    /**
+     * Número de vueltas totales de manera general
+     */
+    public static int vVueltasTotales;
+
+    /**
+     * Indica si el primer sensor está activado.
+     */
+    private boolean isCheck1Activated = false;
+
+    /**
+     * Indica si el segundo sensor está activado.
+     */
+    private boolean isCheck2Activated = false;
+
+    /**
+     * Indica si el tercer sensor está activado.
+     */
+    private boolean isCheck3Activated = false;
+
+    /**
+     * Instancia de ButtonCreator para manejar botones.
+     */
+    private final ButtonCreator buttonCreator;
+
+    /**
+     * Instancia de ButtonCreator para manejar preferencias.
+     */
+    private final PreferencesManager preferencesManager;
+
+    /**
+     * Constructor de la clase SensorContactListener.
+     *
+     * @param buttonCreator Instancia de ButtonCreator para manejar botones.
+     */
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
         preferencesManager = new PreferencesManager();
         vVueltasTotales = preferencesManager.getVueltas();
     }
 
+    /**
+     * Método creado cuando se detecta un contacto entre dos fixtures.
+     *
+     * @param contact El objeto Contact que contiene información sobre el contacto.
+     */
     @Override
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
@@ -86,6 +127,11 @@ public class SensorContactListener implements ContactListener {
         }
     }
 
+    /**
+     * Método creado cuando se deja de detectar un contacto entre dos fixtures.
+     *
+     * @param contact El objeto Contact que contiene información sobre el contacto.
+     */
     @Override
     public void endContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
@@ -97,13 +143,23 @@ public class SensorContactListener implements ContactListener {
         }
     }
 
+    /**
+     * Método que se llama antes de resolver el contacto entre fixtures.
+     *
+     * @param contact     El objeto Contact que contiene información sobre el contacto.
+     * @param oldManifold El objeto Manifold que contiene información sobre el antiguo estado del contacto.
+     */
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
     }
 
+    /**
+     * Método que se llama después de resolver el contacto entre fixtures.
+     *
+     * @param contact  El objeto Contact que contiene información sobre el contacto.
+     * @param impulse  El objeto ContactImpulse que contiene información sobre el impulso del contacto.
+     */
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 }

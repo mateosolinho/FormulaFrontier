@@ -5,8 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Game;
 
 public class TutorialScreen implements Screen {
@@ -27,7 +26,7 @@ public class TutorialScreen implements Screen {
                 new Texture("Tutorial/tutorial3.jpg"),
         };
 
-        stage = new Stage(new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+        stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
         currentTextureIndex = 0;
@@ -35,6 +34,7 @@ public class TutorialScreen implements Screen {
 
         Image image = new Image(textures[currentTextureIndex]);
         stage.addActor(image);
+//        image.setBounds((Gdx.graphics.getWidth() - image.getWidth()) / 2f , (Gdx.graphics.getHeight() - image.getHeight()) / 2f, Gdx.graphics.getWidth() + (image.getWidth() / 2), Gdx.graphics.getHeight());
     }
 
     @Override

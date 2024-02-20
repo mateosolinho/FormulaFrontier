@@ -6,8 +6,6 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.Screens.MainScreen;
 import com.mygdx.game.Tools.PreferencesManager;
 
-import java.util.prefs.Preferences;
-
 public class Game extends com.badlogic.gdx.Game {
     private MainScreen mainScreen;
     public static I18NBundle bundle;

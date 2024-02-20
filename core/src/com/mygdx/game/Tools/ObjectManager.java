@@ -17,14 +17,32 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Clase que se encarga de gestionar la creación de objetos físicos a partir de un mapa tiled.
+ */
 public class ObjectManager {
 
+    /**
+     * El mundo Box2D en el que se crean los objetos físicos.
+     */
     private final World world;
 
+    /**
+     * Constructor de la clase ObjectManager.
+     *
+     * @param world El mundo Box2D donde se crean los objetos físicos.
+     */
     public ObjectManager(World world){
         this.world = world;
     }
 
+
+    /**
+     * Crea el cuerpo del jugador a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del jugador.
+     * @return El cuerpo del jugador creado.
+     */
     public Body createPlayer(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(PLAYER).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body playerBody = ShapeFactory.createRectangle(
@@ -35,6 +53,11 @@ public class ObjectManager {
         return playerBody;
     }
 
+    /**
+     * Crea el cuerpo de las paredes a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del las paredes.
+     */
     public void createWalls(TiledMap map) {
         Array<RectangleMapObject> walls = map.getLayers().get(WALLS).getObjects().getByType(RectangleMapObject.class);
         for (RectangleMapObject rObject : new Array.ArrayIterator<>(walls)) {
@@ -47,6 +70,11 @@ public class ObjectManager {
         }
     }
 
+    /**
+     * Crea el cuerpo de la meta a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del la meta.
+     */
     public void createMeta(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(META).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body bodyMeta = ShapeFactory.createRectangle(
@@ -56,6 +84,11 @@ public class ObjectManager {
         bodyMeta.setUserData("meta");
     }
 
+    /**
+     * Crea el cuerpo del checkpoint1 a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del checkpoint1.
+     */
     public void createCheckpoint1(TiledMap map){
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT1).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check1 = ShapeFactory.createRectangle(
@@ -64,6 +97,12 @@ public class ObjectManager {
                 BodyDef.BodyType.StaticBody, world, 0.4f, true);
         check1.setUserData("check1");
     }
+
+    /**
+     * Crea el cuerpo del checkpoint2 a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del checkpoint2.
+     */
     public void createCheckpoint2(TiledMap map){
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT2).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check2 = ShapeFactory.createRectangle(
@@ -72,6 +111,12 @@ public class ObjectManager {
                 BodyDef.BodyType.StaticBody, world, 0.4f, true);
         check2.setUserData("check2");
     }
+
+    /**
+     * Crea el cuerpo del checkpoint3 a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del checkpoint3.
+     */
     public void createCheckpoint3(TiledMap map){
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT3).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check3 = ShapeFactory.createRectangle(
@@ -81,6 +126,11 @@ public class ObjectManager {
         check3.setUserData("check3");
     }
 
+    /**
+     * Crea el cuerpo del exterior del mapa a partir de un mapa tiled.
+     *
+     * @param map El mapa tiled que contiene la información del exterior del mapa.
+     */
     public void createExterior(TiledMap map) {
         Array<RectangleMapObject> walls = map.getLayers().get("fuera").getObjects().getByType(RectangleMapObject.class);
         for (RectangleMapObject rObject : new Array.ArrayIterator<>(walls)) {
