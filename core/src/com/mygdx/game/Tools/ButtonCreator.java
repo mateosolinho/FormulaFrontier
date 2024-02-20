@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Game;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class ButtonCreator {
     private ImageButton imageButtonVolver;
     private ImageButton imageButtonMusicON;
     private ImageButton imageButtonVibracion;
+    private ImageButton imageButtonIdioma;
     private ImageButton imageButtonTrack1;
     private ImageButton imageButtonTrack2;
     private ImageButton imageButtonFlecha;
@@ -53,7 +55,7 @@ public class ButtonCreator {
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        cal.setTimeInMillis(tiempo-3600000);
+        cal.setTimeInMillis(tiempo - 3600000);
         return dateFormat.format(cal.getTime());
     }
 
@@ -72,7 +74,7 @@ public class ButtonCreator {
         f1Font.font.getData().setScale(50 / f1Font.font.getCapHeight());
 
         lblTiempo = new Label("", f1Font);
-        lblVuelta = new Label("Lap: ", f1Font);
+        lblVuelta = new Label(Game.bundle.get("vuelta") + ": ", f1Font);
         lblBestTime = new Label("", f1Font);
         lblLastTime = new Label("", f1Font);
 
@@ -187,10 +189,11 @@ public class ButtonCreator {
     }
 
     public Stage createPauseScreenButtons() {
-        Texture buttonTextureExitPause = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
-        Texture buttonTextureVolver = new Texture(Gdx.files.internal("UI/pauseUI/volver.png"));
+        Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
+        Texture buttonTextureVolver = new Texture(Gdx.files.internal(Game.bundle.get("botonVolver")));
         Texture buttonTextureMusicON = new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"));
         Texture buttonTextureVibracion = new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"));
+        Texture buttonTextureEspanol = new Texture(Gdx.files.internal("UI/pauseUI/espana.png"));
 
         ImageButton.ImageButtonStyle stylePauseExit = new ImageButton.ImageButtonStyle();
         stylePauseExit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureExitPause));
@@ -207,6 +210,10 @@ public class ButtonCreator {
         ImageButton.ImageButtonStyle styleVibracion = new ImageButton.ImageButtonStyle();
         styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureVibracion));
         imageButtonVibracion = new ImageButton(styleVibracion);
+
+        ImageButton.ImageButtonStyle styleIdioma = new ImageButton.ImageButtonStyle();
+        styleIdioma.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureEspanol));
+        imageButtonIdioma = new ImageButton(styleIdioma);
 
         stage.getViewport().getCamera().position.set(screenWidth / 2f, 0, 0);
 
@@ -225,6 +232,16 @@ public class ButtonCreator {
         imageButtonVibracion.setHeight(screenHeight * 0.1f);
         imageButtonVibracion.setWidth(screenWidth * 0.1f);
         imageButtonVibracion.setPosition((screenWidth - imageButtonVibracion.getWidth()) / 4f, -screenHeight / 20f);
+
+        imageButtonIdioma.setHeight(screenHeight * 0.1f);
+        imageButtonIdioma.setWidth(screenWidth * 0.1f);
+        imageButtonIdioma.setPosition(( screenWidth - imageButtonIdioma.getWidth()) / 2, -screenHeight / 20f);
+
+        if (PreferencesManager.getIngles()) {
+            styleIdioma.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/espana.png"))));
+        } else {
+            styleIdioma.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/uk.png"))));
+        }
 
         if (PreferencesManager.getVibracion()) {
             styleVibracion.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/vibracionON.png"))));
@@ -253,6 +270,7 @@ public class ButtonCreator {
         stage.addActor(imageButtonVolver);
         stage.addActor(imageButtonMusicON);
         stage.addActor(imageButtonVibracion);
+        stage.addActor(imageButtonIdioma);
 
         return stage;
     }
@@ -261,7 +279,7 @@ public class ButtonCreator {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
 
-        Label lblTitulo = new Label("FORMULA \nFRONTIER", f1FontTitle);
+        Label lblTitulo = new Label(Game.bundle.get("titulo"), f1FontTitle);
 
         float labelWidth = lblTitulo.getWidth();
 
@@ -269,12 +287,12 @@ public class ButtonCreator {
         lblTitulo.setWidth(screenWidth * 0.15f);
         lblTitulo.setPosition((1.02f * screenWidth - labelWidth) / 2, 4f * screenHeight / 20f);
 
-        Texture buttonTexturePause = new Texture(Gdx.files.internal("UI/mainUI/start.png"));
-        Texture buttonTextureSettings = new Texture(Gdx.files.internal("UI/mainUI/settings.png"));
-        Texture buttonTexturePuntuaciones = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
-        Texture buttonTextureTutorial = new Texture(Gdx.files.internal("UI/mainUI/tutorial.png"));
-        Texture buttonTextureExit = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
-        Texture buttonTextureCredits = new Texture(Gdx.files.internal("UI/mainUI/creditos.png"));
+        Texture buttonTexturePause = new Texture(Gdx.files.internal(Game.bundle.get("botonStart")));
+        Texture buttonTextureSettings = new Texture(Gdx.files.internal(Game.bundle.get("botonAjustes")));
+        Texture buttonTexturePuntuaciones = new Texture(Gdx.files.internal("UI/mainUI/es/puntuacionesES.png"));
+        Texture buttonTextureTutorial = new Texture(Gdx.files.internal(Game.bundle.get("botonGuia")));
+        Texture buttonTextureExit = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
+        Texture buttonTextureCredits = new Texture(Gdx.files.internal(Game.bundle.get("botonCreditos")));
 
         ImageButton.ImageButtonStyle styleStart = new ImageButton.ImageButtonStyle();
         styleStart.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePause));
@@ -359,7 +377,7 @@ public class ButtonCreator {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
 
-        Label lblSelection = new Label("Car Selection", f1FontTitle);
+        Label lblSelection = new Label(Game.bundle.get("tituloCoches"), f1FontTitle);
 
         float labelWidth = lblSelection.getWidth();
 
@@ -416,10 +434,10 @@ public class ButtonCreator {
         f1FontTitle.font.getData().setScale(35 / f1FontTitle.font.getCapHeight());
 
 
-        Label lblRecords = new Label("Records Screen ", f1FontTitle);
-        Label lblVueltasDadas = new Label("Laps elapsed: ", f1FontTitle);
-        Label lblTiempo = new Label("Time played: ", f1FontTitle);
-        Label lblTime1 = new Label("Best Time: ", f1FontTitle);
+        Label lblRecords = new Label(Game.bundle.get("tituloRecords"), f1FontTitle);
+        Label lblVueltasDadas = new Label(Game.bundle.get("vueltasRecords") + " : ", f1FontTitle);
+        Label lblTiempo = new Label(Game.bundle.get("tiempoRecords") + " : ", f1FontTitle);
+        Label lblTime1 = new Label(Game.bundle.get("tiempoMejorRecords") + " : ", f1FontTitle);
         lblVueltasTotales = new Label(preferencesManager.getVueltas() + " ", f1FontTitle);
         lblTiempoTotal = new Label(preferencesManager.getTiempoTotal(), f1FontTitle);
         lblBestTime1 = new Label(formatTiempo(PreferencesManager.getTiempo1Milis()), f1FontTitle);
@@ -430,23 +448,17 @@ public class ButtonCreator {
         lblRecords.setWidth(screenWidth * 0.15f);
         lblRecords.setPosition((screenWidth - labelWidthR) / 2, 14.5f * screenHeight / 20);
 
-        float labelWidthV = lblVueltasDadas.getWidth();
-
         lblVueltasDadas.setHeight(screenHeight * 0.15f);
         lblVueltasDadas.setWidth(screenWidth * 0.15f);
-        lblVueltasDadas.setPosition((0.7f * screenWidth - labelWidthV) / 2, 10.5f * screenHeight / 20);
-
-        float labelWidthVTt = lblTiempoTotal.getWidth();
+        lblVueltasDadas.setPosition((0.3f * screenWidth) / 2, 10.5f * screenHeight / 20);
 
         lblTiempo.setHeight(screenHeight * 0.15f);
         lblTiempo.setWidth(screenWidth * 0.15f);
-        lblTiempo.setPosition((0.7f * screenWidth - labelWidthVTt) / 2, 7.5f * screenHeight / 20);
-
-        float labelWidthBt1 = lblTime1.getWidth();
+        lblTiempo.setPosition((0.3f * screenWidth) / 2, 7.5f * screenHeight / 20);
 
         lblTime1.setHeight(screenHeight * 0.15f);
         lblTime1.setWidth(screenWidth * 0.15f);
-        lblTime1.setPosition((0.7f * screenWidth - labelWidthBt1) / 2, 4.5f * screenHeight / 20);
+        lblTime1.setPosition((0.3f * screenWidth) / 2, 4.5f * screenHeight / 20);
 
         //=======================================================
 
@@ -507,7 +519,7 @@ public class ButtonCreator {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
 
-        Label lblSelection = new Label("Circuit Selection", f1FontTitle);
+        Label lblSelection = new Label(Game.bundle.get("tituloCircuitos"), f1FontTitle);
 
         float labelWidth = lblSelection.getWidth();
 
@@ -528,7 +540,7 @@ public class ButtonCreator {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(30 / f1FontTitle.font.getCapHeight());
 
-        Label lblSelection = new Label("Creditos", f1FontTitle);
+        Label lblSelection = new Label(Game.bundle.get("tituloCreditos"), f1FontTitle);
 
         float labelWidth = lblSelection.getWidth();
 
@@ -536,12 +548,12 @@ public class ButtonCreator {
         lblSelection.setWidth(screenWidth * 0.15f);
         lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
 
-        Label lblCreditos = new Label("Físicas : Onibojan \n\n" +
-                "Físicas : www.iforce2d.net \n\n" +
+        Label lblCreditos = new Label(Game.bundle.get("fisicas") + " : Onibojan \n\n" +
+                Game.bundle.get("fisicas") + " : www.iforce2d.net \n\n" +
                 "Assets : itch.io \n\n" +
                 "Assets : GameDev Market \n\n" +
                 "Assets : www.f1assets \n\n" +
-                "Música : www.jamendo.com", f1FontTitle);
+                Game.bundle.get("musica") + " : www.jamendo.com", f1FontTitle);
 
         float labelWidthVTt = lblCreditos.getWidth();
 
@@ -624,11 +636,15 @@ public class ButtonCreator {
         return imageButtonCreditos;
     }
 
+    public ImageButton getImageButtonIdioma() {
+        return imageButtonIdioma;
+    }
+
     public ArrayList<ImageButton> getImageButtonCars() {
         return listaCoches;
     }
 
     public void updateVueltas(int vueltas) {
-        lblVuelta.setText("Lap: " + vueltas);
+        lblVuelta.setText(Game.bundle.get("vuelta") + ": " + vueltas);
     }
 }

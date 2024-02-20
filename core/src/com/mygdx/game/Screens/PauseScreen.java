@@ -129,5 +129,25 @@ public class PauseScreen implements Screen {
                 button.setStyle(style);
             }
         });
+
+        buttonCreator.getImageButtonIdioma().addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ImageButton button = buttonCreator.getImageButtonIdioma();
+                ImageButton.ImageButtonStyle style = button.getStyle();
+
+                if (PreferencesManager.getIngles()) {
+                    style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/uk.png"))));
+                    PreferencesManager.setIngles(false);
+                } else {
+                    style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/espana.png"))));
+                    PreferencesManager.setIngles(true);
+                }
+                style.imageUp.setMinWidth(2400);
+                style.imageUp.setMinHeight(1700);
+                button.setStyle(style);
+            }
+        });
     }
 }

@@ -51,6 +51,8 @@ public class PlayScreen implements Screen {
     private int driveDirection = DRIVE_DIRECTION_NONE;
     private int turnDirection = TURN_DIRECTION_NONE;
 
+    private final int TICK = 50;
+
     private final Stage stage;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
@@ -68,20 +70,20 @@ public class PlayScreen implements Screen {
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
-    private final AudioManager audioManager;
+    private AudioManager audioManager;
     static public TimeAttack timeAttack = new TimeAttack();
+    private PreferencesManager preferencesManager;
 
     private static final float TARGET_FPS = 60;
     private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
     private final ArrayList<Texture> semaforos = new ArrayList<>();
     private float timeSemaforo = 0;
     private int spriteSemaforo = 0;
-
-    @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
+        Gdx.app.log("t2",""+tiempo);
         cal.setTimeInMillis(tiempo-3600000);
         return dateFormat.format(cal.getTime());
     }
@@ -154,20 +156,19 @@ public class PlayScreen implements Screen {
 
         timeAttack.getBestTime();
         ButtonCreator.lblTiempo.setText(TimeAttack.getTiempoActual());
-        ButtonCreator.lblBestTime.setText("Best: " + formatTiempo(PreferencesManager.getTiempo1Milis()));
+        ButtonCreator.lblBestTime.setText(Game.bundle.get("mejorTiempo") + ": " + formatTiempo(PreferencesManager.getTiempo1Milis()));
         if (SensorContactListener.vVueltas > 0) {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
         }
         if (isPausePressed) {
             isPausePressed = false;
         }
-        update();
+        update(delta);
 
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        int TICK = 50;
         if (System.currentTimeMillis() - tTotal > TICK) {
 
             if (isUpPressed) {
@@ -381,12 +382,14 @@ public class PlayScreen implements Screen {
 
     float accelerometerX;
 
-    private void update() {
+    private void update(float dt) {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
         accelerometerX = Gdx.input.getAccelerometerZ();
 
+
+        Gdx.app.log("accelerometer", accelerometerX + " ");
         if (!isSemaforoActive ) {
             if (accelerometerX > BOOST_THRESHOLD) {
                 accelerometerX = 0;

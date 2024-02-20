@@ -2,6 +2,7 @@ package com.mygdx.game.Gamemodes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
@@ -15,14 +16,16 @@ public class TimeAttack {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 
-    private static final ArrayList<Long> tiempos = new ArrayList<>();
-    private static boolean startTime = false;
-    private static long tiempo = 0;
-    private static long tiempoTotal = 0;
-    private long lastTime = 0;
-    private static final PreferencesManager preferencesManager = new PreferencesManager();
+    static public ArrayList<Long> tiempos = new ArrayList<>();
+    static private boolean startTime = false;
+    static private long tiempo = 0;
+    static private long tiempoTotal = 0;
+    long lastTime = 0;
+    long bestTime = 0;
+    static PreferencesManager preferencesManager = new PreferencesManager();
 
     public static void resetTimes() {
+        Gdx.app.log("timepobest" , PreferencesManager.getTiempo1Milis() + " ");
         tiempos.clear();
         startTime = false;
         tiempo = 0;
@@ -63,11 +66,13 @@ public class TimeAttack {
         if (tiempos.isEmpty()) {
             return;
         }
-        long bestTime = Collections.min(tiempos);
+        bestTime = Collections.min(tiempos);
+        Gdx.app.log("besty", bestTime + " ");
 
         long bestTimeFromPreferences = PreferencesManager.getTiempo1Milis();
 
-        if (bestTime < bestTimeFromPreferences) {
+        Gdx.app.log("besty", bestTimeFromPreferences + " ");
+        if (bestTime < bestTimeFromPreferences || bestTimeFromPreferences == 0) {
             preferencesManager.guardarTiempo1Milis(bestTime);
         }
 
@@ -79,6 +84,7 @@ public class TimeAttack {
             lastTime = tiempos.get(tiempos.size() - 1);
         }
 
+        Gdx.app.log("timepob" , lastTime + " ");
         if (PreferencesManager.getTiempo1Milis() > lastTime) {
             ButtonCreator.lblLastTime.setColor(Color.GREEN);
         } else if (PreferencesManager.getTiempo1Milis() < lastTime) {
@@ -86,7 +92,7 @@ public class TimeAttack {
         } else {
             ButtonCreator.lblLastTime.setColor(Color.GREEN);
         }
-        return "Last: " + formatTiempoMarcas(lastTime);
+        return Game.bundle.get("ultimoTiempo") + ": " + formatTiempoMarcas(lastTime);
     }
 
 

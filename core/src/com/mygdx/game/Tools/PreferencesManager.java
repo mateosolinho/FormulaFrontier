@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 
 public class PreferencesManager {
@@ -13,7 +14,7 @@ public class PreferencesManager {
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        cal.setTimeInMillis(tiempo-3600000);
+        cal.setTimeInMillis(tiempo - 3600000);
         return dateFormat.format(cal.getTime());
     }
 
@@ -92,5 +93,25 @@ public class PreferencesManager {
             return true;
         }
         return prefs.getBoolean("vibracion");
+    }
+
+    //==============================================================
+
+    public static void setIngles(boolean ingles) {
+        Gdx.app.log("ingles" , ingles + " ");
+        prefs.putBoolean("ingles", ingles);
+        prefs.flush();
+    }
+
+    public static boolean getIngles() {
+        return prefs.getBoolean("ingles");
+    }
+
+    public static String getPropertyFile() {
+        return getIngles() ? "textos_en" : "textos_es";
+    }
+
+    public static Locale getLocale() {
+        return getIngles() ? new Locale("en") : new Locale("es");
     }
 }
