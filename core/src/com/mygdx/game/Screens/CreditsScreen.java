@@ -11,9 +11,9 @@ import com.mygdx.game.Tools.ButtonCreator;
 
 public class CreditsScreen implements Screen {
 
-    private Game game;
-    private ButtonCreator buttonCreator;
-    private Stage stage;
+    private final Game game;
+    private final ButtonCreator buttonCreator;
+    private final Stage stage;
 
     public CreditsScreen(Game game) {
         this.game = game;

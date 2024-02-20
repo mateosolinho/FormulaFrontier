@@ -12,9 +12,9 @@ import com.mygdx.game.Tools.ButtonCreator;
 
 public class CarSelectionScreen implements Screen {
 
-    private Game game;
-    private ButtonCreator buttonCreator;
-    private Stage stage;
+    private final Game game;
+    private final ButtonCreator buttonCreator;
+    private final Stage stage;
     public static String rutaCoche;
 
     public CarSelectionScreen(Game game) {
@@ -29,12 +29,8 @@ public class CarSelectionScreen implements Screen {
             b.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
                     CarSelectionScreen.rutaCoche ="Cars/" +  b.getName().trim() + ".png";
-                    Gdx.app.log("Coche,", b.getName() + ".png");
-                    if (rutaCoche != null){
-                        game.setScreen(new CircuitSelectionScreen(game));
-                    }
+                    game.setScreen(new CircuitSelectionScreen(game));
                 }
             });
         }
@@ -78,9 +74,4 @@ public class CarSelectionScreen implements Screen {
     public void dispose() {
 
     }
-
-//    public String getRutaCoche() {
-//        Gdx.app.log("sel", rutaCoche + " ");
-//        return rutaCoche;
-//    }
 }

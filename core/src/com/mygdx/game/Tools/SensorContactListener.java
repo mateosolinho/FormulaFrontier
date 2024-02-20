@@ -31,11 +31,7 @@ public class SensorContactListener implements ContactListener {
 
         if ("player".equals(fixtureA.getBody().getUserData()) && "check3".equals(fixtureB.getBody().getUserData())
                 || "check3".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
-            if (isCheck3Activated && !isCheck2Activated) {
-                isCheck3Activated = false;
-            } else {
-                isCheck3Activated = true;
-            }
+            isCheck3Activated = !isCheck3Activated || isCheck2Activated;
         }
 
         if ("player".equals(fixtureA.getBody().getUserData()) && "check2".equals(fixtureB.getBody().getUserData())

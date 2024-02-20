@@ -12,9 +12,9 @@ import com.mygdx.game.Tools.SensorContactListener;
 
 public class CircuitSelectionScreen implements Screen {
 
-    private Game game;
-    private ButtonCreator buttonCreator;
-    private Stage stage;
+    private final Game game;
+    private final ButtonCreator buttonCreator;
+    private final Stage stage;
     public static String rutaCircuito;
     static PlayScreen playScreen;
 
@@ -83,9 +83,4 @@ public class CircuitSelectionScreen implements Screen {
     public void dispose() {
 
     }
-
-//    public String getRutaCoche() {
-//        Gdx.app.log("sel", rutaCoche + " ");
-//        return rutaCoche;
-//    }
 }

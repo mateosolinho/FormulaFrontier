@@ -17,14 +17,12 @@ public class MainScreen implements Screen {
     private final Game game;
     private static AudioManager audioManager;
     private boolean musicStarted = false;
-    PreferencesManager preferencesManager;
 
     public MainScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createMainButtons();
         audioManager = new AudioManager();
-        preferencesManager = new PreferencesManager();
         handleInput();
     }
 

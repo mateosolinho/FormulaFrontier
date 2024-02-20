@@ -51,8 +51,6 @@ public class PlayScreen implements Screen {
     private int driveDirection = DRIVE_DIRECTION_NONE;
     private int turnDirection = TURN_DIRECTION_NONE;
 
-    private final int TICK = 50;
-
     private final Stage stage;
     private Vector2 baseVector;
     private final OrthographicCamera camera;
@@ -70,7 +68,7 @@ public class PlayScreen implements Screen {
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
-    private AudioManager audioManager;
+    private final AudioManager audioManager;
     static public TimeAttack timeAttack = new TimeAttack();
 
     private static final float TARGET_FPS = 60;
@@ -84,7 +82,6 @@ public class PlayScreen implements Screen {
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        Gdx.app.log("t2",""+tiempo);
         cal.setTimeInMillis(tiempo-3600000);
         return dateFormat.format(cal.getTime());
     }
@@ -164,12 +161,13 @@ public class PlayScreen implements Screen {
         if (isPausePressed) {
             isPausePressed = false;
         }
-        update(delta);
+        update();
 
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
+        int TICK = 50;
         if (System.currentTimeMillis() - tTotal > TICK) {
 
             if (isUpPressed) {
@@ -383,14 +381,12 @@ public class PlayScreen implements Screen {
 
     float accelerometerX;
 
-    private void update(float dt) {
+    private void update() {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
         accelerometerX = Gdx.input.getAccelerometerZ();
 
-
-        Gdx.app.log("accelerometer", accelerometerX + " ");
         if (!isSemaforoActive ) {
             if (accelerometerX > BOOST_THRESHOLD) {
                 accelerometerX = 0;

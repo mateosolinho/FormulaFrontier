@@ -26,7 +26,6 @@ public class ButtonCreator {
     public static Label lblTiempo;
     public static Label lblBestTime;
     public static Label lblLastTime;
-    private Label lblTitulo;
     private ImageButton imageButtonDerecha;
     private ImageButton imageButtonIzquierda;
     private ImageButton imageButtonArriba;
@@ -41,8 +40,6 @@ public class ButtonCreator {
     private ImageButton imageButtonVolver;
     private ImageButton imageButtonMusicON;
     private ImageButton imageButtonVibracion;
-    private ImageButton imageButtonRace;
-    private ImageButton imageButtonTimeAttack;
     private ImageButton imageButtonTrack1;
     private ImageButton imageButtonTrack2;
     private ImageButton imageButtonFlecha;
@@ -264,7 +261,7 @@ public class ButtonCreator {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
 
-        lblTitulo = new Label("FORMULA \nFRONTIER", f1FontTitle);
+        Label lblTitulo = new Label("FORMULA \nFRONTIER", f1FontTitle);
 
         float labelWidth = lblTitulo.getWidth();
 
@@ -354,38 +351,6 @@ public class ButtonCreator {
         stage.addActor(imageButtonExit);
         stage.addActor(lblTitulo);
         stage.addActor(imageButtonCreditos);
-
-        return stage;
-    }
-
-    public Stage createGamemodeButtons() {
-        Texture buttonTextureRace = new Texture(Gdx.files.internal("UI/mainUI/gamemodeRace.png"));
-        Texture buttonTextureTime = new Texture(Gdx.files.internal("UI/mainUI/gamemodeTime.png"));
-
-        ImageButton.ImageButtonStyle styleRace = new ImageButton.ImageButtonStyle();
-        styleRace.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureRace));
-        imageButtonRace = new ImageButton(styleRace);
-
-        ImageButton.ImageButtonStyle styleTime = new ImageButton.ImageButtonStyle();
-        styleTime.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTime));
-        imageButtonTimeAttack = new ImageButton(styleTime);
-
-        styleRace.imageUp.setMinWidth(500);
-        styleRace.imageUp.setMinHeight(300);
-
-        styleTime.imageUp.setMinWidth(500);
-        styleTime.imageUp.setMinHeight(300);
-
-        imageButtonRace.setHeight(screenHeight * 0.5f);
-        imageButtonRace.setWidth(screenWidth * 0.5f);
-        imageButtonRace.setPosition(0.05f * (screenWidth - imageButtonRace.getWidth()) / 2, (screenHeight - imageButtonRace.getHeight()) / 2);
-
-        imageButtonTimeAttack.setHeight(screenHeight * 0.5f);
-        imageButtonTimeAttack.setWidth(screenWidth * 0.5f);
-        imageButtonTimeAttack.setPosition(2 * (screenWidth - imageButtonTimeAttack.getWidth()) / 2, (screenHeight - imageButtonTimeAttack.getHeight()) / 2);
-
-        stage.addActor(imageButtonRace);
-        stage.addActor(imageButtonTimeAttack);
 
         return stage;
     }
@@ -641,14 +606,6 @@ public class ButtonCreator {
 
     public ImageButton getImageButtonVibracion() {
         return imageButtonVibracion;
-    }
-
-    public ImageButton getImageButtonRace() {
-        return imageButtonRace;
-    }
-
-    public ImageButton getImageButtonTimeAttack() {
-        return imageButtonTimeAttack;
     }
 
     public ImageButton getImageButtonTrack1() {

@@ -19,8 +19,8 @@ public class MainPauseScreen implements Screen {
     private final ButtonCreator buttonCreator;
     private final Stage stage;
     private final Game game;
-    PreferencesManager preferencesManager;
-    AudioManager audioManager;
+    private final PreferencesManager preferencesManager;
+    private final AudioManager audioManager;
 
     public MainPauseScreen(Game game) {
         this.game = game;

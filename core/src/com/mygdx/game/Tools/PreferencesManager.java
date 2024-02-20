@@ -13,7 +13,6 @@ public class PreferencesManager {
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        Gdx.app.log("t2",""+tiempo);
         cal.setTimeInMillis(tiempo-3600000);
         return dateFormat.format(cal.getTime());
     }

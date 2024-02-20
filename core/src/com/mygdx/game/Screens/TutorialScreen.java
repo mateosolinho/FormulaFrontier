@@ -14,7 +14,6 @@ public class TutorialScreen implements Screen {
     private int currentTextureIndex;
     private final Game game;
     private boolean canTouch;
-    private float cooldownTime = 0.3f;
     private float elapsedTime = 0f;
 
     public TutorialScreen(Game game) {
@@ -31,9 +30,8 @@ public class TutorialScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         currentTextureIndex = 0;
-        canTouch = true; // Inicialmente permitimos la entrada táctil
+        canTouch = true;
 
-        // Agrega la primera textura al escenario
         Image image = new Image(textures[currentTextureIndex]);
         stage.addActor(image);
     }
@@ -70,6 +68,7 @@ public class TutorialScreen implements Screen {
 
         elapsedTime += delta;
 
+        float cooldownTime = 0.3f;
         if (elapsedTime >= cooldownTime) {
             canTouch = true;
         }

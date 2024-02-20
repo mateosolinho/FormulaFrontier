@@ -15,16 +15,14 @@ public class TimeAttack {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 
-    static public ArrayList<Long> tiempos = new ArrayList<>();
-    static private boolean startTime = false;
-    static private long tiempo = 0;
-    static private long tiempoTotal = 0;
-    long lastTime = 0;
-    long bestTime = 0;
-    static PreferencesManager preferencesManager = new PreferencesManager();
+    private static final ArrayList<Long> tiempos = new ArrayList<>();
+    private static boolean startTime = false;
+    private static long tiempo = 0;
+    private static long tiempoTotal = 0;
+    private long lastTime = 0;
+    private static final PreferencesManager preferencesManager = new PreferencesManager();
 
     public static void resetTimes() {
-            Gdx.app.log("timepobest" , PreferencesManager.getTiempo1Milis() + " ");
         tiempos.clear();
         startTime = false;
         tiempo = 0;
@@ -65,7 +63,7 @@ public class TimeAttack {
         if (tiempos.isEmpty()) {
             return;
         }
-        bestTime = Collections.min(tiempos);
+        long bestTime = Collections.min(tiempos);
 
         long bestTimeFromPreferences = PreferencesManager.getTiempo1Milis();
 
@@ -81,7 +79,6 @@ public class TimeAttack {
             lastTime = tiempos.get(tiempos.size() - 1);
         }
 
-            Gdx.app.log("timepob" , lastTime + " ");
         if (PreferencesManager.getTiempo1Milis() > lastTime) {
             ButtonCreator.lblLastTime.setColor(Color.GREEN);
         } else if (PreferencesManager.getTiempo1Milis() < lastTime) {
