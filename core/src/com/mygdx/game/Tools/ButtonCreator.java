@@ -21,7 +21,6 @@ public class ButtonCreator {
     private final PreferencesManager preferencesManager;
     public static Label lblVueltasTotales;
     public static Label lblBestTime1;
-    public static Label lblBestTime2;
     public static Label lblTiempoTotal;
     public static Label lblVuelta;
     public static Label lblTiempo;
@@ -38,13 +37,12 @@ public class ButtonCreator {
     private ImageButton imageButtonPuntuaciones;
     private ImageButton imageButtonTutorial;
     private ImageButton imageButtonExit;
+    private ImageButton imageButtonCreditos;
     private ImageButton imageButtonVolver;
     private ImageButton imageButtonMusicON;
     private ImageButton imageButtonVibracion;
     private ImageButton imageButtonRace;
     private ImageButton imageButtonTimeAttack;
-    private ImageButton imageButtonSelectionCar;
-    private ImageButton imageButtonSelectionCircuit;
     private ImageButton imageButtonTrack1;
     private ImageButton imageButtonTrack2;
     private ImageButton imageButtonFlecha;
@@ -58,7 +56,6 @@ public class ButtonCreator {
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        Gdx.app.log("t2",""+tiempo);
         cal.setTimeInMillis(tiempo-3600000);
         return dateFormat.format(cal.getTime());
     }
@@ -189,7 +186,6 @@ public class ButtonCreator {
         stage.addActor(imageButtonAbajo);
         stage.addActor(imageButtonPause);
 
-
         return stage;
     }
 
@@ -258,7 +254,6 @@ public class ButtonCreator {
 
         stage.addActor(imageButtonExit);
         stage.addActor(imageButtonVolver);
-//        stage.addActor(imageButtonPuntuaciones);
         stage.addActor(imageButtonMusicON);
         stage.addActor(imageButtonVibracion);
 
@@ -282,6 +277,7 @@ public class ButtonCreator {
         Texture buttonTexturePuntuaciones = new Texture(Gdx.files.internal("UI/mainUI/puntuaciones.png"));
         Texture buttonTextureTutorial = new Texture(Gdx.files.internal("UI/mainUI/tutorial.png"));
         Texture buttonTextureExit = new Texture(Gdx.files.internal("UI/mainUI/exit.png"));
+        Texture buttonTextureCredits = new Texture(Gdx.files.internal("UI/mainUI/creditos.png"));
 
         ImageButton.ImageButtonStyle styleStart = new ImageButton.ImageButtonStyle();
         styleStart.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePause));
@@ -302,6 +298,10 @@ public class ButtonCreator {
         ImageButton.ImageButtonStyle styleExit = new ImageButton.ImageButtonStyle();
         styleExit.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureExit));
         imageButtonExit = new ImageButton(styleExit);
+
+        ImageButton.ImageButtonStyle styleCreditos = new ImageButton.ImageButtonStyle();
+        styleCreditos.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureCredits));
+        imageButtonCreditos = new ImageButton(styleCreditos);
 
         stage.getViewport().getCamera().position.set(screenWidth / 2, 0, 0);
 
@@ -325,6 +325,10 @@ public class ButtonCreator {
         imageButtonExit.setWidth(screenWidth * 0.1f);
         imageButtonExit.setPosition((2.75f * screenWidth - imageButtonExit.getWidth()) / 4f, 8 * -screenHeight / 20f);
 
+        imageButtonCreditos.setHeight(screenHeight * 0.1f);
+        imageButtonCreditos.setWidth(screenWidth * 0.1f);
+        imageButtonCreditos.setPosition((screenWidth - imageButtonStart.getWidth()) / 2, 6f * (-screenHeight) / 20);
+
         styleStart.imageUp.setMinWidth(500);
         styleStart.imageUp.setMinHeight(300);
 
@@ -340,12 +344,16 @@ public class ButtonCreator {
         styleExit.imageUp.setMinWidth(500);
         styleExit.imageUp.setMinHeight(300);
 
+        styleCreditos.imageUp.setMinWidth(500);
+        styleCreditos.imageUp.setMinHeight(300);
+
         stage.addActor(imageButtonStart);
         stage.addActor(imageButtonSettings);
         stage.addActor(imageButtonPuntuaciones);
         stage.addActor(imageButtonTutorial);
         stage.addActor(imageButtonExit);
         stage.addActor(lblTitulo);
+        stage.addActor(imageButtonCreditos);
 
         return stage;
     }
@@ -549,6 +557,39 @@ public class ButtonCreator {
         return stage;
     }
 
+    public Stage createLabelsCredits() {
+        createFlecha();
+
+        Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
+        f1FontTitle.font.getData().setScale(30 / f1FontTitle.font.getCapHeight());
+
+        Label lblSelection = new Label("Creditos", f1FontTitle);
+
+        float labelWidth = lblSelection.getWidth();
+
+        lblSelection.setHeight(screenHeight * 0.15f);
+        lblSelection.setWidth(screenWidth * 0.15f);
+        lblSelection.setPosition((screenWidth - labelWidth) / 2, 14.5f * screenHeight / 20);
+
+        Label lblCreditos = new Label("Físicas : Onibojan \n\n" +
+                "Físicas : www.iforce2d.net \n\n" +
+                "Assets : itch.io \n\n" +
+                "Assets : GameDev Market \n\n" +
+                "Assets : www.f1assets \n\n" +
+                "Música : www.jamendo.com", f1FontTitle);
+
+        float labelWidthVTt = lblCreditos.getWidth();
+
+        lblCreditos.setHeight(screenHeight * 0.15f);
+        lblCreditos.setWidth(screenWidth * 0.15f);
+        lblCreditos.setPosition((screenWidth - labelWidthVTt) / 2, 6f * screenHeight / 20f);
+
+        stage.addActor(lblCreditos);
+        stage.addActor(lblSelection);
+
+        return stage;
+    }
+
 
     public ImageButton getImageButtonDerecha() {
         return imageButtonDerecha;
@@ -622,19 +663,15 @@ public class ButtonCreator {
         return imageButtonFlecha;
     }
 
+    public ImageButton getImageButtonCreditos() {
+        return imageButtonCreditos;
+    }
+
     public ArrayList<ImageButton> getImageButtonCars() {
         return listaCoches;
     }
 
     public void updateVueltas(int vueltas) {
-        lblVuelta.setText("Lap: " + vueltas);
-    }
-
-    public void updateBestLap1(int vueltas) {
-        lblVuelta.setText("Lap: " + vueltas);
-    }
-
-    public void updateBestLap2(int vueltas) {
         lblVuelta.setText("Lap: " + vueltas);
     }
 }

@@ -72,13 +72,14 @@ public class PlayScreen implements Screen {
     private final MapLoader mapLoader;
     private AudioManager audioManager;
     static public TimeAttack timeAttack = new TimeAttack();
-    private PreferencesManager preferencesManager;
 
     private static final float TARGET_FPS = 60;
     private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
     private final ArrayList<Texture> semaforos = new ArrayList<>();
     private float timeSemaforo = 0;
     private int spriteSemaforo = 0;
+
+    @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 

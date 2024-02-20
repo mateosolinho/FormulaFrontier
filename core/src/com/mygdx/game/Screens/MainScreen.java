@@ -118,5 +118,13 @@ public class MainScreen implements Screen {
                 Gdx.app.exit();
             }
         });
+
+        buttonCreator.getImageButtonCreditos().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new CreditsScreen(game));
+                dispose();
+            }
+        });
     }
 }
