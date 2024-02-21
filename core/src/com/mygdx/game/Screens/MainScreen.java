@@ -20,6 +20,9 @@ public class MainScreen implements Screen {
     private static Stage stage;
     private final Game game;
     private static AudioManager audioManager;
+    public static boolean isMainScreen;
+    public static boolean musicStarted = false;
+
 
     public MainScreen(Game game) {
         this.game = game;
@@ -40,14 +43,18 @@ public class MainScreen implements Screen {
 
     @Override
     public void show() {
-        if (PreferencesManager.getMusica() && !MainPauseScreen.musicStarted) {
+        if (PreferencesManager.getMusica() && !MainScreen.musicStarted) {
             audioManager.startMusicMenu();
+            MainScreen.musicStarted = true;
         }
     }
 
     @Override
     public void render(float delta) {
-        actualizarImegenes();
+        if (isMainScreen) {
+            actualizarImagenesMain();
+            MainScreen.isMainScreen = false;
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -130,7 +137,7 @@ public class MainScreen implements Screen {
         });
     }
 
-    public void actualizarImegenes() {
+    public void actualizarImagenesMain() {
         Texture buttonTextureStart = new Texture(Gdx.files.internal(Game.bundle.get("botonStart")));
         Texture buttonTextureSettings = new Texture(Gdx.files.internal(Game.bundle.get("botonAjustes")));
         Texture buttonTextureCreditos = new Texture(Gdx.files.internal(Game.bundle.get("botonCreditos")));

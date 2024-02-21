@@ -35,7 +35,6 @@ public class TutorialScreen implements Screen {
         Image image = new Image(textures[currentTextureIndex]);
         image.setFillParent(true);
         stage.addActor(image);
-//        image.setBounds((Gdx.graphics.getWidth() - image.getWidth()) / 2f , (Gdx.graphics.getHeight() - image.getHeight()) / 2f, Gdx.graphics.getWidth() + (image.getWidth() / 2), Gdx.graphics.getHeight());
     }
 
     @Override

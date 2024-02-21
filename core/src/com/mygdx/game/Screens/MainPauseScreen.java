@@ -18,13 +18,14 @@ import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
+import jdk.tools.jmod.Main;
+
 public class MainPauseScreen implements Screen {
     private final ButtonCreator buttonCreator;
     private final Stage stage;
     private final Game game;
     private final PreferencesManager preferencesManager;
     private final AudioManager audioManager;
-    public static boolean musicStarted = false;
 
     public MainPauseScreen(Game game) {
         this.game = game;
@@ -81,6 +82,7 @@ public class MainPauseScreen implements Screen {
                 Gdx.input.setInputProcessor(MainScreen.getStage());
                 game.setMainScreen();
                 dispose();
+                MainScreen.isMainScreen = true;
             }
         });
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
@@ -89,6 +91,7 @@ public class MainPauseScreen implements Screen {
                 Gdx.input.setInputProcessor(MainScreen.getStage());
                 game.setMainScreen();
                 dispose();
+                MainScreen.isMainScreen = true;
             }
         });
         buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {
@@ -103,12 +106,12 @@ public class MainPauseScreen implements Screen {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
                     preferencesManager.guardarMusica(false);
                     audioManager.stopMusicMenu();
-                    musicStarted = false;
+                    MainScreen.musicStarted = false;
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
                     preferencesManager.guardarMusica(true);
                     audioManager.startMusicMenu();
-                    musicStarted = true;
+                    MainScreen.musicStarted = true;
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);

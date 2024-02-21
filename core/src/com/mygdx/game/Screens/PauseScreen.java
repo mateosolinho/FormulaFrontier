@@ -98,11 +98,13 @@ public class PauseScreen implements Screen {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
                     preferencesManager.guardarMusica(false);
                     audioManager.stopMusicCarrera();
+                    MainScreen.musicStarted = false;
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
                     preferencesManager.guardarMusica(true);
 
                     audioManager.startMusicCarrera();
+                    MainScreen.musicStarted = true;
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
