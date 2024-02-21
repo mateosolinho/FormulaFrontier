@@ -10,7 +10,6 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 public class CircuitRecordsScreen implements Screen {
-
     private final Game game;
     private final ButtonCreator buttonCreator;
     private final Stage stage;
@@ -21,7 +20,6 @@ public class CircuitRecordsScreen implements Screen {
         stage = buttonCreator.createLabelsRecords();
         handleInput();
     }
-
     private void handleInput() {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
             @Override

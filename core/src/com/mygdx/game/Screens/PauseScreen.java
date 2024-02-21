@@ -78,6 +78,7 @@ public class PauseScreen implements Screen {
                 game.setScreen(CircuitSelectionScreen.playScreen);
             }
         });
+
         buttonCreator.getImageButtonExit().addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -87,6 +88,7 @@ public class PauseScreen implements Screen {
                 game.setMainScreen();
             }
         });
+
         buttonCreator.getImageButtonMusicON().addListener(new ClickListener() {
 
             @Override

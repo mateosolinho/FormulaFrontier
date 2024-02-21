@@ -459,8 +459,6 @@ public class ButtonCreator {
         lblTime1.setWidth(screenWidth * 0.15f);
         lblTime1.setPosition((0.3f * screenWidth) / 2, 4.5f * screenHeight / 20);
 
-        //=======================================================
-
         float labelWidthVueltasTotales = lblVueltasTotales.getWidth();
 
         lblVueltasTotales.setHeight(screenHeight * 0.15f);

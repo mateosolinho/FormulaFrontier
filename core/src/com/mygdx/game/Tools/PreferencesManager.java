@@ -32,7 +32,6 @@ public class PreferencesManager {
         return prefs.getInteger("laps");
     }
 
-    //==============================================================
     public void guardarTiempo1Milis(long tiempo1) {
         prefs.putLong("tiempo1Milis", tiempo1);
         prefs.flush();
@@ -44,8 +43,6 @@ public class PreferencesManager {
         }
         return prefs.getLong("tiempo1Milis");
     }
-
-    //==============================================================
 
     public void guardarTiempoTotal(long tiempoTotal) {
         prefs.putLong("tiempoTotal", tiempoTotal);
@@ -61,8 +58,6 @@ public class PreferencesManager {
         return formatTiempo(prefs.getLong("tiempoTotal"));
     }
 
-    //==============================================================
-
     public void guardarMusica(boolean musica) {
         prefs.putBoolean("musica", musica);
         prefs.flush();
@@ -74,9 +69,6 @@ public class PreferencesManager {
         }
         return prefs.getBoolean("musica");
     }
-
-    //==============================================================
-
 
     public void guardarVibracion(boolean vibracion) {
         if (!prefs.contains("vibracion")) {
@@ -94,8 +86,6 @@ public class PreferencesManager {
         }
         return prefs.getBoolean("vibracion");
     }
-
-    //==============================================================
 
     public static void setIngles(boolean ingles) {
         Gdx.app.log("ingles" , ingles + " valor guardado");

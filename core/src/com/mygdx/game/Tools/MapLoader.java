@@ -92,5 +92,6 @@ public class MapLoader implements Disposable {
     @Override
     public void dispose() {
         map.dispose();
+        tiledMapRenderer.dispose();
     }
 }

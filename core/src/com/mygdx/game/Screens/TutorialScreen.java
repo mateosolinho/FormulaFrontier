@@ -67,7 +67,6 @@ public class TutorialScreen implements Screen {
             elapsedTime = 0;
         }
 
-
         elapsedTime += delta;
 
         float cooldownTime = 0.3f;

@@ -17,14 +17,12 @@ public class CircuitSelectionScreen implements Screen {
     private final Stage stage;
     public static String rutaCircuito;
     static PlayScreen playScreen;
-
     public CircuitSelectionScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createMapsButtons();
         handleInput();
     }
-
     private void handleInput() {
         buttonCreator.getImageButtonTrack1().addListener(new ClickListener() {
             @Override

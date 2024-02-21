@@ -111,7 +111,6 @@ public class SensorContactListener implements ContactListener {
                         TimeAttack.addNewTime();
                         TimeAttack.setTiempo(0);
                         buttonCreator.updateVueltas(vVueltas);
-                        Gdx.app.log("vuelta", vVueltasTotales + " ");
                         preferencesManager.guardarVueltas(vVueltasTotales);
                         isCheck1Activated = false;
                         isCheck2Activated = false;

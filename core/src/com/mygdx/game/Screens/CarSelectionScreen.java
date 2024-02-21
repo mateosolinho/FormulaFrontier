@@ -11,12 +11,10 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 public class CarSelectionScreen implements Screen {
-
     private final Game game;
     private final ButtonCreator buttonCreator;
     private final Stage stage;
     public static String rutaCoche;
-
     public CarSelectionScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();

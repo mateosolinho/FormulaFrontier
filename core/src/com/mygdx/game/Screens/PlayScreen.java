@@ -31,6 +31,9 @@ import java.util.Calendar;
 
 // https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
 public class PlayScreen implements Screen {
+    private static final float TARGET_FPS = 60;
+    private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
+
     private static final float BOOST_THRESHOLD = 12;
     private static final float BOOST_FORCE = 250.0f;
 
@@ -61,71 +64,71 @@ public class PlayScreen implements Screen {
     private final World world;
     private final Box2DDebugRenderer b2rd;
     private final Body player;
-    private long tTotal = 0;
-    private boolean isPausePressed;
-    private boolean isSemaforoActive;
-
     private final Game game;
     private final ButtonCreator buttonCreator;
     private final Texture playerTexture;
     private final Sprite playerSprite;
     private final MapLoader mapLoader;
-    private AudioManager audioManager;
+    private final AudioManager audioManager;
     static public TimeAttack timeAttack = new TimeAttack();
-    private PreferencesManager preferencesManager;
 
-    private static final float TARGET_FPS = 60;
-    private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
     private final ArrayList<Texture> semaforos = new ArrayList<>();
+
+    private long tTotal = 0;
+    private boolean isPausePressed;
+    private boolean isSemaforoActive;
     private float timeSemaforo = 0;
     private int spriteSemaforo = 0;
+
+    @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
     private static final Calendar cal = Calendar.getInstance();
 
     public static String formatTiempo(long tiempo) {
-        Gdx.app.log("t2",""+tiempo);
         cal.setTimeInMillis(tiempo-3600000);
         return dateFormat.format(cal.getTime());
     }
 
-
     public PlayScreen(Game game) {
         this.game = game;
+
         semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")));
         semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_1.png")));
         semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_2.png")));
         semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_3.png")));
         semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_4.png")));
         semaforos.add(new Texture(Gdx.files.internal("UI/gameUI/sem_5.png")));
+
         batch = new SpriteBatch();
+
+        isPausePressed = false;
 
         world = new World(new Vector2(0, 0), true);
         b2rd = new Box2DDebugRenderer();
-        isPausePressed = false;
         mapLoader = new MapLoader(world);
         camera = mapLoader.getCamera();
         tiledMapRenderer = mapLoader.getTileMapRenderer();
 
-        Gdx.app.log("Coche", CarSelectionScreen.rutaCoche + " ");
         playerTexture = new Texture(Gdx.files.internal(CarSelectionScreen.rutaCoche));
         playerSprite = new Sprite(playerTexture);
         playerSprite.setSize(2f, 3.6f);
         playerSprite.setOrigin(playerSprite.getWidth() / 2f, playerSprite.getHeight() / 2f);
 
         TimeAttack.resetTimes();
+
         player = mapLoader.getPlayer();
         player.setLinearDamping(0.5f);
+
         buttonCreator = new ButtonCreator();
         buttonCreator.createGameLabels();
         stage = buttonCreator.createGameButtons();
         world.setContactListener(new SensorContactListener(buttonCreator));
-
         audioManager = MainScreen.getAudioManager();
+
         if (PreferencesManager.getMusica()) {
             audioManager.stopMusicMenu();
             audioManager.startSemaforoMusic();
         }
-
     }
 
     public Stage getStage() {
@@ -138,8 +141,8 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         timeSemaforo = timeSemaforo + delta;
+
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         if (deltaTime < TIME_PER_FRAME) {
@@ -151,19 +154,24 @@ public class PlayScreen implements Screen {
         }
 
         baseVector = new Vector2(0, 0);
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         timeAttack.getBestTime();
+
         ButtonCreator.lblTiempo.setText(TimeAttack.getTiempoActual());
         ButtonCreator.lblBestTime.setText(Game.bundle.get("mejorTiempo") + ": " + formatTiempo(PreferencesManager.getTiempo1Milis()));
+
         if (SensorContactListener.vVueltas > 0) {
             ButtonCreator.lblLastTime.setText(timeAttack.getLastTime() + " ");
         }
+
         if (isPausePressed) {
             isPausePressed = false;
         }
-        update(delta);
+
+        update();
 
         camera.update();
         tiledMapRenderer.setView(camera);
@@ -346,7 +354,6 @@ public class PlayScreen implements Screen {
         MAX_SPEED = newMaxSpeed;
     }
 
-
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
 
@@ -379,17 +386,14 @@ public class PlayScreen implements Screen {
             }
         }
     }
-
     float accelerometerX;
 
-    private void update(float dt) {
+    private void update() {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
         accelerometerX = Gdx.input.getAccelerometerZ();
 
-
-        Gdx.app.log("accelerometer", accelerometerX + " ");
         if (!isSemaforoActive ) {
             if (accelerometerX > BOOST_THRESHOLD) {
                 accelerometerX = 0;
@@ -431,5 +435,9 @@ public class PlayScreen implements Screen {
         b2rd.dispose();
         stage.dispose();
         playerTexture.dispose();
+
+        for (Texture texture : semaforos) {
+            texture.dispose();
+        }
     }
 }
