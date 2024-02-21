@@ -18,33 +18,144 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ButtonCreator {
+    /**
+     * Stage que contiene todos los elementos visuales de la pantalla.
+     */
     private Stage stage;
+
+    /**
+     * Gestor de preferencias utilizado para manejar las preferencias de la aplicación.
+     */
     private final PreferencesManager preferencesManager;
+
+    /**
+     * Etiqueta para mostrar el número total de vueltas.
+     */
     public static Label lblVueltasTotales;
+
+    /**
+     * Etiqueta para mostrar el mejor tiempo.
+     */
     public static Label lblBestTime1;
+
+    /**
+     * Etiqueta para mostrar el tiempo total de la carrera.
+     */
     public static Label lblTiempoTotal;
+
+    /**
+     * Etiqueta para mostrar la vuelta actual.
+     */
     public static Label lblVuelta;
+
+    /**
+     * Etiqueta para mostrar el tiempo de la vuelta actual.
+     */
     public static Label lblTiempo;
+
+    /**
+     * Etiqueta para mostrar el mejor tiempo.
+     */
     public static Label lblBestTime;
+
+    /**
+     * Etiqueta para mostrar el último tiempo registrado.
+     */
     public static Label lblLastTime;
+
+    /**
+     * ImageButton para moverse hacia la derecha.
+     */
     private ImageButton imageButtonDerecha;
+
+    /**
+     * ImageButton para moverse hacia la izquierda.
+     */
     private ImageButton imageButtonIzquierda;
+
+    /**
+     * ImageButton para moverse hacia adelante.
+     */
     private ImageButton imageButtonArriba;
+
+    /**
+     * ImageButton para moverse hacia atrás.
+     */
     private ImageButton imageButtonAbajo;
+
+    /**
+     * ImageButton para pausar el juego.
+     */
     private ImageButton imageButtonPause;
+
+    /**
+     * ImageButton para iniciar el juego.
+     */
     private ImageButton imageButtonStart;
+
+    /**
+     * ImageButton para acceder a la configuración.
+     */
     private ImageButton imageButtonSettings;
-    private ImageButton imageButtonPuntuaciones;
+
+    /**
+     * ImageButton para ver los records.
+     */
+    private ImageButton imageButtonRecords;
+
+    /**
+     * ImageButton para acceder al tutorial.
+     */
     private ImageButton imageButtonTutorial;
+
+    /**
+     * ImageButton para salir del juego.
+     */
     private ImageButton imageButtonExit;
+
+    /**
+     * ImageButton para acceder a los créditos.
+     */
     private ImageButton imageButtonCreditos;
+
+    /**
+     * ImageButton para volver atrás.
+     */
     private ImageButton imageButtonVolver;
+
+    /**
+     * ImageButton para activar/desactivar la música.
+     */
     private ImageButton imageButtonMusicON;
+
+    /**
+     * ImageButton para activar/desactivar la vibración.
+     */
     private ImageButton imageButtonVibracion;
+
+    /**
+     * ImageButton para cambiar de idioma.
+     */
     private ImageButton imageButtonIdioma;
+
+    /**
+     * ImageButton para seleccionar la pista 1.
+     */
     private ImageButton imageButtonTrack1;
+
+    /**
+     * ImageButton para seleccionar la pista 2.
+     */
     private ImageButton imageButtonTrack2;
+
+    /**
+     * ImageButton para mostrar una flecha.
+     */
     private ImageButton imageButtonFlecha;
+
+    /**
+     * Lista que contiene todos los botones de imagen relacionados con los coches.
+     */
     private final ArrayList<ImageButton> listaCoches = new ArrayList<>();
 
     float screenWidth = Gdx.graphics.getWidth();
@@ -303,7 +414,7 @@ public class ButtonCreator {
 
         ImageButton.ImageButtonStyle stylePuntuaciones = new ImageButton.ImageButtonStyle();
         stylePuntuaciones.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTexturePuntuaciones));
-        imageButtonPuntuaciones = new ImageButton(stylePuntuaciones);
+        imageButtonRecords = new ImageButton(stylePuntuaciones);
 
         ImageButton.ImageButtonStyle styleTutorial = new ImageButton.ImageButtonStyle();
         styleTutorial.imageUp = new TextureRegionDrawable(new TextureRegion(buttonTextureTutorial));
@@ -327,13 +438,13 @@ public class ButtonCreator {
         imageButtonSettings.setWidth(screenWidth * 0.1f);
         imageButtonSettings.setPosition(screenWidth / 4f, 4 * -screenHeight / 20f);
 
-        imageButtonPuntuaciones.setHeight(screenHeight * 0.1f);
-        imageButtonPuntuaciones.setWidth(screenWidth * 0.1f);
-        imageButtonPuntuaciones.setPosition(screenWidth / 4f, 8 * -screenHeight / 20f);
+        imageButtonRecords.setHeight(screenHeight * 0.1f);
+        imageButtonRecords.setWidth(screenWidth * 0.1f);
+        imageButtonRecords.setPosition(screenWidth / 4f, 8 * -screenHeight / 20f);
 
         imageButtonTutorial.setHeight(screenHeight * 0.1f);
         imageButtonTutorial.setWidth(screenWidth * 0.1f);
-        imageButtonTutorial.setPosition((2.75f * screenWidth - imageButtonPuntuaciones.getWidth()) / 4f, 4 * -screenHeight / 20f);
+        imageButtonTutorial.setPosition((2.75f * screenWidth - imageButtonRecords.getWidth()) / 4f, 4 * -screenHeight / 20f);
 
         imageButtonExit.setHeight(screenHeight * 0.1f);
         imageButtonExit.setWidth(screenWidth * 0.1f);
@@ -363,7 +474,7 @@ public class ButtonCreator {
 
         stage.addActor(imageButtonStart);
         stage.addActor(imageButtonSettings);
-        stage.addActor(imageButtonPuntuaciones);
+        stage.addActor(imageButtonRecords);
         stage.addActor(imageButtonTutorial);
         stage.addActor(imageButtonExit);
         stage.addActor(lblTitulo);
@@ -593,8 +704,8 @@ public class ButtonCreator {
         return imageButtonSettings;
     }
 
-    public ImageButton getImageButtonPuntuaciones() {
-        return imageButtonPuntuaciones;
+    public ImageButton getImageButtonRecords() {
+        return imageButtonRecords;
     }
 
     public ImageButton getImageButtonTutorial() {

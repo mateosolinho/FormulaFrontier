@@ -69,18 +69,38 @@ public class MapLoader implements Disposable {
         objectManager.createExterior(map);
     }
 
+    /**
+     * Obtiene el cuerpo del jugador.
+     *
+     * @return El cuerpo del jugador.
+     */
     public Body getPlayer(){
         return player;
     }
 
+    /**
+     * Obtiene la cámara ortográfica.
+     *
+     * @return La cámara ortográfica.
+     */
     public OrthographicCamera getCamera(){
         return camera;
     }
 
+    /**
+     * Obtiene el viewport.
+     *
+     * @return El viewport.
+     */
     public Viewport getViewport(){
         return viewport;
     }
 
+    /**
+     * Obtiene el renderizador de mapas de mosaicos.
+     *
+     * @return El renderizador de mapas de mosaicos.
+     */
     public TiledMapRenderer getTileMapRenderer(){
         return tiledMapRenderer;
     }
