@@ -82,6 +82,7 @@ public class PauseScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 audioManager.stopMusicCarrera();
+                audioManager.startMusicMenu();
                 Gdx.input.setInputProcessor(MainScreen.getStage());
                 game.setMainScreen();
             }
@@ -96,7 +97,6 @@ public class PauseScreen implements Screen {
                 if (PreferencesManager.getMusica()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
                     preferencesManager.guardarMusica(false);
-
                     audioManager.stopMusicCarrera();
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
@@ -140,14 +140,34 @@ public class PauseScreen implements Screen {
                 if (PreferencesManager.getIngles()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/uk.png"))));
                     PreferencesManager.setIngles(false);
+                    Game.actualizaridioma();
+                    actualizarImegenes();
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/espana.png"))));
                     PreferencesManager.setIngles(true);
+                    Game.actualizaridioma();
+                    actualizarImegenes();
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
                 button.setStyle(style);
             }
         });
+    }
+
+    public void actualizarImegenes() {
+        Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
+        Texture buttonTextureVolver = new Texture(Gdx.files.internal(Game.bundle.get("botonVolver")));
+
+        createStyle(buttonTextureExitPause, buttonCreator.getImageButtonExit());
+        createStyle(buttonTextureVolver, buttonCreator.getImageButtonVolver());
+    }
+
+    public void createStyle(Texture texture, ImageButton imageButton) {
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));
+        style.imageUp.setMinWidth(500);
+        style.imageUp.setMinHeight(300);
+        imageButton.setStyle(style);
     }
 }

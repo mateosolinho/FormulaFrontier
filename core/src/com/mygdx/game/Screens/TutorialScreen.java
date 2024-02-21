@@ -33,6 +33,7 @@ public class TutorialScreen implements Screen {
         canTouch = true;
 
         Image image = new Image(textures[currentTextureIndex]);
+        image.setFillParent(true);
         stage.addActor(image);
 //        image.setBounds((Gdx.graphics.getWidth() - image.getWidth()) / 2f , (Gdx.graphics.getHeight() - image.getHeight()) / 2f, Gdx.graphics.getWidth() + (image.getWidth() / 2), Gdx.graphics.getHeight());
     }
@@ -59,6 +60,7 @@ public class TutorialScreen implements Screen {
                 dispose();
             } else {
                 Image image = new Image(textures[currentTextureIndex]);
+                image.setFillParent(true);
                 stage.clear();
                 stage.addActor(image);
             }

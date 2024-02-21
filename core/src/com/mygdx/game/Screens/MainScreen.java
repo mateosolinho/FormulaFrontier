@@ -3,9 +3,13 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
@@ -16,7 +20,6 @@ public class MainScreen implements Screen {
     private static Stage stage;
     private final Game game;
     private static AudioManager audioManager;
-    private boolean musicStarted = false;
 
     public MainScreen(Game game) {
         this.game = game;
@@ -26,7 +29,7 @@ public class MainScreen implements Screen {
         handleInput();
     }
 
-    public static Stage getStage(){
+    public static Stage getStage() {
         return stage;
     }
 
@@ -37,14 +40,14 @@ public class MainScreen implements Screen {
 
     @Override
     public void show() {
-        if (PreferencesManager.getMusica() && !musicStarted) {
+        if (PreferencesManager.getMusica() && !MainPauseScreen.musicStarted) {
             audioManager.startMusicMenu();
-            musicStarted = true;
         }
     }
 
     @Override
     public void render(float delta) {
+        actualizarImegenes();
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -83,6 +86,7 @@ public class MainScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new CarSelectionScreen(game));
+                dispose();
             }
         });
 
@@ -124,5 +128,25 @@ public class MainScreen implements Screen {
                 dispose();
             }
         });
+    }
+
+    public void actualizarImegenes() {
+        Texture buttonTextureStart = new Texture(Gdx.files.internal(Game.bundle.get("botonStart")));
+        Texture buttonTextureSettings = new Texture(Gdx.files.internal(Game.bundle.get("botonAjustes")));
+        Texture buttonTextureCreditos = new Texture(Gdx.files.internal(Game.bundle.get("botonCreditos")));
+        Texture buttoTextureTurtorial = new Texture(Gdx.files.internal(Game.bundle.get("botonGuia")));
+
+        createStyle(buttonTextureStart, buttonCreator.getImageButtonStart());
+        createStyle(buttonTextureSettings, buttonCreator.getImageButtonSettings());
+        createStyle(buttonTextureCreditos, buttonCreator.getImageButtonCreditos());
+        createStyle(buttoTextureTurtorial, buttonCreator.getImageButtonTutorial());
+    }
+
+    public void createStyle(Texture texture, ImageButton imageButton) {
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));
+        style.imageUp.setMinWidth(500);
+        style.imageUp.setMinHeight(300);
+        imageButton.setStyle(style);
     }
 }

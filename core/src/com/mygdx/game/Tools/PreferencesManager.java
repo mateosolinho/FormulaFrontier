@@ -98,7 +98,7 @@ public class PreferencesManager {
     //==============================================================
 
     public static void setIngles(boolean ingles) {
-        Gdx.app.log("ingles" , ingles + " ");
+        Gdx.app.log("ingles" , ingles + " valor guardado");
         prefs.putBoolean("ingles", ingles);
         prefs.flush();
     }

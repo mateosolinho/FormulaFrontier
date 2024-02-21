@@ -25,7 +25,6 @@ public class TimeAttack {
     static PreferencesManager preferencesManager = new PreferencesManager();
 
     public static void resetTimes() {
-        Gdx.app.log("timepobest" , PreferencesManager.getTiempo1Milis() + " ");
         tiempos.clear();
         startTime = false;
         tiempo = 0;

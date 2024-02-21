@@ -12,9 +12,10 @@ public class Game extends com.badlogic.gdx.Game {
 
     @Override
     public void create() {
+        Gdx.app.log("idi", PreferencesManager.getLocale() + " ");
         FileHandle fileHandle = Gdx.files.internal("Traductions/" + PreferencesManager.getPropertyFile());
         bundle = I18NBundle.createBundle(fileHandle, PreferencesManager.getLocale());
-        
+
         mainScreen = new MainScreen(this);
         setScreen(mainScreen);
     }
@@ -31,5 +32,10 @@ public class Game extends com.badlogic.gdx.Game {
 
     public void setMainScreen() {
         setScreen(mainScreen);
+    }
+
+    public static void actualizaridioma() {
+        FileHandle fileHandle = Gdx.files.internal("Traductions/" + PreferencesManager.getPropertyFile());
+        Game.bundle = I18NBundle.createBundle(fileHandle, PreferencesManager.getLocale());
     }
 }

@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
@@ -21,6 +24,7 @@ public class MainPauseScreen implements Screen {
     private final Game game;
     private final PreferencesManager preferencesManager;
     private final AudioManager audioManager;
+    public static boolean musicStarted = false;
 
     public MainPauseScreen(Game game) {
         this.game = game;
@@ -99,10 +103,12 @@ public class MainPauseScreen implements Screen {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaOFF.png"))));
                     preferencesManager.guardarMusica(false);
                     audioManager.stopMusicMenu();
+                    musicStarted = false;
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/musicaON.png"))));
                     preferencesManager.guardarMusica(true);
                     audioManager.startMusicMenu();
+                    musicStarted = true;
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
@@ -142,16 +148,35 @@ public class MainPauseScreen implements Screen {
                 if (PreferencesManager.getIngles()) {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/uk.png"))));
                     PreferencesManager.setIngles(false);
+                    Game.actualizaridioma();
+                    actualizarImegenes();
                 } else {
                     style.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/espana.png"))));
                     PreferencesManager.setIngles(true);
+                    Game.actualizaridioma();
+                    actualizarImegenes();
                 }
                 style.imageUp.setMinWidth(2400);
                 style.imageUp.setMinHeight(1700);
                 button.setStyle(style);
             }
         });
+    }
 
+    public void actualizarImegenes(){
+        Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
+        Texture buttonTextureVolver = new Texture(Gdx.files.internal(Game.bundle.get("botonVolver")));
+
+        createStyle(buttonTextureExitPause, buttonCreator.getImageButtonExit());
+        createStyle(buttonTextureVolver, buttonCreator.getImageButtonVolver());
+    }
+
+    public void createStyle(Texture texture, ImageButton imageButton){
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
+        style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));
+        style.imageUp.setMinWidth(500);
+        style.imageUp.setMinHeight(300);
+        imageButton.setStyle(style);
     }
 
 

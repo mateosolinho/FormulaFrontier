@@ -278,7 +278,6 @@ public class ButtonCreator {
     public Stage createMainButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
-
         Label lblTitulo = new Label(Game.bundle.get("titulo"), f1FontTitle);
 
         float labelWidth = lblTitulo.getWidth();
