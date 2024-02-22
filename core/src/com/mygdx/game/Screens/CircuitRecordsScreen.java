@@ -9,17 +9,41 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
+/**
+ * Clase encargada de representar la pantalla de récords del circuito.
+ */
 public class CircuitRecordsScreen implements Screen {
+
+    /**
+     * Instancia principal del juego.
+     */
     private final Game game;
+
+    /**
+     * Instancia del creador de botones para la pantalla de récords.
+     */
     private final ButtonCreator buttonCreator;
+
+    /**
+     * Escenario que contiene los elementos visuales de la pantalla.
+     */
     private final Stage stage;
 
+    /**
+     * Constructor de la clase CircuitRecordsScreen.
+     *
+     * @param game Instancia principal del juego.
+     */
     public CircuitRecordsScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createLabelsRecords();
         handleInput();
     }
+
+    /**
+     * Maneja la entrada del usuario al hacer clic en el botón de flecha.
+     */
     private void handleInput() {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
             @Override
@@ -36,6 +60,10 @@ public class CircuitRecordsScreen implements Screen {
 
     }
 
+    /**
+     * Renderiza la pantalla de récords del circuito.
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);

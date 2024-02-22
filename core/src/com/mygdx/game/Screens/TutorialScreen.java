@@ -8,14 +8,45 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Game;
 
+/**
+ * Pantalla que muestra un tutorial con varias imágenes.
+ */
 public class TutorialScreen implements Screen {
+
+    /**
+     * Array de texturas que contiene las imágenes del tutorial.
+     */
     private final Texture[] textures;
+
+    /**
+     * Stage donde se muestran las imágenes del tutorial.
+     */
     private final Stage stage;
+
+    /**
+     * Indice de la textura actual que se está mostrando en el tutorial.
+     */
     private int currentTextureIndex;
+
+    /**
+     * Instancia del juego principal al que pertenece la pantalla del tutorial.
+     */
     private final Game game;
+
+    /**
+     * Indica si la pantalla acepta eventos en un momento dado.
+     */
     private boolean canTouch;
+
+    /**
+     * Tiempo transcurrido desde la última interacción en la pantalla.
+     */
     private float elapsedTime = 0f;
 
+    /**
+     * Constructor de la clase TutorialScreen.
+     * @param game Instancia del juego principal.
+     */
     public TutorialScreen(Game game) {
         this.game = game;
         textures = new Texture[]{
@@ -42,6 +73,11 @@ public class TutorialScreen implements Screen {
 
     }
 
+    /**
+     * Renderiza la pantalla del tutorial.
+     *
+     * @param delta El tiempo transcurrido desde el último fotograma.
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -75,6 +111,12 @@ public class TutorialScreen implements Screen {
         }
     }
 
+    /**
+     * Ajusta el tamaño del viewport del stage cuando la ventana de la aplicación se redimensiona.
+     *
+     * @param width El nuevo ancho de la ventana.
+     * @param height La nueva altura de la ventana.
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
@@ -84,17 +126,18 @@ public class TutorialScreen implements Screen {
     public void pause() {
 
     }
-
     @Override
     public void resume() {
 
     }
-
     @Override
     public void hide() {
 
     }
 
+    /**
+     * Libera los recursos de la pantalla del tutorial.
+     */
     @Override
     public void dispose() {
         for (Texture texture : textures) {

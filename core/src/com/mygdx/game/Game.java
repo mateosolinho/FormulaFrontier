@@ -7,7 +7,7 @@ import com.mygdx.game.Screens.MainScreen;
 import com.mygdx.game.Tools.PreferencesManager;
 
 /**
- * La clase Game representa el punto principal del juego y controla la gestión de las pantallas y el idioma del juego.
+ * Clase que representa el punto principal del juego y controla la gestión de las pantallas y el idioma del juego.
  */
 public class Game extends com.badlogic.gdx.Game {
 

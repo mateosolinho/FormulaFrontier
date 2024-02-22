@@ -17,6 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/**
+ * Clase encargada de crear y gestionar los botones y etiquetas utilizados en la interfaz de usuario del juego.
+ */
 public class ButtonCreator {
     /**
      * Stage que contiene todos los elementos visuales de la pantalla.
@@ -158,28 +161,58 @@ public class ButtonCreator {
      */
     private final ArrayList<ImageButton> listaCoches = new ArrayList<>();
 
+    /**
+     * Variable que almacena el ancho de la pantalla.
+     */
     float screenWidth = Gdx.graphics.getWidth();
+
+    /**
+     * Variable que alamacena el alto de la pantalla.
+     */
     float screenHeight = Gdx.graphics.getHeight();
 
+    /**
+     * Formato de fecha para representar el tiempo en formato "HH:mm:ss".
+     */
     @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
+
+    /**
+     * Instancia de Calendar utilizada para trabajar con la fecha y la hora del sistema.
+     */
     private static final Calendar cal = Calendar.getInstance();
 
+    /**
+     * Método encargado de formatear el tiempo en mm al formato indicado.
+     *
+     * @param tiempo Unidad de tiempo en mm.
+     * @return String de la cadena ya formateada con el tiempo.
+     */
     public static String formatTiempo(long tiempo) {
         cal.setTimeInMillis(tiempo - 3600000);
         return dateFormat.format(cal.getTime());
     }
 
+    /**
+     * Constructor de la clase ButtonCreator, inicializa el stage y el gestor de preferencias.
+     */
     public ButtonCreator() {
         createStage();
         preferencesManager = new PreferencesManager();
     }
 
+    /**
+     * Método privado utilizado para crear el stage de la interfaz de usuario.
+     */
     private void createStage() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Crea y configura etiquetas del juego para mostrar información en la interfaz de usuario.
+     * Las etiquetas incluyen información sobre el tiempo, la vuelta actual, el mejor tiempo y el último tiempo.
+     */
     public void createGameLabels() {
         Label.LabelStyle f1Font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
         f1Font.font.getData().setScale(50 / f1Font.font.getCapHeight());
@@ -211,6 +244,9 @@ public class ButtonCreator {
         stage.addActor(lblLastTime);
     }
 
+    /**
+     * Crea y configura un botón que se encarga de gestionar la vuelta a la pantalla principal
+     */
     public void createFlecha() {
         Texture buttonTextureFlecha = new Texture(Gdx.files.internal("UI/mainUI/flecha.png"));
 
@@ -225,8 +261,11 @@ public class ButtonCreator {
         stage.addActor(imageButtonFlecha);
     }
 
+    /**
+     * Crea los botones del juego y los agrega al stage.
+     * @return El stage con los botones agregados.
+     */
     public Stage createGameButtons() {
-
         Texture buttonTextureDerecha = new Texture(Gdx.files.internal("UI/gameUI/derechaBien.png"));
         Texture buttonTextureIzquierda = new Texture(Gdx.files.internal("UI/gameUI/izquierdaBien.png"));
         Texture buttonTextureArriba = new Texture(Gdx.files.internal("UI/gameUI/arribaBien.png"));
@@ -299,6 +338,10 @@ public class ButtonCreator {
         return stage;
     }
 
+    /**
+     * Crea los botones del menu de pausa del juego y los agrega al stage.
+     * @return El stage con los botones agregados.
+     */
     public Stage createPauseScreenButtons() {
         Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
         Texture buttonTextureVolver = new Texture(Gdx.files.internal(Game.bundle.get("botonVolver")));
@@ -346,7 +389,7 @@ public class ButtonCreator {
 
         imageButtonIdioma.setHeight(screenHeight * 0.1f);
         imageButtonIdioma.setWidth(screenWidth * 0.1f);
-        imageButtonIdioma.setPosition(( screenWidth - imageButtonIdioma.getWidth()) / 2, -screenHeight / 20f);
+        imageButtonIdioma.setPosition((screenWidth - imageButtonIdioma.getWidth()) / 2, -screenHeight / 20f);
 
         if (PreferencesManager.getIngles()) {
             styleIdioma.imageUp = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("UI/pauseUI/espana.png"))));
@@ -386,6 +429,10 @@ public class ButtonCreator {
         return stage;
     }
 
+    /**
+     * Crea los botones y etiquetas de la pantalla principal y los agrega al stage.
+     * @return El stage con los botones y etiquetas agregados.
+     */
     public Stage createMainButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
@@ -483,6 +530,10 @@ public class ButtonCreator {
         return stage;
     }
 
+    /**
+     * Crea los botones y etiquetas de seleccion de coche y los agrega al stage.
+     * @return El stage con los botones y etiquetas agregados.
+     */
     public Stage createCarButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
@@ -537,6 +588,10 @@ public class ButtonCreator {
         return stage;
     }
 
+    /**
+     * Crea las etiquetas de la pantalla records y los agrega al stage.
+     * @return El stage con los botones y etiquetas agregados.
+     */
     public Stage createLabelsRecords() {
         createFlecha();
 
@@ -599,6 +654,9 @@ public class ButtonCreator {
         return stage;
     }
 
+    /**
+     * Crea los botones de la pantalla de selección de circuito y los agrega al stage.
+     */
     public void createMapButtonsDefault() {
         Texture buttonTextureRace = new Texture(Gdx.files.internal("TrackFiles/Track1/track1.png"));
         Texture buttonTextureTime = new Texture(Gdx.files.internal("TrackFiles/Track2/track2.png"));
@@ -623,6 +681,10 @@ public class ButtonCreator {
         stage.addActor(imageButtonTrack2);
     }
 
+    /**
+     * Crea las etiquetas de la pantalla de seleccion de circuito y los agrega al stage.
+     * @return El stage con las etiquetas agregadas.
+     */
     public Stage createMapsButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
         f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
@@ -642,6 +704,10 @@ public class ButtonCreator {
         return stage;
     }
 
+    /**
+     * Crea las etiquetas de la pantalla de creditos y los agrega al stage.
+     * @return El stage con las etiquetas agregadas.
+     */
     public Stage createLabelsCredits() {
         createFlecha();
 
@@ -675,83 +741,162 @@ public class ButtonCreator {
         return stage;
     }
 
-
+    /**
+     * Obtiene el botón para moverse hacia la derecha.
+     * @return El botón para moverse hacia la derecha.
+     */
     public ImageButton getImageButtonDerecha() {
         return imageButtonDerecha;
     }
 
+    /**
+     * Obtiene el botón para moverse hacia la izquierda.
+     * @return El botón para moverse hacia la izquierda.
+     */
     public ImageButton getImageButtonIzquierda() {
         return imageButtonIzquierda;
     }
 
+    /**
+     * Obtiene el botón para moverse hacia adelante.
+     * @return El botón para moverse hacia adelante.
+     */
     public ImageButton getImageButtonArriba() {
         return imageButtonArriba;
     }
 
+    /**
+     * Obtiene el botón para moverse hacia atrás.
+     * @return El botón para moverse hacia atrás.
+     */
     public ImageButton getImageButtonAbajo() {
         return imageButtonAbajo;
     }
 
+    /**
+     * Obtiene el botón de pausa del juego.
+     * @return El botón de pausa del juego.
+     */
     public ImageButton getImageButtonPause() {
         return imageButtonPause;
     }
 
+    /**
+     * Obtiene el botón de inicio del juego.
+     * @return El botón de inicio del juego.
+     */
     public ImageButton getImageButtonStart() {
         return imageButtonStart;
     }
 
+    /**
+     * Obtiene el botón de configuración.
+     * @return El botón de configuración.
+     */
     public ImageButton getImageButtonSettings() {
         return imageButtonSettings;
     }
 
+    /**
+     * Obtiene el botón de récords.
+     * @return El botón de récords.
+     */
     public ImageButton getImageButtonRecords() {
         return imageButtonRecords;
     }
 
+    /**
+     * Obtiene el botón de la guia.
+     * @return El botón de la guia.
+     */
     public ImageButton getImageButtonTutorial() {
         return imageButtonTutorial;
     }
 
+    /**
+     * Obtiene el botón de salida del juego.
+     * @return El botón de salida del juego.
+     */
     public ImageButton getImageButtonExit() {
         return imageButtonExit;
     }
 
+    /**
+     * Obtiene el botón de regreso.
+     * @return El botón de regreso.
+     */
     public ImageButton getImageButtonVolver() {
         return imageButtonVolver;
     }
 
+    /**
+     * Obtiene el botón de música.
+     * @return El botón de música.
+     */
     public ImageButton getImageButtonMusicON() {
         return imageButtonMusicON;
     }
 
+    /**
+     * Obtiene el botón de vibración.
+     * @return El botón de vibración.
+     */
     public ImageButton getImageButtonVibracion() {
         return imageButtonVibracion;
     }
 
+    /**
+     * Obtiene el botón de la pista 1.
+     * @return El botón de la pista 1.
+     */
     public ImageButton getImageButtonTrack1() {
         return imageButtonTrack1;
     }
 
+    /**
+     * Obtiene el botón de la pista 2.
+     * @return El botón de la pista 2.
+     */
     public ImageButton getImageButtonTrack2() {
         return imageButtonTrack2;
     }
 
+    /**
+     * Obtiene el botón de la flecha.
+     * @return El botón de la flecha.
+     */
     public ImageButton getImageButtonFlecha() {
         return imageButtonFlecha;
     }
 
+    /**
+     * Obtiene el botón de créditos.
+     * @return El botón de créditos.
+     */
     public ImageButton getImageButtonCreditos() {
         return imageButtonCreditos;
     }
 
+    /**
+     * Obtiene el botón de idioma.
+     * @return El botón de idioma.
+     */
     public ImageButton getImageButtonIdioma() {
         return imageButtonIdioma;
     }
 
+    /**
+     * Obtiene la lista de botones de coches.
+     * @return La lista de botones de coches.
+     */
     public ArrayList<ImageButton> getImageButtonCars() {
         return listaCoches;
     }
 
+    /**
+     * Actualiza el texto de las vueltas en el juego.
+     * @param vueltas El número de vueltas.
+     */
     public void updateVueltas(int vueltas) {
         lblVuelta.setText(Game.bundle.get("vuelta") + ": " + vueltas);
     }

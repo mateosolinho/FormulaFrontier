@@ -10,7 +10,7 @@ import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
- * Listener para manejar los contactos entre sensores y otros cuerpos en el juego.
+ * Clase encargada de manejar los contactos entre sensores y otros cuerpos en el juego.
  */
 public class SensorContactListener implements ContactListener {
 

@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Screens.CircuitSelectionScreen;
 
+/**
+ * Clase encargada de cargar y renderizar el mapa del juego.
+ */
 public class MapLoader implements Disposable {
 
     /**

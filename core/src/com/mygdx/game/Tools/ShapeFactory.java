@@ -9,6 +9,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ * Clase encargada de crear formas en un mundo Box2D.
+ */
 public class ShapeFactory {
     /**
      * Crea un objeto rectangular en la pantalla

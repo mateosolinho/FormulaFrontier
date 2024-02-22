@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+/**
+ * Clase encargada de almacenar las constantes de la aplicación
+ */
 public class Constants {
     /**
      * Píxeles por metro (PPM). Factor de conversión para convertir entre unidades del mundo Box2D y unidades de pantalla.

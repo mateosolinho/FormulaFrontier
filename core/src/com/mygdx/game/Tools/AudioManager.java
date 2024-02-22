@@ -3,6 +3,9 @@ package com.mygdx.game.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
+/**
+ * Clase encargada de gestionar la música y los efectos de sonido en el juego
+ */
 public class AudioManager {
 
     /**
