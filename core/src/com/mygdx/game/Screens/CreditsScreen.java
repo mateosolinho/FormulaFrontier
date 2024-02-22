@@ -9,12 +9,31 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
+/**
+ * Clase encargada de respresentar la pantalla de records.
+ */
 public class CreditsScreen implements Screen {
 
+    /**
+     * Instancia principal del juego
+     */
     private final Game game;
+
+    /**
+     * Instancia de buttoncreator
+     */
     private final ButtonCreator buttonCreator;
+
+    /**
+     * Instancia del stage que contiene los elementos visuales
+     */
     private final Stage stage;
 
+    /**
+     * Constructor de la clase CreditsScreen.
+     *
+     * @param game La instancia principal del juego.
+     */
     public CreditsScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
@@ -22,6 +41,9 @@ public class CreditsScreen implements Screen {
         handleInput();
     }
 
+    /**
+     * Método que maneja la entrada del usuario.
+     */
     private void handleInput() {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
             @Override
@@ -38,6 +60,10 @@ public class CreditsScreen implements Screen {
 
     }
 
+    /**
+     * Renderiza la pantalla de records.
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);

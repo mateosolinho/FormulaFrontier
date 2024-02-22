@@ -10,19 +10,51 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.SensorContactListener;
 
+/**
+ * Clase encargada de respresentar la pantalla de selección de vehiculos
+ */
 public class CircuitSelectionScreen implements Screen {
 
+    /**
+     * Instacia principal del juego
+     */
     private final Game game;
+
+    /**
+     * Instancia de buttoncreator
+     */
     private final ButtonCreator buttonCreator;
+
+    /**
+     * Instancia del stage que contiene los elementos visuales de la pantalla
+     */
     private final Stage stage;
+
+    /**
+     * Ruta del archivo del circuito seleccionado
+     */
     public static String rutaCircuito;
+
+    /**
+     * Instancia d playscreen
+     */
     static PlayScreen playScreen;
+
+    /**
+     * Constructor de CircuitSelectionScreen.
+     *
+     * @param game Instancia principal del juego.
+     */
     public CircuitSelectionScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
         stage = buttonCreator.createMapsButtons();
         handleInput();
     }
+
+    /**
+     * Maneja la interacción con los botones de selección de circuito.
+     */
     private void handleInput() {
         buttonCreator.getImageButtonTrack1().addListener(new ClickListener() {
             @Override
@@ -48,6 +80,10 @@ public class CircuitSelectionScreen implements Screen {
 
     }
 
+    /**
+     * Renderiza la pantalla de selecion del circuito.
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);

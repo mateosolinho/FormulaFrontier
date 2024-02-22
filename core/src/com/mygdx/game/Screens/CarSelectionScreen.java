@@ -21,7 +21,7 @@ public class CarSelectionScreen implements Screen {
     private final Game game;
 
     /**
-     * Instancia del creador de botones para la interfaz de usuario.
+     * Instancia de buttoncreator
      */
     private final ButtonCreator buttonCreator;
 

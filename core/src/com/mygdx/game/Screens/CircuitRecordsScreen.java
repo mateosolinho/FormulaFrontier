@@ -20,7 +20,7 @@ public class CircuitRecordsScreen implements Screen {
     private final Game game;
 
     /**
-     * Instancia del creador de botones para la pantalla de récords.
+     * Instancia de buttoncreator
      */
     private final ButtonCreator buttonCreator;
 

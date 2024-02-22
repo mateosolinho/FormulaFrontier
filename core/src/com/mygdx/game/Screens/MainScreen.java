@@ -15,15 +15,45 @@ import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
+/**
+ * Clase encargada de respresentar la pantalla principal.
+ */
 public class MainScreen implements Screen {
+
+    /**
+     * Instancia de buttoncreator
+     */
     private final ButtonCreator buttonCreator;
+
+    /**
+     * Instancia de stage
+     */
     private static Stage stage;
+
+    /**
+     * Instancia de game
+     */
     private final Game game;
+
+    /**
+     * Instancia de audiomanager
+     */
     private static AudioManager audioManager;
+
+    /**
+     * Comprueba si esta en la pantalla MainScreen
+     */
     public static boolean isMainScreen;
+
+    /**
+     * Comprueba si esta en la musica esta sonando
+     */
     public static boolean musicStarted = false;
 
-
+    /**
+     * Constructor de la clase MainScreen.
+     * @param game La instancia del juego.
+     */
     public MainScreen(Game game) {
         this.game = game;
         buttonCreator = new ButtonCreator();
@@ -32,15 +62,25 @@ public class MainScreen implements Screen {
         handleInput();
     }
 
+    /**
+     * Obtiene el stage de la pantalla principal.
+     * @return El stage de la pantalla principal.
+     */
     public static Stage getStage() {
         return stage;
     }
 
-
+    /**
+     * Obtiene el administrador de audio.
+     * @return El administrador de audio.
+     */
     public static AudioManager getAudioManager() {
         return audioManager;
     }
 
+    /**
+     * Se ejecuta cuando esta pantalla se muestra.
+     */
     @Override
     public void show() {
         if (PreferencesManager.getMusica() && !MainScreen.musicStarted) {
@@ -49,6 +89,10 @@ public class MainScreen implements Screen {
         }
     }
 
+    /**
+     * Renderiza la pantalla principal.
+     * @param delta El tiempo en segundos desde el último renderizado.
+     */
     @Override
     public void render(float delta) {
         if (isMainScreen) {
@@ -88,6 +132,9 @@ public class MainScreen implements Screen {
 
     }
 
+    /**
+     * Configura el manejo de entrada para los botones.
+     */
     private void handleInput() {
         buttonCreator.getImageButtonStart().addListener(new ClickListener() {
             @Override
@@ -137,6 +184,9 @@ public class MainScreen implements Screen {
         });
     }
 
+    /**
+     * Actualiza las imágenes según el idioma actual.
+     */
     public void actualizarImagenesMain() {
         Texture buttonTextureStart = new Texture(Gdx.files.internal(Game.bundle.get("botonStart")));
         Texture buttonTextureSettings = new Texture(Gdx.files.internal(Game.bundle.get("botonAjustes")));
@@ -149,6 +199,11 @@ public class MainScreen implements Screen {
         createStyle(buttoTextureTurtorial, buttonCreator.getImageButtonTutorial());
     }
 
+    /**
+     * Crea el estilo de un botón con la textura especificada.
+     * @param texture La textura para el botón.
+     * @param imageButton El botón al que se le aplicará el estilo.
+     */
     public void createStyle(Texture texture, ImageButton imageButton) {
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
         style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));

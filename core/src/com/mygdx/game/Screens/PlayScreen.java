@@ -29,31 +29,94 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-// https://www.iforce2d.net/b2dtut/top-down-car <- Documento de explicación de las físicas 2d
+/**
+ * Clase encargada de representar la pantalla de juego principal donde se desarrolla la acción del juego.
+ */
 public class PlayScreen implements Screen {
+
+    /**
+     * FPS máximos del juego
+     */
     private static final float TARGET_FPS = 60;
+
+    /**
+     * Calculo de los FPS
+     */
     private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
 
+    /**
+     * Umbral que detetecta cuando se aplica el turbo
+     */
     private static final float BOOST_THRESHOLD = 12;
+
+    /**
+     * Fuerza del impulso para el turbo
+     */
     private static final float BOOST_FORCE = 250.0f;
 
+    /**
+     * Dirección de conducción: ninguna.
+     */
     private final static int DRIVE_DIRECTION_NONE = 0;
+
+    /**
+     * Dirección de conducción: hacia adelante.
+     */
     private final static int DRIVE_DIRECTION_FORWARD = 1;
+
+    /**
+     * Dirección de conducción: hacia atrás.
+     */
     private final static int DRIVE_DIRECTION_BACKWARD = 2;
 
+    /**
+     * Dirección de giro: ninguna.
+     */
     private final static int TURN_DIRECTION_NONE = 0;
+
+    /**
+     * Dirección de giro: izquierda.
+     */
     private final static int TURN_DIRECTION_LEFT = 1;
+
+    /**
+     * Dirección de giro: derecha.
+     */
     private final static int TURN_DIRECTION_RIGHT = 2;
 
+    /**
+     * Coeficiente de drift para el deslizamiento del vehículo.
+     */
     private final static float DRIFT = 0.99f;
 
+    /**
+     * Velocidad de conducción predeterminada.
+     */
     private static float DRIVE_SPEED = 150.0f;
+
+    /**
+     * Velocidad de giro predeterminada.
+     */
     private static float TURN_SPEED = 2.5f;
+
+    /**
+     * Velocidad de maxima permitida.
+     */
     private static float MAX_SPEED = 55.0f;
 
+    /**
+     * Dirección de la conducción actual del vehículo: ninguna.
+     */
     private int driveDirection = DRIVE_DIRECTION_NONE;
+
+    /**
+     * Dirección actual del giro del vehículo: ninguna.
+     */
     private int turnDirection = TURN_DIRECTION_NONE;
 
+    /**
+     * Intervalo de tiempo para la actualización de ciertos procesos en milisegundos.
+     */
     private final int TICK = 50;
 
     private final Stage stage;

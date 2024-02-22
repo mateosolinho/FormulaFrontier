@@ -16,12 +16,36 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
 public class PauseScreen implements Screen {
+
+    /**
+     * Instancia de buttoncreator
+     */
     private final ButtonCreator buttonCreator;
+
+    /**
+     * Instancia de stage
+     */
     private final Stage stage;
+
+    /**
+     * Instancia de game
+     */
     private final Game game;
+
+    /**
+     * Instancia de preferencesManager
+     */
     private final PreferencesManager preferencesManager;
+
+    /**
+     * Instancia de audioManager
+     */
     private final AudioManager audioManager;
 
+    /**
+     * Constructor de la clase PauseScreen.
+     * @param game La instancia del juego.
+     */
     public PauseScreen(Game game) {
         this.game = game;
         preferencesManager = new PreferencesManager();
@@ -36,6 +60,10 @@ public class PauseScreen implements Screen {
 
     }
 
+    /**
+     * Renderiza la pantalla principal.
+     * @param delta El tiempo en segundos desde el último renderizado.
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -70,6 +98,9 @@ public class PauseScreen implements Screen {
 
     }
 
+    /**
+     * Configura el manejo de entrada para los botones.
+     */
     private void handleInput() {
         buttonCreator.getImageButtonVolver().addListener(new ClickListener() {
             @Override
@@ -159,6 +190,9 @@ public class PauseScreen implements Screen {
         });
     }
 
+    /**
+     * Actualiza las imágenes según el idioma actual.
+     */
     public void actualizarImegenes() {
         Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
         Texture buttonTextureVolver = new Texture(Gdx.files.internal(Game.bundle.get("botonVolver")));
@@ -167,6 +201,11 @@ public class PauseScreen implements Screen {
         createStyle(buttonTextureVolver, buttonCreator.getImageButtonVolver());
     }
 
+    /**
+     * Crea el estilo de un botón con la textura especificada.
+     * @param texture La textura para el botón.
+     * @param imageButton El botón al que se le aplicará el estilo.
+     */
     public void createStyle(Texture texture, ImageButton imageButton) {
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
         style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));
