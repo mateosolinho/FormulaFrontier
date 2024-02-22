@@ -16,7 +16,7 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
 /**
- * Clase encargada de respresentar la pantalla configuración.
+ * Clase encargada de representar la pantalla configuración.
  */
 public class MainPauseScreen implements Screen {
 
@@ -47,6 +47,7 @@ public class MainPauseScreen implements Screen {
 
     /**
      * Constructor de MainPauseScreen.
+     *
      * @param game La instancia del juego.
      */
     public MainPauseScreen(Game game) {
@@ -65,6 +66,7 @@ public class MainPauseScreen implements Screen {
 
     /**
      * Renderiza la MainPauseScreen.
+     *
      * @param delta El tiempo en segundos desde el último renderizado.
      */
     @Override
@@ -198,7 +200,7 @@ public class MainPauseScreen implements Screen {
     /**
      * Actualiza las imágenes según el idioma actual.
      */
-    public void actualizarImegenes(){
+    public void actualizarImegenes() {
         Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
         Texture buttonTextureVolver = new Texture(Gdx.files.internal(Game.bundle.get("botonVolver")));
 
@@ -208,10 +210,11 @@ public class MainPauseScreen implements Screen {
 
     /**
      * Crea el estilo de un botón con la textura especificada.
-     * @param texture La textura para el botón.
+     *
+     * @param texture     La textura para el botón.
      * @param imageButton El botón al que se le aplicará el estilo.
      */
-    public void createStyle(Texture texture, ImageButton imageButton){
+    public void createStyle(Texture texture, ImageButton imageButton) {
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
         style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));
         style.imageUp.setMinWidth(500);

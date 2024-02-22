@@ -32,7 +32,7 @@ public class ObjectManager {
      *
      * @param world El mundo Box2D donde se crean los objetos físicos.
      */
-    public ObjectManager(World world){
+    public ObjectManager(World world) {
         this.world = world;
     }
 
@@ -62,11 +62,11 @@ public class ObjectManager {
         Array<RectangleMapObject> walls = map.getLayers().get(WALLS).getObjects().getByType(RectangleMapObject.class);
         for (RectangleMapObject rObject : new Array.ArrayIterator<>(walls)) {
             Rectangle rectangle = rObject.getRectangle();
-           Body bodyWalls = ShapeFactory.createRectangle(
+            Body bodyWalls = ShapeFactory.createRectangle(
                     new Vector2((rectangle.getX() + rectangle.getWidth() / 2), (rectangle.getY() + rectangle.getHeight() / 2)),
                     new Vector2(rectangle.getWidth() / 2, rectangle.getHeight() / 2),
                     BodyDef.BodyType.StaticBody, world, 1f, false);
-        bodyWalls.setUserData("wall");
+            bodyWalls.setUserData("wall");
         }
     }
 
@@ -89,7 +89,7 @@ public class ObjectManager {
      *
      * @param map El mapa tiled que contiene la información del checkpoint1.
      */
-    public void createCheckpoint1(TiledMap map){
+    public void createCheckpoint1(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT1).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check1 = ShapeFactory.createRectangle(
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
@@ -103,7 +103,7 @@ public class ObjectManager {
      *
      * @param map El mapa tiled que contiene la información del checkpoint2.
      */
-    public void createCheckpoint2(TiledMap map){
+    public void createCheckpoint2(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT2).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check2 = ShapeFactory.createRectangle(
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),
@@ -117,7 +117,7 @@ public class ObjectManager {
      *
      * @param map El mapa tiled que contiene la información del checkpoint3.
      */
-    public void createCheckpoint3(TiledMap map){
+    public void createCheckpoint3(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT3).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
         Body check3 = ShapeFactory.createRectangle(
                 new Vector2(playerRectangle.getX() + playerRectangle.getWidth() / 2, playerRectangle.getY() + playerRectangle.getHeight() / 2),

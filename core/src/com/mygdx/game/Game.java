@@ -22,7 +22,6 @@ public class Game extends com.badlogic.gdx.Game {
      */
     @Override
     public void create() {
-        Gdx.app.log("idi", PreferencesManager.getLocale() + " ");
         FileHandle fileHandle = Gdx.files.internal("Traductions/" + PreferencesManager.getPropertyFile());
         bundle = I18NBundle.createBundle(fileHandle, PreferencesManager.getLocale());
 

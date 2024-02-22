@@ -119,39 +119,138 @@ public class PlayScreen implements Screen {
      */
     private final int TICK = 50;
 
+    /**
+     * Instancia de stage
+     */
     private final Stage stage;
-    private Vector2 baseVector;
-    private final OrthographicCamera camera;
-    private final TiledMapRenderer tiledMapRenderer;
-    private final SpriteBatch batch;
-    private final World world;
-    private final Box2DDebugRenderer b2rd;
-    private final Body player;
-    private final Game game;
-    private final ButtonCreator buttonCreator;
-    private final Texture playerTexture;
-    private final Sprite playerSprite;
-    private final MapLoader mapLoader;
-    private final AudioManager audioManager;
-    static public TimeAttack timeAttack = new TimeAttack();
 
+    /**
+     * Vector base para cálculos de posición
+     */
+    private Vector2 baseVector;
+
+    /**
+     * Cámara ortográfica para la vista del juego.
+     */
+    private final OrthographicCamera camera;
+
+    /**
+     * Renderizador de mapas tiled
+     */
+    private final TiledMapRenderer tiledMapRenderer;
+
+    /**
+     * Lote de sprites para renderizado
+     */
+    private final SpriteBatch batch;
+
+    /**
+     * Mundo de Box2D para la simulación de física.
+     */
+    private final World world;
+
+    /**
+     * Renderizador de depuración de Box2D.
+     */
+    private final Box2DDebugRenderer b2rd;
+
+    /**
+     * Cuerpo del jugador en el mundo Box2D.
+     */
+    private final Body player;
+
+    /**
+     * Instancia de game
+     */
+    private final Game game;
+
+    /**
+     * Instancia de buttonCreator
+     */
+    private final ButtonCreator buttonCreator;
+
+    /**
+     * Textura del jugador
+     */
+    private final Texture playerTexture;
+
+    /**
+     * Sprite del jugador
+     */
+    private final Sprite playerSprite;
+
+    /**
+     * Cargador de mapas para cargar mapas del juego.
+     */
+    private final MapLoader mapLoader;
+
+    /**
+     * Administrador de audio para el juego
+     */
+    private final AudioManager audioManager;
+
+    /**
+     * Instancia de timeAttack
+     */
+    public static TimeAttack timeAttack = new TimeAttack();
+
+    /**
+     * Lista que almacena texturas de semáforos.
+     */
     private final ArrayList<Texture> semaforos = new ArrayList<>();
 
+    /**
+     * Tiempo total acumulado.
+     */
     private long tTotal = 0;
+
+    /**
+     * Indicador de si se ha presionado el botón de pausa.
+     */
     private boolean isPausePressed;
+
+    /**
+     * Indicador de si el semáforo está activo.
+     */
     private boolean isSemaforoActive;
+
+    /**
+     * Tiempo transcurrido desde la activación del semáforo.
+     */
     private float timeSemaforo = 0;
+
+    /**
+     * Índice del sprite del semáforo.
+     */
     private int spriteSemaforo = 0;
 
+    /**
+     * Formato de fecha para representar el tiempo en formato "HH:mm:ss".
+     */
     @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
+
+    /**
+     * Instancia de Calendar utilizada para trabajar con la fecha y la hora del sistema.
+     */
     private static final Calendar cal = Calendar.getInstance();
 
+    /**
+     * Método encargado de formatear el tiempo en mm al formato indicado.
+     *
+     * @param tiempo Unidad de tiempo en mm.
+     * @return String de la cadena ya formateada con el tiempo.
+     */
     public static String formatTiempo(long tiempo) {
-        cal.setTimeInMillis(tiempo-3600000);
+        cal.setTimeInMillis(tiempo - 3600000);
         return dateFormat.format(cal.getTime());
     }
 
+    /**
+     * Constructor de la clase PlayScreen.
+     *
+     * @param game La instancia del juego.
+     */
     public PlayScreen(Game game) {
         this.game = game;
 
@@ -194,6 +293,11 @@ public class PlayScreen implements Screen {
         }
     }
 
+    /**
+     * Obtiene el stage de la interfaz de usuario.
+     *
+     * @return El stage de la interfaz de usuario utilizado en la pantalla del juego.
+     */
     public Stage getStage() {
         return stage;
     }
@@ -202,6 +306,11 @@ public class PlayScreen implements Screen {
     public void show() {
     }
 
+    /**
+     * Método que renderiza la pantalla del juego.
+     *
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
+     */
     @Override
     public void render(float delta) {
         timeSemaforo = timeSemaforo + delta;
@@ -278,11 +387,29 @@ public class PlayScreen implements Screen {
         player.setLinearVelocity(forwardSpeed.x + lateralSpeed.x * DRIFT, forwardSpeed.y + lateralSpeed.y * DRIFT);
     }
 
+    /**
+     * Indica si la tecla de dirección hacia arriba está presionada.
+     */
     boolean isUpPressed = false;
+
+    /**
+     * Indica si la tecla de dirección hacia abajo está presionada.
+     */
     boolean isDownPressed = false;
+
+    /**
+     * Indica si la tecla de dirección hacia la derecha está presionada.
+     */
     boolean isRightPressed = false;
+
+    /**
+     * Indica si la tecla de dirección hacia la izquierda está presionada.
+     */
     boolean isLeftPressed = false;
 
+    /**
+     * Procesa la entrada del jugador y aplica la física correspondiente al jugador en el mundo Box2D.
+     */
     private void processInput() {
         switch (turnDirection) {
             case TURN_DIRECTION_RIGHT:
@@ -346,6 +473,9 @@ public class PlayScreen implements Screen {
         return new Vector2(a * v.x, a * v.y);
     }
 
+    /**
+     * Método que maneja la entrada del usuario.
+     */
     private void handleInput() {
 
         buttonCreator.getImageButtonArriba().addListener(new InputListener() {
@@ -411,12 +541,22 @@ public class PlayScreen implements Screen {
 
     }
 
+    /**
+     * Modifica las velocidades de conducción del jugador.
+     *
+     * @param newSpeed     La nueva velocidad de avance del jugador.
+     * @param newTurnSpeed La nueva velocidad de giro del jugador.
+     * @param newMaxSpeed  La nueva velocidad máxima del jugador.
+     */
     public static void modifyDriveSpeed(float newSpeed, float newTurnSpeed, float newMaxSpeed) {
         DRIVE_SPEED = newSpeed;
         TURN_SPEED = newTurnSpeed;
         MAX_SPEED = newMaxSpeed;
     }
 
+    /**
+     * Dibuja los elementos visuales en la pantalla del juego..
+     */
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
 
@@ -449,17 +589,26 @@ public class PlayScreen implements Screen {
             }
         }
     }
-    float accelerometerX;
 
+    /**
+     * Valor del acelerómetro en el eje Z.
+     */
+    float accelerometerZ;
+
+    /**
+     * Actualiza el estado del juego.
+     * Este método se encarga de actualizar la posición de la cámara, verificar el acelerómetro
+     * para aplicar un impulso y actualizar la simulación del mundo.
+     */
     private void update() {
         camera.position.set(player.getPosition(), 0);
         camera.update();
 
-        accelerometerX = Gdx.input.getAccelerometerZ();
+        accelerometerZ = Gdx.input.getAccelerometerZ();
 
-        if (!isSemaforoActive ) {
-            if (accelerometerX > BOOST_THRESHOLD) {
-                accelerometerX = 0;
+        if (!isSemaforoActive) {
+            if (accelerometerZ > BOOST_THRESHOLD) {
+                accelerometerZ = 0;
                 applyBoost();
             }
         }
@@ -467,10 +616,19 @@ public class PlayScreen implements Screen {
         world.step(1 / 60f, 5, 3);
     }
 
+    /**
+     * Aplica la fuerza sobre el player.
+     */
     private void applyBoost() {
         player.applyForceToCenter(player.getWorldVector(new Vector2(0, BOOST_FORCE)), true);
     }
 
+    /**
+     * Método invocado cuando la pantalla cambia de tamaño.
+     *
+     * @param width  El nuevo ancho de la pantalla.
+     * @param height La nueva altura de la pantalla.
+     */
     @Override
     public void resize(int width, int height) {
         mapLoader.getViewport().update(width, height, true);
@@ -491,6 +649,9 @@ public class PlayScreen implements Screen {
 
     }
 
+    /**
+     * Libera los recursos utilizados por la pantalla
+     */
     @Override
     public void dispose() {
         batch.dispose();

@@ -160,7 +160,7 @@ public class PreferencesManager {
      * @param ingles El valor booleano que indica si se prefiere el idioma inglés.
      */
     public static void setIngles(boolean ingles) {
-        Gdx.app.log("ingles" , ingles + " valor guardado");
+        Gdx.app.log("ingles", ingles + " valor guardado");
         prefs.putBoolean("ingles", ingles);
         prefs.flush();
     }

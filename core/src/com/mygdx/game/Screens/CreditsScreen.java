@@ -10,7 +10,7 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 /**
- * Clase encargada de respresentar la pantalla de records.
+ * Clase encargada de representar la pantalla de records.
  */
 public class CreditsScreen implements Screen {
 
@@ -62,6 +62,7 @@ public class CreditsScreen implements Screen {
 
     /**
      * Renderiza la pantalla de records.
+     *
      * @param delta El tiempo transcurrido desde el último fotograma en segundos.
      */
     @Override

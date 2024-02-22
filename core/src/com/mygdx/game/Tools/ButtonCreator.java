@@ -263,6 +263,7 @@ public class ButtonCreator {
 
     /**
      * Crea los botones del juego y los agrega al stage.
+     *
      * @return El stage con los botones agregados.
      */
     public Stage createGameButtons() {
@@ -340,6 +341,7 @@ public class ButtonCreator {
 
     /**
      * Crea los botones del menu de pausa del juego y los agrega al stage.
+     *
      * @return El stage con los botones agregados.
      */
     public Stage createPauseScreenButtons() {
@@ -431,6 +433,7 @@ public class ButtonCreator {
 
     /**
      * Crea los botones y etiquetas de la pantalla principal y los agrega al stage.
+     *
      * @return El stage con los botones y etiquetas agregados.
      */
     public Stage createMainButtons() {
@@ -532,6 +535,7 @@ public class ButtonCreator {
 
     /**
      * Crea los botones y etiquetas de seleccion de coche y los agrega al stage.
+     *
      * @return El stage con los botones y etiquetas agregados.
      */
     public Stage createCarButtons() {
@@ -590,6 +594,7 @@ public class ButtonCreator {
 
     /**
      * Crea las etiquetas de la pantalla records y los agrega al stage.
+     *
      * @return El stage con los botones y etiquetas agregados.
      */
     public Stage createLabelsRecords() {
@@ -683,6 +688,7 @@ public class ButtonCreator {
 
     /**
      * Crea las etiquetas de la pantalla de seleccion de circuito y los agrega al stage.
+     *
      * @return El stage con las etiquetas agregadas.
      */
     public Stage createMapsButtons() {
@@ -706,6 +712,7 @@ public class ButtonCreator {
 
     /**
      * Crea las etiquetas de la pantalla de creditos y los agrega al stage.
+     *
      * @return El stage con las etiquetas agregadas.
      */
     public Stage createLabelsCredits() {
@@ -743,6 +750,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón para moverse hacia la derecha.
+     *
      * @return El botón para moverse hacia la derecha.
      */
     public ImageButton getImageButtonDerecha() {
@@ -751,6 +759,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón para moverse hacia la izquierda.
+     *
      * @return El botón para moverse hacia la izquierda.
      */
     public ImageButton getImageButtonIzquierda() {
@@ -759,6 +768,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón para moverse hacia adelante.
+     *
      * @return El botón para moverse hacia adelante.
      */
     public ImageButton getImageButtonArriba() {
@@ -767,6 +777,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón para moverse hacia atrás.
+     *
      * @return El botón para moverse hacia atrás.
      */
     public ImageButton getImageButtonAbajo() {
@@ -775,6 +786,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de pausa del juego.
+     *
      * @return El botón de pausa del juego.
      */
     public ImageButton getImageButtonPause() {
@@ -783,6 +795,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de inicio del juego.
+     *
      * @return El botón de inicio del juego.
      */
     public ImageButton getImageButtonStart() {
@@ -791,6 +804,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de configuración.
+     *
      * @return El botón de configuración.
      */
     public ImageButton getImageButtonSettings() {
@@ -799,6 +813,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de récords.
+     *
      * @return El botón de récords.
      */
     public ImageButton getImageButtonRecords() {
@@ -807,6 +822,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de la guia.
+     *
      * @return El botón de la guia.
      */
     public ImageButton getImageButtonTutorial() {
@@ -815,6 +831,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de salida del juego.
+     *
      * @return El botón de salida del juego.
      */
     public ImageButton getImageButtonExit() {
@@ -823,6 +840,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de regreso.
+     *
      * @return El botón de regreso.
      */
     public ImageButton getImageButtonVolver() {
@@ -831,6 +849,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de música.
+     *
      * @return El botón de música.
      */
     public ImageButton getImageButtonMusicON() {
@@ -839,6 +858,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de vibración.
+     *
      * @return El botón de vibración.
      */
     public ImageButton getImageButtonVibracion() {
@@ -847,6 +867,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de la pista 1.
+     *
      * @return El botón de la pista 1.
      */
     public ImageButton getImageButtonTrack1() {
@@ -855,6 +876,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de la pista 2.
+     *
      * @return El botón de la pista 2.
      */
     public ImageButton getImageButtonTrack2() {
@@ -863,6 +885,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de la flecha.
+     *
      * @return El botón de la flecha.
      */
     public ImageButton getImageButtonFlecha() {
@@ -871,6 +894,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de créditos.
+     *
      * @return El botón de créditos.
      */
     public ImageButton getImageButtonCreditos() {
@@ -879,6 +903,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene el botón de idioma.
+     *
      * @return El botón de idioma.
      */
     public ImageButton getImageButtonIdioma() {
@@ -887,6 +912,7 @@ public class ButtonCreator {
 
     /**
      * Obtiene la lista de botones de coches.
+     *
      * @return La lista de botones de coches.
      */
     public ArrayList<ImageButton> getImageButtonCars() {
@@ -895,6 +921,7 @@ public class ButtonCreator {
 
     /**
      * Actualiza el texto de las vueltas en el juego.
+     *
      * @param vueltas El número de vueltas.
      */
     public void updateVueltas(int vueltas) {

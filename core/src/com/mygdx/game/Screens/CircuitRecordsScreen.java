@@ -62,6 +62,7 @@ public class CircuitRecordsScreen implements Screen {
 
     /**
      * Renderiza la pantalla de récords del circuito.
+     *
      * @param delta El tiempo transcurrido desde el último fotograma en segundos.
      */
     @Override

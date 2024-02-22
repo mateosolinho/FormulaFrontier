@@ -155,8 +155,8 @@ public class SensorContactListener implements ContactListener {
     /**
      * Método que se llama después de resolver el contacto entre fixtures.
      *
-     * @param contact  El objeto Contact que contiene información sobre el contacto.
-     * @param impulse  El objeto ContactImpulse que contiene información sobre el impulso del contacto.
+     * @param contact El objeto Contact que contiene información sobre el contacto.
+     * @param impulse El objeto ContactImpulse que contiene información sobre el impulso del contacto.
      */
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {

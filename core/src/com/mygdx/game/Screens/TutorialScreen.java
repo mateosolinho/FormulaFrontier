@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Game;
 
 /**
- * Pantalla que muestra un tutorial con varias imágenes.
+ * Clase encargada de representar la pantalla del tutorial.
  */
 public class TutorialScreen implements Screen {
 
@@ -45,6 +45,7 @@ public class TutorialScreen implements Screen {
 
     /**
      * Constructor de la clase TutorialScreen.
+     *
      * @param game Instancia del juego principal.
      */
     public TutorialScreen(Game game) {
@@ -114,7 +115,7 @@ public class TutorialScreen implements Screen {
     /**
      * Ajusta el tamaño del viewport del stage cuando la ventana de la aplicación se redimensiona.
      *
-     * @param width El nuevo ancho de la ventana.
+     * @param width  El nuevo ancho de la ventana.
      * @param height La nueva altura de la ventana.
      */
     @Override
@@ -126,10 +127,12 @@ public class TutorialScreen implements Screen {
     public void pause() {
 
     }
+
     @Override
     public void resume() {
 
     }
+
     @Override
     public void hide() {
 

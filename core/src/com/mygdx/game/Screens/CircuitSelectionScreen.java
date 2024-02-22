@@ -11,7 +11,7 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.SensorContactListener;
 
 /**
- * Clase encargada de respresentar la pantalla de selección de vehiculos
+ * Clase encargada de representar la pantalla de selección de vehiculos
  */
 public class CircuitSelectionScreen implements Screen {
 
@@ -82,6 +82,7 @@ public class CircuitSelectionScreen implements Screen {
 
     /**
      * Renderiza la pantalla de selecion del circuito.
+     *
      * @param delta El tiempo transcurrido desde el último fotograma en segundos.
      */
     @Override

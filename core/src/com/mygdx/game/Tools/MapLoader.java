@@ -55,12 +55,12 @@ public class MapLoader implements Disposable {
         float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
         float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
-        camera = new OrthographicCamera(mapWidth,mapHeight);
-        camera.setToOrtho(false, mapWidth / PPM , mapHeight / PPM);
+        camera = new OrthographicCamera(mapWidth, mapHeight);
+        camera.setToOrtho(false, mapWidth / PPM, mapHeight / PPM);
         camera.zoom = 2f;
 
-        viewport = new FillViewport(Gdx.graphics.getWidth()/PPM, Gdx.graphics.getHeight()/PPM,camera);
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1/PPM);
+        viewport = new FillViewport(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM, camera);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);
 
         ObjectManager objectManager = new ObjectManager(world);
         player = objectManager.createPlayer(map);
@@ -77,7 +77,7 @@ public class MapLoader implements Disposable {
      *
      * @return El cuerpo del jugador.
      */
-    public Body getPlayer(){
+    public Body getPlayer() {
         return player;
     }
 
@@ -86,7 +86,7 @@ public class MapLoader implements Disposable {
      *
      * @return La cámara ortográfica.
      */
-    public OrthographicCamera getCamera(){
+    public OrthographicCamera getCamera() {
         return camera;
     }
 
@@ -95,7 +95,7 @@ public class MapLoader implements Disposable {
      *
      * @return El viewport.
      */
-    public Viewport getViewport(){
+    public Viewport getViewport() {
         return viewport;
     }
 
@@ -104,13 +104,12 @@ public class MapLoader implements Disposable {
      *
      * @return El renderizador de mapas de mosaicos.
      */
-    public TiledMapRenderer getTileMapRenderer(){
+    public TiledMapRenderer getTileMapRenderer() {
         return tiledMapRenderer;
     }
 
     /**
      * Libera los recursos utilizados por MapLoader al eliminarla.
-     *
      */
     @Override
     public void dispose() {

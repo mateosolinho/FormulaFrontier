@@ -69,6 +69,7 @@ public class TimeAttack {
     /**
      * Obtiene el tiempo actual en formato de cadena "mm:ss:SS".
      * Calcula el tiempo transcurrido si el temporizador está activo.
+     *
      * @return Tiempo actual en formato de cadena.
      */
     public static String getTiempoActual() {
@@ -82,6 +83,7 @@ public class TimeAttack {
 
     /**
      * Formatea un tiempo dado en milisegundos en el formato "mm:ss:SS".
+     *
      * @param tiempo Tiempo en milisegundos a formatear.
      * @return Tiempo formateado en formato de cadena.
      */
@@ -92,6 +94,7 @@ public class TimeAttack {
 
     /**
      * Formatea un tiempo dado en milisegundos en el formato "mm:ss:SS".
+     *
      * @param tiempo Tiempo en milisegundos a formatear.
      * @return Tiempo formateado en formato de cadena.
      */
@@ -109,6 +112,7 @@ public class TimeAttack {
 
     /**
      * Establece el tiempo actual.
+     *
      * @param tiempo El nuevo tiempo actual en milisegundos.
      */
     public static void setTiempo(long tiempo) {
@@ -117,6 +121,7 @@ public class TimeAttack {
 
     /**
      * Establece si el temporizador está activo o no.
+     *
      * @param startTime Indica si el temporizador está activo.
      */
     public void setStartTime(boolean startTime) {
@@ -147,6 +152,7 @@ public class TimeAttack {
 
     /**
      * Obtiene el último tiempo registrado y actualiza el color de la etiqueta correspondiente en la interfaz.
+     *
      * @return El último tiempo registrado en formato de cadena.
      */
     public String getLastTime() {

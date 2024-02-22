@@ -37,6 +37,7 @@ public class CarSelectionScreen implements Screen {
 
     /**
      * Constructor de la clase CarSelectionScreen.
+     *
      * @param game Instancia principal del juego.
      */
     public CarSelectionScreen(Game game) {
@@ -68,6 +69,7 @@ public class CarSelectionScreen implements Screen {
 
     /**
      * Renderiza la pantalla de selección de coches.
+     *
      * @param delta The time in seconds since the last render.
      */
     @Override

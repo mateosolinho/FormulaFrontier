@@ -15,6 +15,9 @@ import com.mygdx.game.Tools.AudioManager;
 import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
+/**
+ *Clase encargada de representar la pantalla de pausa.
+ */
 public class PauseScreen implements Screen {
 
     /**
@@ -44,6 +47,7 @@ public class PauseScreen implements Screen {
 
     /**
      * Constructor de la clase PauseScreen.
+     *
      * @param game La instancia del juego.
      */
     public PauseScreen(Game game) {
@@ -62,6 +66,7 @@ public class PauseScreen implements Screen {
 
     /**
      * Renderiza la pantalla principal.
+     *
      * @param delta El tiempo en segundos desde el último renderizado.
      */
     @Override
@@ -203,7 +208,8 @@ public class PauseScreen implements Screen {
 
     /**
      * Crea el estilo de un botón con la textura especificada.
-     * @param texture La textura para el botón.
+     *
+     * @param texture     La textura para el botón.
      * @param imageButton El botón al que se le aplicará el estilo.
      */
     public void createStyle(Texture texture, ImageButton imageButton) {

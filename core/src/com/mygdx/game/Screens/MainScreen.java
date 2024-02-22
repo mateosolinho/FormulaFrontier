@@ -16,7 +16,7 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
 /**
- * Clase encargada de respresentar la pantalla principal.
+ * Clase encargada de representar la pantalla principal.
  */
 public class MainScreen implements Screen {
 
@@ -52,6 +52,7 @@ public class MainScreen implements Screen {
 
     /**
      * Constructor de la clase MainScreen.
+     *
      * @param game La instancia del juego.
      */
     public MainScreen(Game game) {
@@ -64,6 +65,7 @@ public class MainScreen implements Screen {
 
     /**
      * Obtiene el stage de la pantalla principal.
+     *
      * @return El stage de la pantalla principal.
      */
     public static Stage getStage() {
@@ -72,6 +74,7 @@ public class MainScreen implements Screen {
 
     /**
      * Obtiene el administrador de audio.
+     *
      * @return El administrador de audio.
      */
     public static AudioManager getAudioManager() {
@@ -91,6 +94,7 @@ public class MainScreen implements Screen {
 
     /**
      * Renderiza la pantalla principal.
+     *
      * @param delta El tiempo en segundos desde el último renderizado.
      */
     @Override
@@ -201,7 +205,8 @@ public class MainScreen implements Screen {
 
     /**
      * Crea el estilo de un botón con la textura especificada.
-     * @param texture La textura para el botón.
+     *
+     * @param texture     La textura para el botón.
      * @param imageButton El botón al que se le aplicará el estilo.
      */
     public void createStyle(Texture texture, ImageButton imageButton) {
