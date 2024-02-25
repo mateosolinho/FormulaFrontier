@@ -61,6 +61,9 @@ public class AudioManager {
         raceMusic.stop();
     }
 
+    /**
+     * Inicia el sonido del choque
+     */
     public void crashEffect() {
         Music crashSound = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/crash.mp3"));
         crashSound.setVolume(0.1f);
