@@ -57,7 +57,10 @@ public class MapLoader implements Disposable {
 
         camera = new OrthographicCamera(mapWidth, mapHeight);
         camera.setToOrtho(false, mapWidth / PPM, mapHeight / PPM);
-        camera.zoom = 2f;
+
+        float aspectRatio = (float) Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
+        camera.zoom = 100000 / (mapWidth * aspectRatio);
+        Gdx.app.log("camara",  100000/ (mapWidth * aspectRatio) + " ");
 
         viewport = new FillViewport(Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM, camera);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map, 1 / PPM);

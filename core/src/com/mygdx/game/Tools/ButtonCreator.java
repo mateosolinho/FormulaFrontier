@@ -215,7 +215,7 @@ public class ButtonCreator {
      */
     public void createGameLabels() {
         Label.LabelStyle f1Font = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Regular-1.fnt")), Color.WHITE);
-        f1Font.font.getData().setScale(50 / f1Font.font.getCapHeight());
+        f1Font.font.getData().setScale((Gdx.graphics.getHeight() * 0.1f) / 2 / f1Font.font.getCapHeight());
 
         lblTiempo = new Label("", f1Font);
         lblVuelta = new Label(Game.bundle.get("vuelta") + ": ", f1Font);
@@ -224,19 +224,19 @@ public class ButtonCreator {
 
         lblTiempo.setHeight(screenHeight * 0.15f);
         lblTiempo.setWidth(screenWidth * 0.15f);
-        lblTiempo.setPosition(screenWidth / 2.4f, 6 * screenHeight / 20f);
+        lblTiempo.setPosition(screenWidth / 2.4f, 7 * screenHeight / 20f);
 
         lblVuelta.setHeight(screenHeight * 0.15f);
         lblVuelta.setWidth(screenWidth * 0.15f);
-        lblVuelta.setPosition(1.5f * screenWidth / 20f, 6 * screenHeight / 20f);
+        lblVuelta.setPosition(1.5f * screenWidth / 20f, 5 * screenHeight / 20f);
 
         lblBestTime.setHeight(screenHeight * 0.15f);
         lblBestTime.setWidth(screenWidth * 0.15f);
-        lblBestTime.setPosition(13 * screenWidth / 20f, 6 * screenHeight / 20f);
+        lblBestTime.setPosition(13 * screenWidth / 20f, 5 * screenHeight / 20f);
 
         lblLastTime.setHeight(screenHeight * 0.15f);
         lblLastTime.setWidth(screenWidth * 0.15f);
-        lblLastTime.setPosition(13 * screenWidth / 20f, 4 * screenHeight / 20f);
+        lblLastTime.setPosition(13 * screenWidth / 20f, 3 * screenHeight / 20f);
 
         stage.addActor(lblTiempo);
         stage.addActor(lblVuelta);
@@ -438,7 +438,7 @@ public class ButtonCreator {
      */
     public Stage createMainButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
-        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+        f1FontTitle.font.getData().setScale((Gdx.graphics.getHeight() * 0.1f) / 2 / f1FontTitle.font.getCapHeight());
         Label lblTitulo = new Label(Game.bundle.get("titulo"), f1FontTitle);
 
         float labelWidth = lblTitulo.getWidth();
@@ -540,7 +540,7 @@ public class ButtonCreator {
      */
     public Stage createCarButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
-        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+        f1FontTitle.font.getData().setScale((Gdx.graphics.getHeight() * 0.1f) / 2 / f1FontTitle.font.getCapHeight());
 
         Label lblSelection = new Label(Game.bundle.get("tituloCoches"), f1FontTitle);
 
@@ -601,7 +601,7 @@ public class ButtonCreator {
         createFlecha();
 
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
-        f1FontTitle.font.getData().setScale(35 / f1FontTitle.font.getCapHeight());
+        f1FontTitle.font.getData().setScale((Gdx.graphics.getHeight() * 0.1f) / 3 / f1FontTitle.font.getCapHeight());
 
 
         Label lblRecords = new Label(Game.bundle.get("tituloRecords"), f1FontTitle);
@@ -693,7 +693,7 @@ public class ButtonCreator {
      */
     public Stage createMapsButtons() {
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
-        f1FontTitle.font.getData().setScale(50 / f1FontTitle.font.getCapHeight());
+        f1FontTitle.font.getData().setScale((Gdx.graphics.getHeight() * 0.1f) / 2 / f1FontTitle.font.getCapHeight());
 
         Label lblSelection = new Label(Game.bundle.get("tituloCircuitos"), f1FontTitle);
 
@@ -719,7 +719,7 @@ public class ButtonCreator {
         createFlecha();
 
         Label.LabelStyle f1FontTitle = new Label.LabelStyle(new BitmapFont(Gdx.files.internal("Fonts/Formula1-Wide.fnt")), Color.WHITE);
-        f1FontTitle.font.getData().setScale(30 / f1FontTitle.font.getCapHeight());
+        f1FontTitle.font.getData().setScale((Gdx.graphics.getHeight() * 0.1f) / 3f / f1FontTitle.font.getCapHeight());
 
         Label lblSelection = new Label(Game.bundle.get("tituloCreditos"), f1FontTitle);
 

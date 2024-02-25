@@ -196,11 +196,13 @@ public class MainScreen implements Screen {
         Texture buttonTextureSettings = new Texture(Gdx.files.internal(Game.bundle.get("botonAjustes")));
         Texture buttonTextureCreditos = new Texture(Gdx.files.internal(Game.bundle.get("botonCreditos")));
         Texture buttoTextureTurtorial = new Texture(Gdx.files.internal(Game.bundle.get("botonGuia")));
+        Texture buttonTextureSalir = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
 
         createStyle(buttonTextureStart, buttonCreator.getImageButtonStart());
         createStyle(buttonTextureSettings, buttonCreator.getImageButtonSettings());
         createStyle(buttonTextureCreditos, buttonCreator.getImageButtonCreditos());
         createStyle(buttoTextureTurtorial, buttonCreator.getImageButtonTutorial());
+        createStyle(buttonTextureSalir, buttonCreator.getImageButtonExit());
     }
 
     /**
