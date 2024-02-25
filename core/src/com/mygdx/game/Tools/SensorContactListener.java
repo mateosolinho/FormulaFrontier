@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.Game;
 import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
@@ -49,6 +50,8 @@ public class SensorContactListener implements ContactListener {
      */
     private final PreferencesManager preferencesManager;
 
+    private final AudioManager audioManager;
+
     /**
      * Constructor de la clase SensorContactListener.
      *
@@ -57,6 +60,7 @@ public class SensorContactListener implements ContactListener {
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
         preferencesManager = new PreferencesManager();
+        audioManager = new AudioManager();
         vVueltasTotales = preferencesManager.getVueltas();
     }
 
@@ -97,6 +101,10 @@ public class SensorContactListener implements ContactListener {
                 || "wall".equals(fixtureA.getBody().getUserData()) && "player".equals(fixtureB.getBody().getUserData())) {
             if (PreferencesManager.getVibracion()) {
                 Gdx.input.vibrate(55);
+            }
+
+            if (PreferencesManager.getMusica()) {
+                audioManager.crashEffect();
             }
         }
 

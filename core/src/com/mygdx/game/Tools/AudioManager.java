@@ -60,4 +60,10 @@ public class AudioManager {
     public void stopMusicCarrera() {
         raceMusic.stop();
     }
+
+    public void crashEffect() {
+        Music crashSound = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/crash.mp3"));
+        crashSound.setVolume(0.1f);
+        crashSound.play();
+    }
 }
