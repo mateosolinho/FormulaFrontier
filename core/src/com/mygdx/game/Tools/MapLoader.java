@@ -16,39 +16,39 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Screens.CircuitSelectionScreen;
 
 /**
- * Clase encargada de cargar y renderizar el mapa del juego.
+ * Class to load and render the game map.
  */
 public class MapLoader implements Disposable {
 
     /**
-     * Cámara ortográfica utilizada para visualizar la escena.
+     * Orthographic camera used to view the scene.
      */
     private final OrthographicCamera camera;
 
     /**
-     * Viewport que define el área visible dentro de la ventana.
+     * Viewport that defines the visible area within the window.
      */
     private final Viewport viewport;
 
     /**
-     * Renderizador de mapas tiled ortogonales utilizado para renderizar el mapa.
+     * Orthogonal tiled map renderer used to render the map.
      */
     private final OrthogonalTiledMapRenderer tiledMapRenderer;
 
     /**
-     * Mapa tiled utilizado para representar la estructura del mundo del juego.
+     * Tiled map used to represent the structure of the game world.
      */
     private final TiledMap map;
 
     /**
-     * Cuerpo del jugador en el mundo físico del juego.
+     * Player's body in the physical world of the game.
      */
     private final Body player;
 
     /**
-     * Constructor de la clase MapLoader.
+     * MapLoader constructor
      *
-     * @param world El mundo Box2D donde se cargará el mapa.
+     * @param world Box2D world where the map will be loaded.
      */
     public MapLoader(World world) {
         map = new TmxMapLoader().load(CircuitSelectionScreen.rutaCircuito);
@@ -76,43 +76,43 @@ public class MapLoader implements Disposable {
     }
 
     /**
-     * Obtiene el cuerpo del jugador.
+     * Gets the player's body.
      *
-     * @return El cuerpo del jugador.
+     * @return Player's body.
      */
     public Body getPlayer() {
         return player;
     }
 
     /**
-     * Obtiene la cámara ortográfica.
+     * Gets the orthographic camera.
      *
-     * @return La cámara ortográfica.
+     * @return Orthographic camera.
      */
     public OrthographicCamera getCamera() {
         return camera;
     }
 
     /**
-     * Obtiene el viewport.
+     * Gets the viewport.
      *
-     * @return El viewport.
+     * @return Viewport.
      */
     public Viewport getViewport() {
         return viewport;
     }
 
     /**
-     * Obtiene el renderizador de mapas de mosaicos.
+     * Gets the tilemap renderer.
      *
-     * @return El renderizador de mapas de mosaicos.
+     * @return Tilemap renderer.
      */
     public TiledMapRenderer getTileMapRenderer() {
         return tiledMapRenderer;
     }
 
     /**
-     * Libera los recursos utilizados por MapLoader al eliminarla.
+     * Frees the resources used by MapLoader when delete it.
      */
     @Override
     public void dispose() {

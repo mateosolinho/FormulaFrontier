@@ -10,19 +10,19 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * Clase encargada de crear formas en un mundo Box2D.
+ * 
  */
 public class ShapeFactory {
     /**
-     * Crea un objeto rectangular en la pantalla
+     * Class to create shapes in a Box2D world.
      *
-     * @param position Posición del centro del rectángulo.
-     * @param size     Tamaño del rectángulo.
-     * @param type     Tipo de cuerpo Box2D (estático, dinámico o cinemático).
-     * @param world    Instancia del mundo Box2D donde se creará el objeto.
-     * @param density  Densidad del cuerpo para simulación de física.
-     * @param sensor   Indica si el cuerpo debe ser un sensor (no afecta colisiones físicas).
-     * @return El objeto Box2D creado.
+     * @param position Position of the center of the rectangle.
+     * @param size     Rectangle size.
+     * @param type     Box2D body type (static, dynamic or kinematic).
+     * @param world    Instance of the Box2D world where the object will be created.
+     * @param density  Body density for physics simulation.
+     * @param sensor   Indicates whether the body should be a sensor (does not affect physical collisions).
+     * @return Created Box2D object.
      */
     public static Body createRectangle(Vector2 position, Vector2 size, BodyDef.BodyType type, World world, float density, boolean sensor) {
 

@@ -9,25 +9,25 @@ import java.util.Locale;
 
 
 /**
- * Clase encaragda de gestionar las preferences de la aplicación y la persistencia de datos.
+ * Class to manage application preferences and data persistence.
  */
 public class PreferencesManager {
     /**
-     * Formato de fecha para representar el tiempo en formato "HH:mm:ss".
+     * Date format to represent time in "HH:mm:ss" format.
      */
     @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     /**
-     * Instancia de Calendar utilizada para trabajar con la fecha y la hora del sistema.
+     * Calendar instance used to work with system date and time.
      */
     private static final Calendar cal = Calendar.getInstance();
 
     /**
-     * Método encargado de formatear el tiempo en mm al formato indicado.
+     * Function to format the time in mm to the indicated format.
      *
-     * @param tiempo Unidad de tiempo en mm.
-     * @return String de la cadena ya formateada con el tiempo.
+     * @param tiempo Time unit in 'mm'.
+     * @return String of the string already formatted over time.
      */
     public static String formatTiempo(long tiempo) {
         cal.setTimeInMillis(tiempo - 3600000);
@@ -35,14 +35,14 @@ public class PreferencesManager {
     }
 
     /**
-     * Preferencias que almmacenan los datos en la aplicación.
+     * Preferences that store data in the application.
      */
     static Preferences prefs = Gdx.app.getPreferences("Datos");
 
     /**
-     * Guarda el número de vueltas totoles.
+     * Saves the number of total laps.
      *
-     * @param vueltasTotales Número total de vueltas que se vaan a guardar.
+     * @param vueltasTotales Total number of laps to save.
      */
     public void guardarVueltas(int vueltasTotales) {
         prefs.putInteger("laps", vueltasTotales);
@@ -50,9 +50,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Obtiene el número de vueltas totales.
+     * Gets the number of total laps.
      *
-     * @return El número de vueltas totales si está disponible, sino devuelve 0.
+     * @return Number of total turns if available, otherwise it returns 0.
      */
     public int getVueltas() {
         if (!prefs.contains("laps")) {
@@ -62,9 +62,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Guarda el tiempo en milisegundos.
+     * Saves time in milliseconds.
      *
-     * @param tiempo1 Tiempo en milisegundos que se va a guardar.
+     * @param tiempo1 Time in milliseconds to save.
      */
     public void guardarTiempo1Milis(long tiempo1) {
         prefs.putLong("tiempo1Milis", tiempo1);
@@ -72,9 +72,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Obtiene el tiempo en milisegundos.
+     * Gets the time in milliseconds.
      *
-     * @return Devuelve el tiempo en milisegundos si esta disponible, sino devuelve 0.
+     * @return Time in milliseconds if available, otherwise it returns 0.
      */
     public static long getTiempo1Milis() {
         if (!prefs.contains("tiempo1Milis")) {
@@ -84,9 +84,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Guarda el tiempo total de la sesión.
+     * Saves the total session time.
      *
-     * @param tiempoTotal Tiempo totol de la sesión a guardar en milisegundos.
+     * @param tiempoTotal Total session time to save in milliseconds.
      */
     public void guardarTiempoTotal(long tiempoTotal) {
         prefs.putLong("tiempoTotal", tiempoTotal);
@@ -94,9 +94,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Obtiene el tiempo total en milisegundos.
+     * Gets the total time in milliseconds.
      *
-     * @return Devuelve el tiempo en milisegundos si está disponible, sino devuelve 0.
+     * @return Time in milliseconds if available, otherwise 0.
      */
     public String getTiempoTotal() {
         if (!prefs.contains("tiempoTotal")) {
@@ -106,9 +106,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Guarda la preferencia de música.
+     * Save the music preference.
      *
-     * @param musica La preferencia de música que se va a guardar.
+     * @param musica Music preference to save.
      */
     public void guardarMusica(boolean musica) {
         prefs.putBoolean("musica", musica);
@@ -116,9 +116,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Obtiene la preferencia de música.
+     * Gets the music preference.
      *
-     * @return La preferencia de música si está disponible, de lo contrario, devuelve true.
+     * @return Music preference if available, otherwise returns true.
      */
     public static boolean getMusica() {
         if (!prefs.contains("musica")) {
@@ -128,9 +128,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Guarda la preferencia de vibración.
+     * Save the vibration preference.
      *
-     * @param vibracion La preferencia de vibración que se va a guardar.
+     * @param vibracion Vibration preference to save.
      */
     public void guardarVibracion(boolean vibracion) {
         if (!prefs.contains("vibracion")) {
@@ -143,9 +143,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Obtiene la preferencia de vibración.
+     * Gets the vibration preference.
      *
-     * @return La preferencia de vibración si está disponible, de lo contrario, devuelve true.
+     * @return Vibration preference if available, otherwise returns true.
      */
     public static boolean getVibracion() {
         if (!prefs.contains("vibracion")) {
@@ -155,9 +155,9 @@ public class PreferencesManager {
     }
 
     /**
-     * Establece la preferencia de idioma inglés.
+     * Set the English language preference.
      *
-     * @param ingles El valor booleano que indica si se prefiere el idioma inglés.
+     * @param ingles Boolean value that indicates whether the English language is preferred.
      */
     public static void setIngles(boolean ingles) {
         Gdx.app.log("ingles", ingles + " valor guardado");
@@ -166,27 +166,27 @@ public class PreferencesManager {
     }
 
     /**
-     * Obtiene la preferencia de idioma inglés.
+     * Gets English language preference.
      *
-     * @return True si la preferencia de idioma es inglés, de lo contrario, false.
+     * @return True if the language preference is English, false otherwise.
      */
     public static boolean getIngles() {
         return prefs.getBoolean("ingles");
     }
 
     /**
-     * Obtiene el nombre del archivo de propiedades basado en la preferencia de idioma.
+     * Gets the name of the properties file based on the language preference.
      *
-     * @return El nombre del archivo de propiedades ("textos_en" para inglés o "textos_es" para español).
+     * @return Name of the properties file ("textos_en" for English or "textos_es" for Spanish).
      */
     public static String getPropertyFile() {
         return getIngles() ? "textos_en" : "textos_es";
     }
 
     /**
-     * Obtiene el Locale basado en la preferencia de idioma.
+     * Gets Locale based on language preference.
      *
-     * @return El objeto Locale que representa el idioma seleccionado (inglés o español).
+     * @return Locale object that represents the selected language (English or Spanish).
      */
     public static Locale getLocale() {
         return getIngles() ? new Locale("en") : new Locale("es");

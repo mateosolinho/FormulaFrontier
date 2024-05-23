@@ -10,29 +10,30 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 /**
- * Clase encargada de representar la pantalla de records.
+ * Records screen representation class.
  */
 public class CreditsScreen implements Screen {
 
     /**
-     * Instancia principal del juego
+     * Game instance.
      */
     private final Game game;
 
     /**
-     * Instancia de buttoncreator
+     * ButtonCreator instance.
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Instancia del stage que contiene los elementos visuales
+     * 
+     * Stage containing the visual elements of the screen.
      */
     private final Stage stage;
 
     /**
-     * Constructor de la clase CreditsScreen.
+     * CreditsScreen class constructor.
      *
-     * @param game La instancia principal del juego.
+     * @param game Game instance.
      */
     public CreditsScreen(Game game) {
         this.game = game;
@@ -42,7 +43,7 @@ public class CreditsScreen implements Screen {
     }
 
     /**
-     * Método que maneja la entrada del usuario.
+     * Function that handles user input.
      */
     private void handleInput() {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
@@ -61,9 +62,9 @@ public class CreditsScreen implements Screen {
     }
 
     /**
-     * Renderiza la pantalla de records.
+     * Renders the record screen.
      *
-     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
+     * @param delta Time since the last frame in seconds.
      */
     @Override
     public void render(float delta) {

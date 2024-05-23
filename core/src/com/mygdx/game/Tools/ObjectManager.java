@@ -18,19 +18,19 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Clase que se encarga de gestionar la creación de objetos físicos a partir de un mapa tiled.
+ * Class to manage the creation of physical objects from a tiled map.
  */
 public class ObjectManager {
 
     /**
-     * El mundo Box2D en el que se crean los objetos físicos.
+     * Box2D world in which physical objects are created.
      */
     private final World world;
 
     /**
-     * Constructor de la clase ObjectManager.
+     * ObjectManager constructor.
      *
-     * @param world El mundo Box2D donde se crean los objetos físicos.
+     * @param world Box2D world in which physical objects are created.
      */
     public ObjectManager(World world) {
         this.world = world;
@@ -38,10 +38,10 @@ public class ObjectManager {
 
 
     /**
-     * Crea el cuerpo del jugador a partir de un mapa tiled.
+     * Creates the player's body from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del jugador.
-     * @return El cuerpo del jugador creado.
+     * @param map Tiled map containing the player information.
+     * @return Created player body.
      */
     public Body createPlayer(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(PLAYER).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
@@ -54,9 +54,9 @@ public class ObjectManager {
     }
 
     /**
-     * Crea el cuerpo de las paredes a partir de un mapa tiled.
+     * Create the body of the walls from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del las paredes.
+     * @param map Tiled map containing wall information. 
      */
     public void createWalls(TiledMap map) {
         Array<RectangleMapObject> walls = map.getLayers().get(WALLS).getObjects().getByType(RectangleMapObject.class);
@@ -71,9 +71,9 @@ public class ObjectManager {
     }
 
     /**
-     * Crea el cuerpo de la meta a partir de un mapa tiled.
+     * Create the body of the goal from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del la meta.
+     * @param map Tiled map containing goal information.
      */
     public void createMeta(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(META).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
@@ -85,9 +85,9 @@ public class ObjectManager {
     }
 
     /**
-     * Crea el cuerpo del checkpoint1 a partir de un mapa tiled.
+     * Creates the body of checkpoint1 from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del checkpoint1.
+     * @param map Tiled map containing checkpoint1 information.
      */
     public void createCheckpoint1(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT1).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
@@ -99,9 +99,9 @@ public class ObjectManager {
     }
 
     /**
-     * Crea el cuerpo del checkpoint2 a partir de un mapa tiled.
+     * Creates the body of checkpoint2 from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del checkpoint2.
+     * @param map Tiled map containing checkpoint2 information.
      */
     public void createCheckpoint2(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT2).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
@@ -113,9 +113,9 @@ public class ObjectManager {
     }
 
     /**
-     * Crea el cuerpo del checkpoint3 a partir de un mapa tiled.
+     * Creates the body of checkpoint3 from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del checkpoint3.
+     * @param map Tiled map containing checkpoint3 information.
      */
     public void createCheckpoint3(TiledMap map) {
         Rectangle playerRectangle = map.getLayers().get(CHECKPOINT3).getObjects().getByType(RectangleMapObject.class).get(0).getRectangle();
@@ -127,9 +127,9 @@ public class ObjectManager {
     }
 
     /**
-     * Crea el cuerpo del exterior del mapa a partir de un mapa tiled.
+     * Creates the body of the exterior of the map from a tiled map.
      *
-     * @param map El mapa tiled que contiene la información del exterior del mapa.
+     * @param map Tiled map that contains the information on the outside of the map.
      */
     public void createExterior(TiledMap map) {
         Array<RectangleMapObject> walls = map.getLayers().get("fuera").getObjects().getByType(RectangleMapObject.class);

@@ -4,22 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 /**
- * Clase encargada de gestionar la música y los efectos de sonido en el juego
+ * Class to manage music and sound effects in the game.
  */
 public class AudioManager {
 
     /**
-     * Música utilizada en la pantalla del menú.
+     * Music used on the menu screen.
      */
     private Music menuMusic;
 
     /**
-     * Música utilizada durante la carrera en el juego.
+     * Music used during the race in the game.
      */
     private Music raceMusic;
 
     /**
-     * Inicia la reproducción de la música del menú si la configuración de música está habilitada.
+     * Starts playing menu music if music settings are enabled.
      */
     public void startMusicMenu() {
         if (PreferencesManager.getMusica()) {
@@ -30,14 +30,14 @@ public class AudioManager {
     }
 
     /**
-     * Detiene la reproducción de la música del menú.
+     * Stops playing menu music.
      */
     public void stopMusicMenu() {
         menuMusic.stop();
     }
 
     /**
-     * Inicia la reproducción de la música del semáforo.
+     * Start playing the traffic light music.
      */
     public void startSemaforoMusic() {
         Music semaforoMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/semaforo.mp3"));
@@ -45,7 +45,7 @@ public class AudioManager {
     }
 
     /**
-     * Inicia la reproducción de la música de la carrera.
+     * Start playing the race music.
      */
     public void startMusicCarrera() {
         raceMusic = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/audioCarrera.mp3"));
@@ -55,14 +55,14 @@ public class AudioManager {
     }
 
     /**
-     * Detiene la reproducción de la música de la carrera.
+     * Stops playing the race music.
      */
     public void stopMusicCarrera() {
         raceMusic.stop();
     }
 
     /**
-     * Inicia el sonido del choque
+     * Start the crash sound.
      */
     public void crashEffect() {
         Music crashSound = Gdx.audio.newMusic(Gdx.files.internal("AudioEffects/crash.mp3"));

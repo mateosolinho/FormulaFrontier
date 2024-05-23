@@ -9,44 +9,44 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Game;
 
 /**
- * Clase encargada de representar la pantalla del tutorial.
+ * Tutorial screen representation class.
  */
 public class TutorialScreen implements Screen {
-
+   
     /**
-     * Array de texturas que contiene las imágenes del tutorial.
-     */
-    private final Texture[] textures;
-
-    /**
-     * Stage donde se muestran las imágenes del tutorial.
-     */
-    private final Stage stage;
-
-    /**
-     * Indice de la textura actual que se está mostrando en el tutorial.
-     */
-    private int currentTextureIndex;
-
-    /**
-     * Instancia del juego principal al que pertenece la pantalla del tutorial.
+     * Instance o the main game to which the tutorial screen belongs.
      */
     private final Game game;
 
     /**
-     * Indica si la pantalla acepta eventos en un momento dado.
+     * Textures array containing the tutorial images.
+     */
+    private final Texture[] textures;
+
+    /**
+     * Stage where the tutorial images are displayed.
+     */
+    private final Stage stage;
+
+    /**
+     * Index of the current texture being displayed in the tutorial.
+     */
+    private int currentTextureIndex;
+
+    /**
+     * Set if the screen accepts events.
      */
     private boolean canTouch;
 
     /**
-     * Tiempo transcurrido desde la última interacción en la pantalla.
+     * Time elapsed since last screen interaction.
      */
     private float elapsedTime = 0f;
 
     /**
-     * Constructor de la clase TutorialScreen.
+     * TutorialScreen constructor
      *
-     * @param game Instancia del juego principal.
+     * @param game Game instance.
      */
     public TutorialScreen(Game game) {
         this.game = game;
@@ -75,9 +75,9 @@ public class TutorialScreen implements Screen {
     }
 
     /**
-     * Renderiza la pantalla del tutorial.
+     * Render the tutorial screen.
      *
-     * @param delta El tiempo transcurrido desde el último fotograma.
+     * @param delta Time elapsed since the last frame.
      */
     @Override
     public void render(float delta) {
@@ -113,10 +113,10 @@ public class TutorialScreen implements Screen {
     }
 
     /**
-     * Ajusta el tamaño del viewport del stage cuando la ventana de la aplicación se redimensiona.
+     * Adjust the size of the stage viewport when the application window is resized.
      *
-     * @param width  El nuevo ancho de la ventana.
-     * @param height La nueva altura de la ventana.
+     * @param width  New window width.
+     * @param height New window height.
      */
     @Override
     public void resize(int width, int height) {
@@ -139,7 +139,7 @@ public class TutorialScreen implements Screen {
     }
 
     /**
-     * Libera los recursos de la pantalla del tutorial.
+     * Free up tutorial screen resources.
      */
     @Override
     public void dispose() {

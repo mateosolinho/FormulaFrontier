@@ -11,51 +11,51 @@ import com.mygdx.game.Gamemodes.TimeAttack;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
- * Clase encargada de manejar los contactos entre sensores y otros cuerpos en el juego.
+ * Class for handling contacts between sensors and other game bodies.
  */
 public class SensorContactListener implements ContactListener {
 
     /**
-     * Número de vueltas en la sesión de juego actual
+     * Number of laps in the current game session.
      */
     public static int vVueltas;
 
     /**
-     * Número de vueltas totales de manera general
+     * Number of total laps.
      */
     public static int vVueltasTotales;
 
     /**
-     * Indica si el primer sensor está activado.
+     * Indicates if the first sensor is activated.
      */
     private boolean isCheck1Activated = false;
 
     /**
-     * Indica si el segundo sensor está activado.
+     * Indicates if the second sensor is activated.
      */
     private boolean isCheck2Activated = false;
 
     /**
-     * Indica si el tercer sensor está activado.
+     * Indicates if the third sensor is activated.
      */
     private boolean isCheck3Activated = false;
 
     /**
-     * Instancia de ButtonCreator para manejar botones.
+     * ButtonCreator instance to handle buttons.
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Instancia de ButtonCreator para manejar preferencias.
+     * ButtonCreator instance to manage preferences.
      */
     private final PreferencesManager preferencesManager;
 
     private final AudioManager audioManager;
 
     /**
-     * Constructor de la clase SensorContactListener.
+     * SensorContactListener constructor.
      *
-     * @param buttonCreator Instancia de ButtonCreator para manejar botones.
+     * @param buttonCreator ButtonCreator instance to handle buttons.
      */
     public SensorContactListener(ButtonCreator buttonCreator) {
         this.buttonCreator = buttonCreator;
@@ -65,9 +65,9 @@ public class SensorContactListener implements ContactListener {
     }
 
     /**
-     * Método creado cuando se detecta un contacto entre dos fixtures.
+     * Function created when a contact is detected between two fixtures.
      *
-     * @param contact El objeto Contact que contiene información sobre el contacto.
+     * @param contact Contact object that contains information about the contact.
      */
     @Override
     public void beginContact(Contact contact) {
@@ -135,9 +135,9 @@ public class SensorContactListener implements ContactListener {
     }
 
     /**
-     * Método creado cuando se deja de detectar un contacto entre dos fixtures.
+     * Function created when a contact between two fixtures is no longer detected.
      *
-     * @param contact El objeto Contact que contiene información sobre el contacto.
+     * @param contact Contact object that contains information about the contact.
      */
     @Override
     public void endContact(Contact contact) {
@@ -151,22 +151,22 @@ public class SensorContactListener implements ContactListener {
     }
 
     /**
-     * Método que se llama antes de resolver el contacto entre fixtures.
+     * Function that is called before resolving the contact between fixtures.
      *
-     * @param contact     El objeto Contact que contiene información sobre el contacto.
-     * @param oldManifold El objeto Manifold que contiene información sobre el antiguo estado del contacto.
+     * @param contact     Contact object that contains information about the contact.
+     * @param oldManifold Manifold object that contains information about the old state of the contact.
      */
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
     }
 
-    /**
-     * Método que se llama después de resolver el contacto entre fixtures.
-     *
-     * @param contact El objeto Contact que contiene información sobre el contacto.
-     * @param impulse El objeto ContactImpulse que contiene información sobre el impulso del contacto.
-     */
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-    }
+    // /**
+    //  * Function that is called after resolving the contact between fixtures.
+    //  *
+    //  * @param contact Contact object that contains information about the contact.
+    //  * @param impulse ContactImpulse object that contains information about the contact impulse.
+    //  */
+    // @Override
+    // public void postSolve(Contact contact, ContactImpulse impulse) {
+    // }
 }
