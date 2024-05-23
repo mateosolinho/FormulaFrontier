@@ -11,39 +11,39 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.SensorContactListener;
 
 /**
- * Selection car screen management class.
+ * Clase encargada de representar la pantalla de selección de vehiculos
  */
 public class CircuitSelectionScreen implements Screen {
 
     /**
-     * Game instance.
+     * Instacia principal del juego
      */
     private final Game game;
 
     /**
-     * ButtonCreator instance.
+     * Instancia de buttoncreator
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Stage containing the visual elements of the screen.
+     * Instancia del stage que contiene los elementos visuales de la pantalla
      */
     private final Stage stage;
 
     /**
-     * File path of the selected circuit.
+     * Ruta del archivo del circuito seleccionado
      */
     public static String rutaCircuito;
 
     /**
-     * PlayScreen instance.
+     * Instancia d playscreen
      */
     static PlayScreen playScreen;
 
     /**
-     * CircuitSelectionScreen class constructor.
+     * Constructor de CircuitSelectionScreen.
      *
-     * @param game Game instance.
+     * @param game Instancia principal del juego.
      */
     public CircuitSelectionScreen(Game game) {
         this.game = game;
@@ -53,7 +53,7 @@ public class CircuitSelectionScreen implements Screen {
     }
 
     /**
-     * Handles interaction with the circuit selection buttons.
+     * Maneja la interacción con los botones de selección de circuito.
      */
     private void handleInput() {
         buttonCreator.getImageButtonTrack1().addListener(new ClickListener() {
@@ -81,9 +81,9 @@ public class CircuitSelectionScreen implements Screen {
     }
 
     /**
-     * Render the circuit selection screen.
+     * Renderiza la pantalla de selecion del circuito.
      *
-     * @param delta Time elapsed since the last frame in seconds.
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
      */
     @Override
     public void render(float delta) {

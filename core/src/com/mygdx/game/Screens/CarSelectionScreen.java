@@ -11,34 +11,34 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 /**
- * Class for representing the vehicle selection screen.
+ * Clase encargada de representar la pantalla de selección de vehículos.
  */
 public class CarSelectionScreen implements Screen {
 
     /**
-     * Game instance.
+     * Instancia principal del juego.
      */
     private final Game game;
 
     /**
-     * ButtonCreator instance.
+     * Instancia de buttoncreator
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Instance of the Stage that contains the visual elements of the screen.
+     * Instancia del stage que contiene los elementos visuales de la pantalla.
      */
     private final Stage stage;
 
     /**
-     * File path of the selected vehicle.
+     * Ruta del archivo del vehículo seleccionado.
      */
     public static String rutaCoche;
 
     /**
-     * CarSelectionScreen constructor.
+     * Constructor de la clase CarSelectionScreen.
      *
-     * @param game Game instance.
+     * @param game Instancia principal del juego.
      */
     public CarSelectionScreen(Game game) {
         this.game = game;
@@ -48,7 +48,7 @@ public class CarSelectionScreen implements Screen {
     }
 
     /**
-     * Handles user input, detecting clicks on vehicle buttons.
+     * Maneja la entrada del usuario, detectando clics en los botones de vehículos.
      */
     private void handleInput() {
         for (final ImageButton b : buttonCreator.getImageButtonCars()) {
@@ -68,9 +68,9 @@ public class CarSelectionScreen implements Screen {
     }
 
     /**
-     * Render the car selection screen.
+     * Renderiza la pantalla de selección de coches.
      *
-     * @param delta Time in seconds since the last render.
+     * @param delta The time in seconds since the last render.
      */
     @Override
     public void render(float delta) {

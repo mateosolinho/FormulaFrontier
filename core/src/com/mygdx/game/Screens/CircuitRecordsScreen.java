@@ -10,29 +10,29 @@ import com.mygdx.game.Game;
 import com.mygdx.game.Tools.ButtonCreator;
 
 /**
- * Circuit record screen management class.
+ * Clase encargada de representar la pantalla de récords del circuito.
  */
 public class CircuitRecordsScreen implements Screen {
 
     /**
-     * Game instance.
+     * Instancia principal del juego.
      */
     private final Game game;
 
     /**
-     * ButtonCreator instance.
+     * Instancia de buttoncreator
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Stage containing the visual elements of the screen.
+     * Escenario que contiene los elementos visuales de la pantalla.
      */
     private final Stage stage;
 
     /**
-     * CircuitRecordsScreen constructor.
-     * 
-     * @param game Game instance.
+     * Constructor de la clase CircuitRecordsScreen.
+     *
+     * @param game Instancia principal del juego.
      */
     public CircuitRecordsScreen(Game game) {
         this.game = game;
@@ -42,7 +42,7 @@ public class CircuitRecordsScreen implements Screen {
     }
 
     /**
-     * Handles user input when clicking the arrow button.
+     * Maneja la entrada del usuario al hacer clic en el botón de flecha.
      */
     private void handleInput() {
         buttonCreator.getImageButtonFlecha().addListener(new ClickListener() {
@@ -61,9 +61,9 @@ public class CircuitRecordsScreen implements Screen {
     }
 
     /**
-     * Renders the circuit records screen.
+     * Renderiza la pantalla de récords del circuito.
      *
-     * @param delta Time elapsed since the last frame in seconds.
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
      */
     @Override
     public void render(float delta) {

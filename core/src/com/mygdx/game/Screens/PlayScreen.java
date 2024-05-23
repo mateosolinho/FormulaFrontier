@@ -30,216 +30,216 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Class of representing the main game screen where the game action takes place.
+ * Clase encargada de representar la pantalla de juego principal donde se desarrolla la acción del juego.
  */
 public class PlayScreen implements Screen {
 
     /**
-     * Maximum game FPS.
+     * FPS máximos del juego
      */
     private static final float TARGET_FPS = 60;
 
     /**
-     * FPS calculation.
+     * Calculo de los FPS
      */
     private static final float TIME_PER_FRAME = 1.3f / TARGET_FPS;
 
     /**
-     * Threshold that detects when the turbo is applied.
+     * Umbral que detetecta cuando se aplica el turbo
      */
     private static final float BOOST_THRESHOLD = 12;
 
     /**
-     * Boost force for turbo.
+     * Fuerza del impulso para el turbo
      */
     private static final float BOOST_FORCE = 250.0f;
 
     /**
-     * Driving direction: none.
+     * Dirección de conducción: ninguna.
      */
     private final static int DRIVE_DIRECTION_NONE = 0;
 
     /**
-     * Driving direction: forward.
+     * Dirección de conducción: hacia adelante.
      */
     private final static int DRIVE_DIRECTION_FORWARD = 1;
 
     /**
-     * Driving direction: backward.
+     * Dirección de conducción: hacia atrás.
      */
     private final static int DRIVE_DIRECTION_BACKWARD = 2;
 
     /**
-     * Turning direction: none.
+     * Dirección de giro: ninguna.
      */
     private final static int TURN_DIRECTION_NONE = 0;
 
     /**
-     * Turning direction: left.
+     * Dirección de giro: izquierda.
      */
     private final static int TURN_DIRECTION_LEFT = 1;
 
     /**
-     * Turning direction: right.
+     * Dirección de giro: derecha.
      */
     private final static int TURN_DIRECTION_RIGHT = 2;
 
     /**
-     * Drift coefficient for vehicle slippage.
+     * Coeficiente de drift para el deslizamiento del vehículo.
      */
     private final static float DRIFT = 0.99f;
 
     /**
-     * Default driving speed.
+     * Velocidad de conducción predeterminada.
      */
     private static float DRIVE_SPEED = 150.0f;
 
     /**
-     * Default turning speed.
+     * Velocidad de giro predeterminada.
      */
     private static float TURN_SPEED = 2.5f;
 
     /**
-     * Maximum speed allowed.
+     * Velocidad de maxima permitida.
      */
     private static float MAX_SPEED = 55.0f;
 
     /**
-     * Vehicle's current driving direction: none.
+     * Dirección de la conducción actual del vehículo: ninguna.
      */
     private int driveDirection = DRIVE_DIRECTION_NONE;
 
     /**
-     * Current vehicle turning direction: none.
+     * Dirección actual del giro del vehículo: ninguna.
      */
     private int turnDirection = TURN_DIRECTION_NONE;
 
     /**
-     * Time interval for updating processes in milliseconds.
+     * Intervalo de tiempo para la actualización de ciertos procesos en milisegundos.
      */
     private final int TICK = 50;
 
     /**
-     * Stage instance.
+     * Instancia de stage
      */
     private final Stage stage;
 
     /**
-     * Base vector for position calculations.
+     * Vector base para cálculos de posición
      */
     private Vector2 baseVector;
 
     /**
-     * Orthographic camera for game view.
+     * Cámara ortográfica para la vista del juego.
      */
     private final OrthographicCamera camera;
 
     /**
-     * Tiled map renderer.
+     * Renderizador de mapas tiled
      */
     private final TiledMapRenderer tiledMapRenderer;
 
     /**
-     * Bundle of sprites for rendering.
+     * Lote de sprites para renderizado
      */
     private final SpriteBatch batch;
 
     /**
-     * Box2D world for physics simulation.
+     * Mundo de Box2D para la simulación de física.
      */
     private final World world;
 
     /**
-     * Box2D Debug Renderer.
+     * Renderizador de depuración de Box2D.
      */
     private final Box2DDebugRenderer b2rd;
 
     /**
-     * Player's body in the Box2D world.
+     * Cuerpo del jugador en el mundo Box2D.
      */
     private final Body player;
 
     /**
-     * Game instance.
+     * Instancia de game
      */
     private final Game game;
 
     /**
-     * ButtonCreator instance.
+     * Instancia de buttonCreator
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Player texture.
+     * Textura del jugador
      */
     private final Texture playerTexture;
 
     /**
-     * Player sprite.
+     * Sprite del jugador
      */
     private final Sprite playerSprite;
 
     /**
-     * Map loader to load game maps.
+     * Cargador de mapas para cargar mapas del juego.
      */
     private final MapLoader mapLoader;
 
     /**
-     * Audio manager for the game.
+     * Administrador de audio para el juego
      */
     private final AudioManager audioManager;
 
     /**
-     * TimeAttack instance.
+     * Instancia de timeAttack
      */
     public static TimeAttack timeAttack = new TimeAttack();
 
     /**
-     * List that stores traffic light textures.
+     * Lista que almacena texturas de semáforos.
      */
     private final ArrayList<Texture> semaforos = new ArrayList<>();
 
     /**
-     * Total accumulated time.
+     * Tiempo total acumulado.
      */
     private long tTotal = 0;
 
     /**
-     * Indicator if the pause button has been pressed.
+     * Indicador de si se ha presionado el botón de pausa.
      */
     private boolean isPausePressed;
 
     /**
-     * Indicator if the traffic light is active.
+     * Indicador de si el semáforo está activo.
      */
     private boolean isSemaforoActive;
 
     /**
-     * Time elapsed since the activation of the traffic light.
+     * Tiempo transcurrido desde la activación del semáforo.
      */
     private float timeSemaforo = 0;
 
     /**
-     * Traffic light sprite index.
+     * Índice del sprite del semáforo.
      */
     private int spriteSemaforo = 0;
 
     /**
-     * Date format to represent time in "HH:mm:ss" format.
+     * Formato de fecha para representar el tiempo en formato "HH:mm:ss".
      */
     @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
 
     /**
-     * Calendar instance used to work with system date and time.
+     * Instancia de Calendar utilizada para trabajar con la fecha y la hora del sistema.
      */
     private static final Calendar cal = Calendar.getInstance();
 
     /**
-     * Function to format the time in 'mm' to the indicated format.
+     * Método encargado de formatear el tiempo en mm al formato indicado.
      *
-     * @param tiempo Unit time in 'mm'.
-     * @return String of the string already formatted over time.
+     * @param tiempo Unidad de tiempo en mm.
+     * @return String de la cadena ya formateada con el tiempo.
      */
     public static String formatTiempo(long tiempo) {
         cal.setTimeInMillis(tiempo - 3600000);
@@ -247,9 +247,9 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * PlayScreen constructor.
+     * Constructor de la clase PlayScreen.
      *
-     * @param game Game instance.
+     * @param game La instancia del juego.
      */
     public PlayScreen(Game game) {
         this.game = game;
@@ -294,9 +294,9 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Gets the stage of the user interface.
+     * Obtiene el stage de la interfaz de usuario.
      *
-     * @return The UI stage used on the game screen.
+     * @return El stage de la interfaz de usuario utilizado en la pantalla del juego.
      */
     public Stage getStage() {
         return stage;
@@ -307,9 +307,9 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Function that renders the game screen.
+     * Método que renderiza la pantalla del juego.
      *
-     * @param delta The time since the last frame in seconds.
+     * @param delta El tiempo transcurrido desde el último fotograma en segundos.
      */
     @Override
     public void render(float delta) {
@@ -377,9 +377,9 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Function to manage the sliding of the object.
-     * First, the forward and lateral velocity of the object is obtained.
-     * The speeds are then combined to manage the slip.
+     * Método para gestionar el deslizamiento del objeto
+     * Primero se obtiene la velocidad hacia adelante y lateral del objeto
+     * Posteriormente se combinan las velocidades para gestionar el deslizamiento
      */
     private void handleDrift() {
         Vector2 forwardSpeed = getForwardVelocity();
@@ -388,27 +388,27 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Indicates if the up arrow key is pressed.
+     * Indica si la tecla de dirección hacia arriba está presionada.
      */
     boolean isUpPressed = false;
 
     /**
-     * Indicates if the down arrow key is pressed.
+     * Indica si la tecla de dirección hacia abajo está presionada.
      */
     boolean isDownPressed = false;
 
     /**
-     * Indicates if the right arrow key is pressed.
+     * Indica si la tecla de dirección hacia la derecha está presionada.
      */
     boolean isRightPressed = false;
 
     /**
-     * Indicates if the left arrow key is pressed.
+     * Indica si la tecla de dirección hacia la izquierda está presionada.
      */
     boolean isLeftPressed = false;
 
     /**
-     * Processes player input and applies corresponding physics to the player in the Box2D world.
+     * Procesa la entrada del jugador y aplica la física correspondiente al jugador en el mundo Box2D.
      */
     private void processInput() {
         switch (turnDirection) {
@@ -441,9 +441,9 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Function to manage the forward speed of the object.
+     * Metodo para gestionar la velocidad hacia adelante del objeto
      *
-     * @return multiply the dot product * the normal vector to get the forward velocity.
+     * @return multiplica el producto punto * el vector normal para obtener la velocidad hacia adelante
      */
     private Vector2 getForwardVelocity() {
         Vector2 currentNormal = player.getWorldVector(new Vector2(0, 1));
@@ -452,9 +452,9 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Function to manage the lateral speed of the object.
+     * Metodo para obtener la velocidad lateral del objeto
      *
-     * @return multiply the dot product * the normal vector to get the lateral velocity.
+     * @return multiplica el producto punto * el vector normal para obtener la velocidad lateral
      */
     private Vector2 getLateralVelocity() {
         Vector2 currentNormal = player.getWorldVector(new Vector2(1, 0));
@@ -463,18 +463,18 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Vector to multiply a scalar by a three-dimensional vector.
+     * Vector para multiplicar un escalar por un vector tridimensional
      *
-     * @param a The scalar to multiply.
-     * @param v The two-dimensional vector to multiply. 
-     * @return New two-dimensional vector result of the multiplication.
+     * @param a El escalar a multiplicar
+     * @param v El vector bidimensional a multiplicar
+     * @return Un nuevo vector bidimensional resultado de la multiplicación.
      */
     private Vector2 multiply(float a, Vector2 v) {
         return new Vector2(a * v.x, a * v.y);
     }
 
     /**
-     * Function that handles user input.
+     * Método que maneja la entrada del usuario.
      */
     private void handleInput() {
 
@@ -542,11 +542,11 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Modifies the player's driving speeds.
+     * Modifica las velocidades de conducción del jugador.
      *
-     * @param newSpeed     The player's new forward speed.
-     * @param newTurnSpeed The player's new turning speed.
-     * @param newMaxSpeed  The player's new maximum speed.
+     * @param newSpeed     La nueva velocidad de avance del jugador.
+     * @param newTurnSpeed La nueva velocidad de giro del jugador.
+     * @param newMaxSpeed  La nueva velocidad máxima del jugador.
      */
     public static void modifyDriveSpeed(float newSpeed, float newTurnSpeed, float newMaxSpeed) {
         DRIVE_SPEED = newSpeed;
@@ -555,7 +555,7 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Draw the visual elements on the game screen.
+     * Dibuja los elementos visuales en la pantalla del juego..
      */
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
@@ -591,14 +591,14 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Accelerometer value in the Z axis.
+     * Valor del acelerómetro en el eje Z.
      */
     float accelerometerZ;
 
     /**
-     * Update game status.
-     * This function is to update the camera position, check the accelerometer
-     * to apply a pulse and update the world simulation.
+     * Actualiza el estado del juego.
+     * Este método se encarga de actualizar la posición de la cámara, verificar el acelerómetro
+     * para aplicar un impulso y actualizar la simulación del mundo.
      */
     private void update() {
         camera.position.set(player.getPosition(), 0);
@@ -617,17 +617,17 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Apply force on the player.
+     * Aplica la fuerza sobre el player.
      */
     private void applyBoost() {
         player.applyForceToCenter(player.getWorldVector(new Vector2(0, BOOST_FORCE)), true);
     }
 
     /**
-     * Method invoked when the screen changes size.
+     * Método invocado cuando la pantalla cambia de tamaño.
      *
-     * @param width  New width of the screen.
-     * @param height New height of the screen.
+     * @param width  El nuevo ancho de la pantalla.
+     * @param height La nueva altura de la pantalla.
      */
     @Override
     public void resize(int width, int height) {
@@ -650,7 +650,7 @@ public class PlayScreen implements Screen {
     }
 
     /**
-     * Release the resources used by the screen.
+     * Libera los recursos utilizados por la pantalla
      */
     @Override
     public void dispose() {

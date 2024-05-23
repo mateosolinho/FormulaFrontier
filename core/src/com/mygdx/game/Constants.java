@@ -1,41 +1,41 @@
 package com.mygdx.game;
 
 /**
- * Storing application constants class.
+ * Clase encargada de almacenar las constantes de la aplicación
  */
 public class Constants {
     /**
-     * Pixels per meter (PPM). Conversion factor to convert between Box2D world units and display units.
+     * Píxeles por metro (PPM). Factor de conversión para convertir entre unidades del mundo Box2D y unidades de pantalla.
      */
     public static final float PPM = 100;
 
     /**
-     * Label to identify the player.
+     * Etiqueta para identificar al jugador.
      */
     public static final String PLAYER = "player";
 
     /**
-     * Label to identify the walls.
+     * Etiqueta para identificar las paredes.
      */
     public static final String WALLS = "wall";
 
     /**
-     * Label to identify the goal.
+     * Etiqueta para identificar la meta.
      */
     public static final String META = "meta";
 
     /**
-     * Label to identify the first control point.
+     * Etiqueta para identificar el primer punto de control.
      */
     public static final String CHECKPOINT1 = "checkpoint1";
 
     /**
-     * Label to identify the second control point.
+     * Etiqueta para identificar el segundo punto de control.
      */
     public static final String CHECKPOINT2 = "checkpoint2";
 
     /**
-     * Label to identify the third control point.
+     * Etiqueta para identificar el tercer punto de control.
      */
     public static final String CHECKPOINT3 = "checkpoint3";
 }

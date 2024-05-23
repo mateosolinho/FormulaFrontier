@@ -12,53 +12,53 @@ import java.util.Calendar;
 import java.util.Collections;
 
 /**
- * Class for tracking time, recording new times and managing them.
+ * Clase encargada de realizar el seguimiento del tiempo, registrar nuevos tiempos y gestionarlos.
  */
 public class TimeAttack {
 
     /**
-     * Date format to represent time in "HH:mm:ss" format.
+     * Formato de fecha para representar el tiempo en formato "HH:mm:ss".
      */
     @SuppressWarnings("SimpleDateFormat")
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("mm:ss:SS");
 
     /**
-     * Calendar instance used to work with system date and time.
+     * Instancia de Calendar utilizada para trabajar con la fecha y la hora del sistema.
      */
     private static final Calendar cal = Calendar.getInstance();
 
     /**
-     * List that stores the times recorded during the game.
+     * Lista que almacena los tiempos registrados durante el juego.
      */
     public static ArrayList<Long> tiempos = new ArrayList<>();
 
     /**
-     * Indicates if the timer has started or not.
+     * Indica si el temporizador ha comenzado o no.
      */
     private static boolean startTime = false;
 
     /**
-     * Current time in milliseconds.
+     * Tiempo actual en milisegundos.
      */
     private static long tiempo = 0;
 
     /**
-     * Total time accumulated during the game.
+     * Tiempo total acumulado durante el juego.
      */
     private static long tiempoTotal;
 
     /**
-     * Last recorded time.
+     * Último tiempo registrado.
      */
     private long lastTime = 0;
 
     /**
-     * Preferences manager to manage game preferences.
+     * Gestor de preferencias para manejar las preferencias del juego.
      */
     private static final PreferencesManager preferencesManager = new PreferencesManager();
 
     /**
-     * Restarts recorded times and stops the timer.
+     * Restablece los tiempos registrados y detiene el temporizador.
      */
     public static void resetTimes() {
         tiempos.clear();
@@ -67,10 +67,10 @@ public class TimeAttack {
     }
 
     /**
-     * Get the current time in "mm:ss:SS" string format".
-     * Calculate the elapsed time if the timer is active.
+     * Obtiene el tiempo actual en formato de cadena "mm:ss:SS".
+     * Calcula el tiempo transcurrido si el temporizador está activo.
      *
-     * @return Current time in String format.
+     * @return Tiempo actual en formato de cadena.
      */
     public static String getTiempoActual() {
         if (startTime) {
@@ -82,7 +82,7 @@ public class TimeAttack {
     }
 
     /**
-     * Formats a given time in milliseconds in the format "mm:ss:SS"
+     * Formatea un tiempo dado en milisegundos en el formato "mm:ss:SS".
      *
      * @param tiempo Tiempo en milisegundos a formatear.
      * @return Tiempo formateado en formato de cadena.
@@ -92,7 +92,6 @@ public class TimeAttack {
         return dateFormat.format(cal.getTime());
     }
 
-    // TODO Surely it can be deleted
     /**
      * Formatea un tiempo dado en milisegundos en el formato "mm:ss:SS".
      *
@@ -105,14 +104,14 @@ public class TimeAttack {
     }
 
     /**
-     * Add a new time to the list of recorded times.
+     * Agrega un nuevo tiempo a la lista de tiempos registrados.
      */
     public static void addNewTime() {
         tiempos.add(tiempo);
     }
 
     /**
-     * Set the current time.
+     * Establece el tiempo actual.
      *
      * @param tiempo El nuevo tiempo actual en milisegundos.
      */
@@ -121,9 +120,9 @@ public class TimeAttack {
     }
 
     /**
-     * Set if the timer is active or not.
+     * Establece si el temporizador está activo o no.
      *
-     * @param startTime Indicates if the timer is active.
+     * @param startTime Indica si el temporizador está activo.
      */
     public void setStartTime(boolean startTime) {
         TimeAttack.startTime = startTime;
@@ -131,8 +130,8 @@ public class TimeAttack {
 
 
     /**
-     * Gets the best recorded time and saves it in preferences.
-     * Updates the formatted time for display on the interface.
+     * Obtiene el mejor tiempo registrado y lo guarda en las preferencias si es mejor que el tiempo anterior.
+     * Actualiza el tiempo formateado para mostrarlo en la interfaz.
      */
     public void getBestTime() {
         if (tiempos.isEmpty()) {
@@ -152,9 +151,9 @@ public class TimeAttack {
     }
 
     /**
-     * Gets the last recorded time and updates the color of the corresponding label in the interface
+     * Obtiene el último tiempo registrado y actualiza el color de la etiqueta correspondiente en la interfaz.
      *
-     * @return The last recorded time in String format
+     * @return El último tiempo registrado en formato de cadena.
      */
     public String getLastTime() {
         if (tiempos.size() > 0) {
@@ -170,4 +169,6 @@ public class TimeAttack {
         }
         return Game.bundle.get("ultimoTiempo") + ": " + formatTiempoMarcas(lastTime);
     }
+
+
 }

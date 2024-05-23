@@ -16,39 +16,39 @@ import com.mygdx.game.Tools.ButtonCreator;
 import com.mygdx.game.Tools.PreferencesManager;
 
 /**
- * Configuration screen representation class.
+ * Clase encargada de representar la pantalla configuración.
  */
 public class MainPauseScreen implements Screen {
 
     /**
-     * Game instance.
-     */
-    private final Game game;
-
-    /**
-     * ButtonCreator instance.
+     * Instancia de buttoncreator
      */
     private final ButtonCreator buttonCreator;
 
     /**
-     * Stage instance that contains the visual elements.
+     * Instancia del stage que contiene los elementos visuales
      */
     private final Stage stage;
 
     /**
-     * PreferencesManager instance.
+     * Instancia principal del juego
+     */
+    private final Game game;
+
+    /**
+     * Instancia de preferencesManager
      */
     private final PreferencesManager preferencesManager;
 
     /**
-     * AudioManager instance.
+     * Instancia de audioManager
      */
     private final AudioManager audioManager;
 
     /**
-     * MainPauseScreen constructor.
+     * Constructor de MainPauseScreen.
      *
-     * @param game Game instance.
+     * @param game La instancia del juego.
      */
     public MainPauseScreen(Game game) {
         this.game = game;
@@ -65,9 +65,9 @@ public class MainPauseScreen implements Screen {
     }
 
     /**
-     * Render MainPauseScreen.
+     * Renderiza la MainPauseScreen.
      *
-     * @param delta Time in seconds since the last render.
+     * @param delta El tiempo en segundos desde el último renderizado.
      */
     @Override
     public void render(float delta) {
@@ -104,7 +104,7 @@ public class MainPauseScreen implements Screen {
     }
 
     /**
-     * Set input handling for buttons.
+     * Configura el manejo de entrada para los botones.
      */
     private void handleInput() {
         buttonCreator.getImageButtonVolver().addListener(new ClickListener() {
@@ -198,7 +198,7 @@ public class MainPauseScreen implements Screen {
     }
 
     /**
-     * Update images based on the current language.
+     * Actualiza las imágenes según el idioma actual.
      */
     public void actualizarImegenes() {
         Texture buttonTextureExitPause = new Texture(Gdx.files.internal(Game.bundle.get("botonSalir")));
@@ -209,10 +209,10 @@ public class MainPauseScreen implements Screen {
     }
 
     /**
-     * Styles a button with the specified texture..
+     * Crea el estilo de un botón con la textura especificada.
      *
-     * @param texture     Button texture.
-     * @param imageButton Button to which the style will be applied.
+     * @param texture     La textura para el botón.
+     * @param imageButton El botón al que se le aplicará el estilo.
      */
     public void createStyle(Texture texture, ImageButton imageButton) {
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
