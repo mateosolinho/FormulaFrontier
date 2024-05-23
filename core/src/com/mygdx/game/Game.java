@@ -7,18 +7,18 @@ import com.mygdx.game.Screens.MainScreen;
 import com.mygdx.game.Tools.PreferencesManager;
 
 /**
- * Clase que representa el punto principal del juego y controla la gestión de las pantallas y el idioma del juego.
+ * Class that represents the main point of the game and controls the management of the screens and the game language.
  */
 public class Game extends com.badlogic.gdx.Game {
 
     private MainScreen mainScreen;
     /**
-     * Almacena las traducciones del juego
+     * Stores game translations.
      */
     public static I18NBundle bundle;
 
     /**
-     * Método llamado al inicio del juego. Configura el idioma del juego y carga los archivos de traducción.
+     * Function called at the start of the game. Set the game language and load the translation files.
      */
     @Override
     public void create() {
@@ -30,7 +30,7 @@ public class Game extends com.badlogic.gdx.Game {
     }
 
     /**
-     * Método llamado continuamente para renderizar el juego.
+     * Function called continuously to render the game.
      */
     @Override
     public void render() {
@@ -38,7 +38,7 @@ public class Game extends com.badlogic.gdx.Game {
     }
 
     /**
-     * Método llamado cuando el juego se cierra para liberar recursos.
+     * Function called when the game is closed to free resources.
      */
     @Override
     public void dispose() {
@@ -46,14 +46,14 @@ public class Game extends com.badlogic.gdx.Game {
     }
 
     /**
-     * Cambia la pantalla actual a la pantalla principal.
+     * Changes the current screen to the main screen.
      */
     public void setMainScreen() {
         setScreen(mainScreen);
     }
 
     /**
-     * Método estático para actualizar el idioma del juego.
+     * Static function to update game language.
      */
     public static void actualizaridioma() {
         FileHandle fileHandle = Gdx.files.internal("Traductions/" + PreferencesManager.getPropertyFile());
